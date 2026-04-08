@@ -30,6 +30,12 @@ const links = {
   ],
   academic: [
     {
+      title: "Logística - Curso",
+      description: "Curso completo de gestión logística",
+      url: "https://logiticcourse.vercel.app",
+      icon: BookOpen,
+    },
+    {
       title: "Optimización en Redes - Curso y Laboratorio",
       description: "Technology Presentation - Material académico interactivo",
       url: "https://technology-presentation.vercel.app",
