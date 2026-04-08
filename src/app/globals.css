@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0f172a;
+  --foreground: #f8fafc;
 }
 
 @theme inline {
@@ -12,15 +12,112 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-y: auto;
+}
+
+.rainbow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+}
+
+.rainbow {
+  height: 100vh;
+  width: 0;
+  top: 0;
+  position: absolute;
+  transform: rotate(10deg);
+  transform-origin: top right;
+}
+
+.rainbow:nth-child(1) {
+  box-shadow: -130px 0 80px 40px rgba(232, 121, 249, 0.3), -50px 0 50px 25px rgba(96, 165, 250, 0.4),
+    0 0 50px 25px rgba(94, 234, 212, 0.3), 50px 0 50px 25px rgba(232, 121, 249, 0.4),
+    130px 0 80px 40px rgba(96, 165, 250, 0.3);
+  animation: slide1 45s linear infinite;
+  animation-delay: -1.8s;
+}
+
+.rainbow:nth-child(2) {
+  box-shadow: -130px 0 80px 40px rgba(94, 234, 212, 0.3), -50px 0 50px 25px rgba(232, 121, 249, 0.4),
+    0 0 50px 25px rgba(96, 165, 250, 0.3), 50px 0 50px 25px rgba(94, 234, 212, 0.4),
+    130px 0 80px 40px rgba(232, 121, 249, 0.3);
+  animation: slide2 45s linear infinite;
+  animation-delay: -3.6s;
+}
+
+.rainbow:nth-child(3) {
+  box-shadow: -130px 0 80px 40px rgba(96, 165, 250, 0.3), -50px 0 50px 25px rgba(94, 234, 212, 0.4),
+    0 0 50px 25px rgba(232, 121, 249, 0.3), 50px 0 50px 25px rgba(96, 165, 250, 0.4),
+    130px 0 80px 40px rgba(94, 234, 212, 0.3);
+  animation: slide3 45s linear infinite;
+  animation-delay: -5.4s;
+}
+
+.rainbow:nth-child(4) {
+  box-shadow: -130px 0 80px 40px rgba(232, 121, 249, 0.25), -50px 0 50px 25px rgba(94, 234, 212, 0.35),
+    0 0 50px 25px rgba(96, 165, 250, 0.25), 50px 0 50px 25px rgba(232, 121, 249, 0.35),
+    130px 0 80px 40px rgba(94, 234, 212, 0.25);
+  animation: slide4 45s linear infinite;
+  animation-delay: -7.2s;
+}
+
+.rainbow:nth-child(5) {
+  box-shadow: -130px 0 80px 40px rgba(96, 165, 250, 0.3), -50px 0 50px 25px rgba(232, 121, 249, 0.4),
+    0 0 50px 25px rgba(94, 234, 212, 0.3), 50px 0 50px 25px rgba(96, 165, 250, 0.4),
+    130px 0 80px 40px rgba(232, 121, 249, 0.3);
+  animation: slide5 45s linear infinite;
+  animation-delay: -9s;
+}
+
+@keyframes slide1 {
+  from { right: -25vw; }
+  to { right: 125vw; }
+}
+
+@keyframes slide2 {
+  from { right: -25vw; }
+  to { right: 125vw; }
+}
+
+@keyframes slide3 {
+  from { right: -25vw; }
+  to { right: 125vw; }
+}
+
+@keyframes slide4 {
+  from { right: -25vw; }
+  to { right: 125vw; }
+}
+
+@keyframes slide5 {
+  from { right: -25vw; }
+  to { right: 125vw; }
+}
+
+.glow-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 20% 20%, rgba(96, 165, 250, 0.1) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 80%, rgba(232, 121, 249, 0.1) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 50%, rgba(94, 234, 212, 0.05) 0%, transparent 50%);
+  z-index: 0;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
 }
