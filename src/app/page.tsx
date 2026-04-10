@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ExternalLink, BookOpen, Code, GraduationCap, Mail, MapPin, Briefcase, ShoppingCart, DollarSign } from "lucide-react";
+import { ExternalLink, BookOpen, Code, GraduationCap, Mail, MapPin, Briefcase, ShoppingCart, DollarSign, Activity, Music } from "lucide-react";
 
 const LinkedInIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -73,12 +73,6 @@ const links = {
       url: "https://pisiculture-app.vercel.app",
       icon: Code,
     },
-    {
-      title: "Logística Suite",
-      description: "Plataforma educativa de gestión logística",
-      url: "https://logistica-suite.vercel.app",
-      icon: Code,
-    },
   ],
   social: [
     {
@@ -96,6 +90,17 @@ const links = {
       url: "mailto:msccristianjcanom@gmail.com",
       icon: Mail,
     },
+  ],
+  anylogic: [
+    { title: "Glorieta Mocari", url: "https://cloud.anylogic.com/model/8ec15dce-ada1-449a-ae1e-caae624f7881" },
+    { title: "Rutas de Montería", url: "https://cloud.anylogic.com/model/e9b4aa43-d156-4291-b597-99d64b942e69" },
+    { title: "Zapatería", url: "https://cloud.anylogic.com/model/6b72d628-dfef-4d0b-8e46-9167ff0aa3f7" },
+    { title: "Simulación de Mantenimiento", url: "https://cloud.anylogic.com/model/68ec5281-f0dc-4958-9d0a-f515a90fdb43" },
+    { title: "Gestión de Inventario", url: "https://cloud.anylogic.com/model/64808b15-d471-4a56-891e-78a596fea899" }
+  ],
+  music: [
+    { title: "Música para Orar", description: "Suno Playlist", url: "https://suno.com/playlist/85fb4b22-d87e-4603-bfd1-c6e0bd68f138" },
+    { title: "Para Escuchar y Compartir", description: "Suno Playlist", url: "https://suno.com/playlist/89655a90-f031-4a94-9ff0-6cda579d8259" }
   ],
 };
 
@@ -226,6 +231,59 @@ export default function Home() {
                     </div>
                     <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors flex-shrink-0" />
                   </div>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
+              <Activity className="w-4 h-4" />
+              Simulación con AnyLogic
+            </h2>
+            <div className="space-y-3">
+              {links.anylogic.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-purple-600/50 rounded-xl p-4 transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-purple-600/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-purple-600/30 transition-colors">
+                      <Activity className="w-5 h-5 text-purple-400" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-white font-medium text-sm truncate">{link.title}</h3>
+                      <p className="text-slate-400 text-xs truncate">Ver modelo interactivo</p>
+                    </div>
+                    <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition-colors flex-shrink-0" />
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
+              <Music className="w-4 h-4" />
+              Música
+            </h2>
+            <div className="grid grid-cols-2 gap-3">
+              {links.music.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-pink-600/50 rounded-xl p-4 transition-all group text-left"
+                >
+                  <div className="w-8 h-8 bg-pink-600/20 rounded-lg flex items-center justify-center mb-3 group-hover:bg-pink-600/30 transition-colors">
+                    <Music className="w-4 h-4 text-pink-400" />
+                  </div>
+                  <h3 className="text-white font-medium text-sm truncate">{link.title}</h3>
+                  <p className="text-slate-400 text-xs truncate mt-1">{link.description}</p>
                 </a>
               ))}
             </div>
