@@ -118,22 +118,28 @@ const links = {
   ],
   hotmart: [
     {
-      title: "OptiStock Pro — Gestión de Inventarios",
-      description: "Herramienta profesional · Gumroad",
-      url: "https://cristianjcanom.gumroad.com/l/Optistock",
-      badge: "Herramienta",
-    },
-    {
       title: "Logistic Book",
-      description: "Cuaderno de logística para ingeniería industrial · Hotmart",
-      url: "https://go.hotmart.com/B100518148W",
+      description: "Cuaderno de logística para ingeniería industrial",
+      url: "https://pay.hotmart.com/R101270360M",
       badge: "Libro",
     },
     {
       title: "The Requiem of the Sea",
-      description: "Novela gráfica interactiva · Hotmart",
-      url: "https://go.hotmart.com/B100518148W",
-      badge: "Libro",
+      description: "Novela épica — el galeón San José y sus secretos",
+      url: "https://pay.hotmart.com/Q100177044E",
+      badge: "Novela",
+    },
+    {
+      title: "Ecos del San José",
+      description: "Historia interactiva de fantasía y memoria",
+      url: "https://pay.hotmart.com/C100167402Y",
+      badge: "Novela",
+    },
+    {
+      title: "OptiStock Pro — Gestión de Inventarios",
+      description: "Herramienta profesional de control de stock",
+      url: "https://cristianjcanom.gumroad.com/l/Optistock",
+      badge: "Herramienta",
     },
   ],
 };
