@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historias Narradas por el Viento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=MedievalSharp&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gothic: '#1a1a1a',
+                        parchment: '#f4e4bc',
+                        gold: '#d4af37',
+                        crimson: '#8b0000',
+                        midnight: '#0a0e14',
+                    },
+                    fontFamily: {
+                        gothic: ['MedievalSharp', 'serif'],
+                        display: ['Cinzel', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0e14 0%, #1a1a1a 50%, #2d1b1b 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .book-cover {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .book-cover:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .shelf {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><rect width="100" height="20" fill="%233d2b1f"/><rect x="0" y="15" width="100" height="2" fill="%236b4423"/><rect x="10" y="17" width="80" height="1" fill="%238b4513"/></svg>') repeat-x;
+            height: 20px;
+            margin: 40px 0;
+        }
+
+        .parchment-bg {
+            background: rgba(244, 228, 188, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+    </style>
+</head>
+
+<body class="font-gothic text-parchment">
+
+    <!-- Gothic Library Atmosphere -->
+    <div class="fixed inset-0 opacity-20 pointer-events-none">
+        <div class="absolute top-10 left-10 w-32 h-32 bg-gold/10 rounded-full blur-xl"></div>
+        <div class="absolute bottom-20 right-20 w-48 h-48 bg-crimson/10 rounded-full blur-xl"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-midnight/20 rounded-full blur-2xl">
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-10 text-center py-12 px-6">
+        <h1 class="font-display text-4xl md:text-6xl text-gold mb-4 tracking-widest">HISTORIAS NARRADAS POR EL VIENTO
+        </h1>
+        <p class="font-gothic text-xl md:text-2xl text-parchment/80 italic">Historias Gráficas Digitales</p>
+        <p class="font-gothic text-lg text-parchment/60 mt-2">Explora mundos de fantasía, redención y eternidad</p>
+    </header>
+
+    <!-- Main Library Shelf -->
+    <main class="relative z-10 max-w-7xl mx-auto px-6 pb-12">
+
+        <!-- Shelf Row 1 -->
+        <div class="shelf"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+
+            <!-- Book 1: El Cirio -->
+            <div class="book-cover parchment-bg rounded-lg overflow-hidden cursor-pointer group"
+                onclick="window.location.href='./el_cirio/Visual Storyteller-saved.html'">
+                <div class="aspect-[3/4] overflow-hidden">
+                    <img src="./el_cirio/images/media_1.jpg" alt="El Cirio"
+                        class="w-full h-full object-cover group-hover:brightness-110 transition-all">
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="font-display text-2xl text-gold mb-2">El Cirio</h3>
+                    <p class="font-gothic text-parchment/80 text-sm italic mb-3">Una historia de devoción y luz eterna
+                    </p>
+                    <div
+                        class="bg-gold text-midnight px-4 py-2 rounded font-display text-sm tracking-widest hover:bg-gold/80 transition-colors">
+                        LEER HISTORIA</div>
+                </div>
+            </div>
+
+            <!-- Book 2: Fuiste Tú -->
+            <div class="book-cover parchment-bg rounded-lg overflow-hidden cursor-pointer group"
+                onclick="window.location.href='./Fuiste_tu/Visual Storyteller-fuiste_tu.html'">
+                <div class="aspect-[3/4] overflow-hidden">
+                    <img src="./Fuiste_tu/images/media_1.jpg" alt="Fuiste Tú"
+                        class="w-full h-full object-cover group-hover:brightness-110 transition-all">
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="font-display text-2xl text-gold mb-2">Fuiste Tú</h3>
+                    <p class="font-gothic text-parchment/80 text-sm italic mb-3">Una historia de redención y
+                        misericordia divina</p>
+                    <div
+                        class="bg-gold text-midnight px-4 py-2 rounded font-display text-sm tracking-widest hover:bg-gold/80 transition-colors">
+                        LEER HISTORIA</div>
+                </div>
+            </div>
+
+            <!-- Book 3: Ecos del San José -->
+            <div class="book-cover parchment-bg rounded-lg overflow-hidden cursor-pointer group"
+                onclick="window.location.href='./ecos_del_San_jose/Visual Storyteller_ecos del san jose.html'">
+                <div class="aspect-[3/4] overflow-hidden">
+                    <img src="./ecos_del_San_jose/images/media_new1.jpg" alt="Ecos del San José"
+                        class="w-full h-full object-cover group-hover:brightness-110 transition-all">
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="font-display text-xl text-gold mb-2">Ecos del San José</h3>
+                    <p class="font-gothic text-parchment/80 text-sm italic mb-3">Una historia de naufragio, amor y
+                        eternidad</p>
+                    <div
+                        class="bg-gold text-midnight px-4 py-2 rounded font-display text-sm tracking-widest hover:bg-gold/80 transition-colors">
+                        LEER HISTORIA</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Shelf Row 2 -->
+        <div class="shelf"></div>
+
+        <!-- Coming Soon Section -->
+        <div class="text-center py-12">
+            <h2 class="font-display text-3xl text-gold mb-6">Próximas Historias</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="parchment-bg rounded-lg p-6 opacity-60">
+                    <div class="w-full aspect-[3/4] bg-midnight/50 rounded mb-4 flex items-center justify-center">
+                        <span class="font-display text-gold text-2xl">?</span>
+                    </div>
+                    <h3 class="font-display text-xl text-gold mb-2">Historia 4</h3>
+                    <p class="font-gothic text-parchment/60 text-sm">Próximamente...</p>
+                </div>
+                <div class="parchment-bg rounded-lg p-6 opacity-60">
+                    <div class="w-full aspect-[3/4] bg-midnight/50 rounded mb-4 flex items-center justify-center">
+                        <span class="font-display text-gold text-2xl">?</span>
+                    </div>
+                    <h3 class="font-display text-xl text-gold mb-2">Historia 5</h3>
+                    <p class="font-gothic text-parchment/60 text-sm">Próximamente...</p>
+                </div>
+                <div class="parchment-bg rounded-lg p-6 opacity-60">
+                    <div class="font-display text-xl text-gold mb-2 text-center">Tu Historia</div>
+                    <p class="font-gothic text-parchment/60 text-sm">¿Quieres que cree tu historia gráfica? Contacta
+                        para comisiones personalizadas.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer with Donate -->
+    <footer class="relative z-10 text-center py-8 px-6 border-t border-gold/20">
+        <div class="max-w-2xl mx-auto">
+            <p class="font-gothic text-parchment/80 mb-4">Apoya la creación de historias gráficas independientes</p>
+            <button
+                onclick="alert('Funcionalidad de donación próximamente. Contacta: cristianjaviercanomogollon@gmail.com')"
+                class="bg-crimson hover:bg-crimson/80 text-parchment px-8 py-3 rounded font-display text-lg tracking-widest transition-colors">
+                DONAR/APOYAR
+            </button>
+            <p class="font-gothic text-xs text-parchment/60 mt-4">
+                Creado por Cristian Javier Cano Mogollon<br>
+                Ingeniero Industrial & Creador de Historias
+            </p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

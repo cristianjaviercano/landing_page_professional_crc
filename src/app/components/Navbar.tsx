@@ -20,10 +20,6 @@ export default function Navbar() {
               <FolderOpen className="w-4 h-4" />
               <span className="text-sm font-medium">Proyectos</span>
             </Link>
-            <Link href="/productos" className="flex items-center gap-1.5 text-slate-600 hover:text-blue-600 transition-colors">
-              <Package2 className="w-4 h-4" />
-              <span className="text-sm font-medium">Productos</span>
-            </Link>
             <Link href="/formacion" className="flex items-center gap-1.5 text-slate-600 hover:text-blue-600 transition-colors">
               <GraduationCap className="w-4 h-4" />
               <span className="text-sm font-medium">Formación</span>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Sí del Silencio | The Yes of Silence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=MedievalSharp&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sacred-gold': '#D4AF37',
+                        'sacred-blue': '#002366',
+                        'umber': '#352315',
+                        'sienna': '#8E412E',
+                        'ivory-black': '#0D0D0D',
+                    },
+                    fontFamily: {
+                        display: ['Cinzel Decorative', 'serif'],
+                        gothic: ['MedievalSharp', 'cursive'],
+                        body: ['Old Standard TT', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0D0D0D;
+            color: #E2E2E2;
+            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Gothic Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0D0D0D; }
+        ::-webkit-scrollbar-thumb { background: #352315; border-radius: 3px; }
+
+        .carousel-container {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            height: 100vh;
+            width: 100%;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(13, 13, 13, 0.95) 0%, rgba(13, 13, 13, 0.7) 40%, transparent 100%);
+            padding: 4rem 2rem 6rem 2rem;
+            max-height: 60%;
+            overflow-y: auto;
+            transition: opacity 0.5s ease;
+        }
+
+        .glass-header {
+            background: rgba(13, 13, 13, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 100;
+        }
+
+        .btn-gothic {
+            font-family: 'MedievalSharp', cursive;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(53, 35, 21, 0.4);
+            color: #D4AF37;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gothic:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: #D4AF37;
+        }
+
+        .btn-gothic.active {
+            background: #D4AF37;
+            color: #0D0D0D;
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 50;
+            background: rgba(13, 13, 13, 0.5);
+            color: #D4AF37;
+            padding: 1.5rem 1rem;
+            cursor: pointer;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        .progress-dots {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.75rem;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #D4AF37;
+            box-shadow: 0 0 10px #D4AF37;
+            transform: scale(1.3);
+        }
+
+        .story-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) contrast(1.1);
+        }
+
+        .chara-glow {
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+        
+        .fade-in-text {
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dynamic Font Sizing classes */
+        .text-size-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-size-md { font-size: 1.125rem; line-height: 1.75rem; }
+        .text-size-lg { font-size: 1.5rem; line-height: 2.25rem; }
+
+        @media (min-width: 768px) {
+            .slide-overlay {
+                bottom: 10%;
+                left: 10%;
+                right: auto;
+                max-width: 500px;
+                border-left: 3px solid #D4AF37;
+                padding: 2rem;
+                background: rgba(13, 13, 13, 0.85);
+            }
+            .text-size-sm { font-size: 1rem; }
+            .text-size-md { font-size: 1.25rem; }
+            .text-size-lg { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body class="font-body">
+
+    <!-- Header Controls -->
+    <header class="glass-header fixed top-0 w-full h-16 flex items-center justify-between px-4 md:px-8">
+        <div class="flex items-center gap-2">
+            <h1 class="font-display text-sacred-gold text-sm md:text-xl tracking-tighter">EL SÍ DEL SILENCIO</h1>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <!-- Language Toggle -->
+            <div class="flex rounded-md overflow-hidden border border-sacred-gold/30">
+                <button onclick="setLanguage('en')" id="lang-en" class="btn-gothic active text-xs uppercase">EN</button>
+                <button onclick="setLanguage('es')" id="lang-es" class="btn-gothic text-xs uppercase">ES</button>
+            </div>
+            
+            <!-- Font Size -->
+            <div class="hidden sm:flex items-center gap-1">
+                <button onclick="setFontSize('sm')" class="btn-gothic text-xs">A-</button>
+                <button onclick="setFontSize('md')" class="btn-gothic text-xs">A</button>
+                <button onclick="setFontSize('lg')" class="btn-gothic text-xs">A+</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Carousel -->
+    <main class="relative h-screen w-full overflow-hidden">
+        <div id="carousel" class="carousel-container">
+            
+            <!-- Cover Page -->
+            <section class="slide">
+                <div class="absolute inset-0 bg-black/40 z-10"></div>
+                <img src="https://opal.google/board/blobs/cc6fb0be-38be-454e-849c-888327a3b3d8" alt="Cover: El Sí del Silencio" class="story-img">
+                <div class="absolute z-20 text-center px-4">
+                    <h2 class="font-display text-4xl md:text-7xl text-sacred-gold chara-glow mb-4">EL SÍ DEL SILENCIO</h2>
+                    <p class="font-gothic text-xl md:text-2xl text-white/80 italic tracking-widest uppercase">The Yes of Silence</p>
+                    <div class="mt-12">
+                        <button onclick="nextSlide()" class="btn-gothic px-8 py-3 text-lg animate-pulse">ENTER THE MYSTERY</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Segment 1 -->
+            <section class="slide">
+                <img src="https://opal.google/board/blobs/77003219-5cb3-442b-b44c-b087bfa25eef" alt="The Carpenter of Nazareth" class="story-img">
+                <div class="slide-overlay">
+                    <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">I. The Mystery / El Misterio</h3>
+                    <p class="story-text font-gothic text-white leading-relaxed" data-en="I am a man of tools and certainties, accustomed to measuring before acting. Upon encountering the mystery of Mary's pregnancy, my initial instinct was to retreat into the shadows. I struggled to comprehend how heaven could fit in the womb of my betrothed. The weight of the law conflicted with the fire of my love. I considered stepping aside, but a dream commanded: 'Do not fear.' Following this awakening, my voice fell silent, and my life became a cry of faith." data-es="Soy un hombre de herramientas y certezas, acostumbrado a medir antes de actuar. Al encontrarme con el misterio del embarazo de María, mi instinto inicial fue retirarme a las sombras. Me costaba comprender cómo el cielo podía caber en el vientre de mi prometida. El peso de la ley chocaba con el fuego de mi amor. Consideré dar un paso al lado, pero un sueño mandó: 'No temas'. Tras este despertar, mi voz calló y mi vida se convirtió en un grito de fe."></p>
+                </div>
+            </section>
+
+            <!-- Segment 2 -->
+            <section class="slide">
+                <img src="https://opal.google/board/blobs/8e3b4244-9ad2-4f83-b636-48a82c599b66" alt="The Dream of the Mandate" class="story-img">
+                <div class="slide-overlay">
+                    <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">II. The Mandate / El Mandato</h3>
+                    <p class="story-text font-gothic text-white leading-relaxed" data-en="I accepted the burden God placed on my carpenter's shoulders. Not as a load, but as the most fragile treasure in the universe. I became the custodian of the Light in the darkest night of Bethlehem. My hands, hardened by oak, had to learn the tenderness of holding God. No palaces, only the breath of beasts and my cloak spread out to protect the sacred. Closed doors were but opportunities to trust in a path God was charting beyond my sight." data-es="Acepté la carga que Dios puso sobre mis hombros de carpintero. No como un peso, sino como el tesoro más frágil del universo. Me convertí en el custodio de la Luz en la noche más oscura de Belén. Mis manos, curtidas por el roble, tuvieron que aprender la ternura de sostener a Dios. Sin palacios, solo el aliento de las bestias y mi manto extendido para proteger lo sagrado. Las puertas cerradas no eran sino oportunidades para confiar en un camino que Dios trazaba más allá de mi vista."></p>
+                </div>
+            </section>
+
+            <!-- Segment 3 -->
+            <section class="slide">
+                <img src="https://opal.google/board/blobs/e9d37572-ea4c-47d0-982a-e4bd487ca6c8" alt="The Guardian of Bethlehem" class="story-img">
+                <div class="slide-overlay">
+                    <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">III. The Guardian / El Guardián</h3>
+                    <p class="story-text font-gothic text-white leading-relaxed" data-en="In the cave-hewn shelter of Bethlehem, I stood watch. The cold night air was thick with the scent of straw and warm animal breath. I was the silent shield. Every scene required a protector, and I offered my broad frame to shield the Child and His Mother. My silence was not absence, but an active, reaching strength that held the world's savior in its calloused palms." data-es="En el refugio de piedra de Belén, me mantuve en vela. El aire frío de la noche estaba impregnado del aroma de la paja y el cálido aliento de los animales. Yo era el escudo silencioso. Cada escena requería un protector, y ofrecí mi robusta figura para resguardar al Niño y a su Madre. Mi silencio no era ausencia, sino una fuerza activa y protectora que sostenía al salvador del mundo en sus palmas callosas."></p>
+                </div>
+            </section>
+
+            <!-- Segment 4 -->
+            <section class="slide">
+                <img src="https://opal.google/board/blobs/d8ed2a6b-b6f5-4e4e-b8de-a99f3f562403" alt="The Sacred Weight" class="story-img">
+                <div class="slide-overlay">
+                    <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">IV. The Weight / El Peso</h3>
+                    <p class="story-text font-gothic text-white leading-relaxed" data-en="I carry the sacred weight of responsibility. Love is stronger than hunger, stronger than the exhaustion that pulls at my knees. My hands, once only for wood, now cradle the Divine Light. This is the vocation of the hidden foundation: to disappear so that He may grow. In this surrender, I find the true stature of a man—defined by the capacity to love and obey even when the heavens seem silent." data-es="Cargo con el peso sagrado de la responsabilidad. El amor es más fuerte que el hambre, más fuerte que el cansancio que abate mis rodillas. Mis manos, antes solo para la madera, ahora acunan la Luz Divina. Esta es la vocación del cimiento oculto: desaparecer para que Él crezca. En esta entrega, encuentro la verdadera estatura de un hombre, definida por la capacidad de amar y obedecer incluso cuando los cielos parecen callar."></p>
+                </div>
+            </section>
+
+            <!-- Segment 5 -->
+            <section class="slide">
+                <img src="https://opal.google/board/blobs/74b12dbe-4971-4ee7-a3f9-ffd92c017e29" alt="The Flight into Egypt" class="story-img">
+                <div class="slide-overlay">
+                    <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">V. The Flight / La Huida</h3>
+                    <p class="story-text font-gothic text-white leading-relaxed" data-en="I am the man of midnight escapes. When danger threatened, I did not ask 'why?' but adjusted my sandals and took my staff. We crossed desolate deserts under the high horizon. I felt human fear—the fear of a stranger in a foreign land—but I knew that fatherhood is giving life every day through the sweat of labor and constant vigilance. My sacrifices are engraved in the calluses of my fingers." data-es="Soy el hombre de las huidas a medianoche. Cuando el peligro acechaba, no pregunté '¿por qué?', sino que ajusté mis sandalias y tomé mi báculo. Cruzamos desiertos desolados bajo el horizonte alto. Sentí el miedo humano —el miedo del extraño en tierra ajena— pero supe que la paternidad es dar la vida cada día a través del sudor del trabajo y la vigilancia constante. Mis sacrificios están grabados en los callos de mis dedos."></p>
+                </div>
+            </section>
+
+            <!-- Segment 6 -->
+            <section class="slide">
+                <img src="https://opal.google/board/blobs/793ba3ce-7933-498e-b858-ff5bb5b5e97a" alt="The Labor of Love" class="story-img">
+                <div class="slide-overlay">
+                    <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">VI. The Labor / El Trabajo</h3>
+                    <p class="story-text font-gothic text-white leading-relaxed" data-en="Back in Nazareth, the workshop became a sanctuary of silence and wood. Dust motes dance in the shafts of light. Every strike of the hammer, every shaving of cedar was a prayer. To you, who carry your own doubts and exiles: my 'yes' was not a single word but a habit. I sought no glory, only to be the shield for Mary and the refuge for Jesus." data-es="De regreso en Nazaret, el taller se convirtió en un santuario de silencio y madera. Motas de polvo bailan en los haces de luz. Cada golpe de martillo, cada viruta de cedro era una oración. Para ti, que cargas tus propias dudas y exilios: mi 'sí' no fue una sola palabra, sino un hábito. No busqué la gloria, solo ser el escudo de María y el refugio de Jesús."></p>
+                </div>
+            </section>
+
+            <!-- Segment 7 -->
+            <section class="slide">
+                <img src="https://opal.google/board/blobs/018d2229-28b1-46b6-8c94-58c734855e7e" alt="The Silent Shield" class="story-img">
+                <div class="slide-overlay">
+                    <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">VII. The Legacy / El Legado</h3>
+                    <p class="story-text font-gothic text-white leading-relaxed" data-en="The sun sets on Nazareth. I watch Jesus; His hands, once small, now guide a chisel with grace. My strength has faded, but my heart is full. I am the bridge between the promise and the fulfillment—the humble wooden frame for a divine masterpiece. My work is finished. I find peace in the silence, like a servant who has walked in the light of the Most High." data-es="El sol se pone sobre Nazaret. Observo a Jesús; sus manos, antes pequeñas, ahora guían el cincel con gracia. Mi fuerza se ha desvanecido, pero mi corazón está lleno. Soy el puente entre la promesa y el cumplimiento: el humilde marco de madera para una obra maestra divina. Mi trabajo ha terminado. Encuentro la paz en el silencio, como un siervo que ha caminado a la luz del Altísimo."></p>
+                </div>
+            </section>
+
+            <!-- Final Slide -->
+            <section class="slide bg-ivory-black">
+                <div class="max-w-2xl text-center px-6">
+                    <h2 class="font-display text-sacred-gold text-3xl md:text-5xl mb-12">Consummatum Est</h2>
+                    <div class="space-y-8 font-gothic text-lg md:text-2xl text-white/90 italic">
+                        <p class="story-text" data-en="I close my eyes, confident that my 'yes' has echoes that will outlast time itself. In the silence, everything was said." data-es="Cierro los ojos, confiado en que mi 'sí' tiene ecos que durarán más allá del tiempo mismo. En el silencio, todo fue dicho."></p>
+                    </div>
+                    <div class="mt-16 pt-8 border-t border-sacred-gold/20">
+                        <button onclick="goToSlide(0)" class="btn-gothic px-6 py-2">Return to the Beginning / Volver al Inicio</button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Progress Indicators -->
+        <div class="progress-dots" id="dots"></div>
+
+        <!-- Navigation Arrows -->
+        <button onclick="prevSlide()" class="nav-arrow left-0 rounded-r-full">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <button onclick="nextSlide()" class="nav-arrow right-0 rounded-l-full">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+    </main>
+
+    <script>
+        let currentSlide = 0;
+        let currentLang = 'en';
+        let currentFontSize = 'md';
+        const totalSlides = document.querySelectorAll('.slide').length;
+        const carousel = document.getElementById('carousel');
+        const dotsContainer = document.getElementById('dots');
+
+        // Initialize dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = `dot ${i === 0 ? 'active' : ''}`;
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update dots
+            document.querySelectorAll('.dot').forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentSlide);
+            });
+
+            // Trigger animations for text in current slide
+            const currentSlideEl = document.querySelectorAll('.slide')[currentSlide];
+            const text = currentSlideEl.querySelector('.story-text');
+            if (text) {
+                text.classList.remove('fade-in-text');
+                void text.offsetWidth; // trigger reflow
+                text.classList.add('fade-in-text');
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateCarousel();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateCarousel();
+            }
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+            document.getElementById('lang-es').classList.toggle('active', lang === 'es');
+            
+            document.querySelectorAll('.story-text').forEach(el => {
+                el.innerText = el.getAttribute(`data-${lang}`);
+            });
+        }
+
+        function setFontSize(size) {
+            currentFontSize = size;
+            const elements = document.querySelectorAll('.story-text');
+            elements.forEach(el => {
+                el.classList.remove('text-size-sm', 'text-size-md', 'text-size-lg');
+                el.classList.add(`text-size-${size}`);
+            });
+        }
+
+        // Key navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleGesture();
+        });
+
+        function handleGesture() {
+            if (touchStartX - touchEndX > 50) nextSlide();
+            if (touchEndX - touchStartX > 50) prevSlide();
+        }
+
+        // Initial setup
+        setLanguage('en');
+        setFontSize('md');
+    </script>
+</body>
+</html>

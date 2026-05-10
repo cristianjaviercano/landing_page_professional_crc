@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuiste Tú | A Gothic Graphic Novel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=UnifrakturMaguntia&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: '#121212',
+                        midnight: '#0a0e14',
+                        crimson: '#4a0404',
+                        gold: '#b8860b',
+                        antique: '#e5e1d8',
+                    },
+                    fontFamily: {
+                        gothic: ['"Cinzel Decorative"', 'serif'],
+                        fraktur: ['"UnifrakturMaguntia"', 'serif'],
+                        text: ['"IM Fell English SC"', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #0a0e14;
+            color: #e5e1d8;
+            font-family: 'IM Fell English SC', serif;
+        }
+
+        .page-container {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .page {
+            min-width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .media-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .media-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6) contrast(1.1) saturate(0.8);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+            z-index: 2;
+        }
+
+        .content-box {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            padding: 2rem;
+            text-align: center;
+            background: rgba(10, 14, 20, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            border-radius: 4px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            margin: 0 1rem;
+        }
+
+        .nav-btn {
+            position: fixed;
+            bottom: 2rem;
+            z-index: 50;
+            background: rgba(184, 134, 11, 0.2);
+            border: 1px solid #b8860b;
+            color: #b8860b;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: #b8860b;
+            color: #0a0e14;
+            box-shadow: 0 0 15px #b8860b;
+        }
+
+        .nav-prev { left: 2rem; }
+        .nav-next { right: 2rem; }
+
+        .header-menu {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1rem 2rem;
+            background: linear-gradient(to bottom, rgba(10,14,20,0.9) 0%, transparent 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(184, 134, 11, 0.1);
+        }
+
+        .lang-toggle button, .font-controls button {
+            background: transparent;
+            border: 1px solid rgba(184, 134, 11, 0.4);
+            color: #b8860b;
+            padding: 0.25rem 0.75rem;
+            margin: 0 0.25rem;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .lang-toggle button.active {
+            background: #b8860b;
+            color: #0a0e14;
+        }
+
+        .title-text {
+            font-family: 'UnifrakturMaguntia', serif;
+            text-shadow: 0 0 20px rgba(184, 134, 11, 0.5);
+            line-height: 1.2;
+        }
+
+        .story-text {
+            line-height: 1.8;
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        .fade-in {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Swipe Progress Bar */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: #b8860b;
+            z-index: 100;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio Background -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="./fuiste-tú..mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="progress-bar" id="progressBar" style="width: 11%"></div>
+
+    <header class="header-menu">
+        <div class="lang-toggle">
+            <button onclick="setLanguage('en')" id="btn-en" class="active">EN</button>
+            <button onclick="setLanguage('es')" id="btn-es">ES</button>
+        </div>
+        <div class="logo font-gothic text-gold text-xl tracking-widest hidden md:block">FUISTE TÚ</div>
+        <div class="font-controls flex items-center">
+            <button onclick="changeFontSize(-2)">A-</button>
+            <button onclick="changeFontSize(2)">A+</button>
+            <button onclick="toggleMusic()" id="music-btn" style="margin-left: 0.5rem; background: transparent; border: 1px solid rgba(184, 134, 11, 0.4); color: #b8860b; padding: 0.25rem 0.75rem; font-family: 'Cinzel Decorative', serif; font-size: 0.8rem; transition: all 0.3s;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <button class="nav-btn nav-prev" onclick="movePage(-1)" id="prevBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="nav-btn nav-next" onclick="movePage(1)" id="nextBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+
+    <div class="page-container" id="container">
+        
+        <!-- Page 1: Cover -->
+        <section class="page">
+            <div class="media-bg"><img src='./images/media_1.jpg' alt='Cover' /></div>
+            <div class="overlay"></div>
+            <div class="content-box fade-in">
+                <h1 class="title-text text-5xl md:text-7xl text-gold mb-6">Fuiste Tú</h1>
+                <p class="story-text text-xl md:text-2xl text-antique italic lang-en">"It was you, thank you Lord for everything."</p>
+                <p class="story-text text-xl md:text-2xl text-antique italic lang-es hidden">"Fuiste tú, Gracias Señor por todo."</p>
+            </div>
+        </section>
+
+        <!-- Page 2: Segment 1 -->
+        <section class="page">
+            <div class="media-bg"><img src='./images/media_2.jpg' alt='Segment 1' /></div>
+            <div class="overlay"></div>
+            <div class="content-box">
+                <p class="story-text text-lg md:text-2xl lang-en">I did not help you when I saw you on the cross, carrying that weight, that lightless pain; my steps fell silent before your suffering, today by the wood, I want to redeem myself.</p>
+                <p class="story-text text-lg md:text-2xl lang-es hidden">Yo no te ayudé, cuando te vi en la cruz, cargando ese peso, aquel dolor sin luz, mis pasos callaron, frente a tu sufrir, hoy junto al madero, me quiero redimir.</p>
+            </div>
+        </section>
+
+        <!-- Page 3: Segment 2 -->
+        <section class="page">
+            <div class="media-bg"><img src='./images/media_3.jpg' alt='Segment 2' /></div>
+            <div class="overlay"></div>
+            <div class="content-box">
+                <p class="story-text text-lg md:text-2xl lang-en">I closed my eyes while everything passed, I denied with my hand when your voice called; I ran to the desert, to the shadow I fled, among my miseries, there I hid.</p>
+                <p class="story-text text-lg md:text-2xl lang-es hidden">Cerré mis ojos, mientras todo pasaba, negué con la mano, cuando tu voz llamaba, corrí al desierto, a la sombra huí, entre mis miserias, ahí me escondí.</p>
+            </div>
+        </section>
+
+        <!-- Page 4: Segment 3 -->
+        <section class="page">
+            <div class="media-bg"><img src='./images/media_4.jpg' alt='Segment 3' /></div>
+            <div class="overlay"></div>
+            <div class="content-box">
+                <p class="story-text text-lg md:text-2xl lang-en">It was you who looked at me, it was you who spoke to me, who with his embrace evaporated my shadow, who with his blood forgave my sin.</p>
+                <p class="story-text text-lg md:text-2xl lang-es hidden">Fuiste tú, quien me miró, fuiste tú, quien me habló, quien con su abrazo mi sombra evaporó, quien con su sangre mi pecado perdonó.</p>
+            </div>
+        </section>
+
+        <!-- Page 5: Segment 4 -->
+        <section class="page">
+            <div class="media-bg"><img src='./images/media_5.jpg' alt='Segment 4' /></div>
+            <div class="overlay"></div>
+            <div class="content-box">
+                <p class="story-text text-lg md:text-2xl lang-en">Guilt weighs me down, but you carry it; in your gaze my soul finds calm; I don't deserve so much, but here I am, by the wood feeling your love.</p>
+                <p class="story-text text-lg md:text-2xl lang-es hidden">Las culpas me pesan, pero tú las cargas, en tu mirada mi alma encuentra calma, no merece tanto, pero aquí estoy, junto al madero sintiendo tu amor.</p>
+            </div>
+        </section>
+
+        <!-- Page 6: Segment 5 -->
+        <section class="page">
+            <div class="media-bg"><img src='./images/media_6.jpg' alt='Segment 5' /></div>
+            <div class="overlay"></div>
+            <div class="content-box">
+                <p class="story-text text-lg md:text-2xl lang-en">The echo of your voice came to wake me, you removed the blindfold, you showed me the sea; in the feat of your great sacrifice, today I embrace the wood and shout!</p>
+                <p class="story-text text-lg md:text-2xl lang-es hidden">El eco de tu voz me vino a despertar, quitaste la venda, me mostraste el mar, en la proeza de tu gran sacrificio, hoy al madero abrazo y grito!</p>
+            </div>
+        </section>
+
+        <!-- Page 7: Segment 6 -->
+        <section class="page">
+            <div class="media-bg"><img src='./images/media_7.jpg' alt='Segment 6' /></div>
+            <div class="overlay"></div>
+            <div class="content-box">
+                <p class="story-text text-lg md:text-2xl lang-en">It was you who looked at me... (Final Redemption)</p>
+                <p class="story-text text-lg md:text-2xl lang-es hidden">Fuiste tú, quien me miró... (Redención Final)</p>
+            </div>
+        </section>
+
+        <!-- Page 8: Segment 7 -->
+        <section class="page">
+            <div class="media-bg"><img src='./images/media_8.jpg' alt='Segment 7' /></div>
+            <div class="overlay"></div>
+            <div class="content-box">
+                <h2 class="title-text text-3xl text-gold mb-4 lang-en">Redemption</h2>
+                <h2 class="title-text text-3xl text-gold mb-4 lang-es hidden">Redención</h2>
+                <p class="story-text text-lg lang-en">An explosion of light and mercy, where the canvas of the past is washed clean by the blood and the glory of the divine master.</p>
+                <p class="story-text text-lg lang-es hidden">Una explosión de luz y misericordia, donde el lienzo del pasado es limpiado por la sangre y la gloria del divino maestro.</p>
+            </div>
+        </section>
+
+        <!-- Page 9: Closing -->
+        <section class="page">
+            <div class="overlay" style="background: radial-gradient(circle, #1a1a1a 0%, #000 100%);"></div>
+            <div class="content-box text-center">
+                <h2 class="title-text text-5xl md:text-6xl text-gold mb-8 lang-en">THE END</h2>
+                <h2 class="title-text text-5xl md:text-6xl text-gold mb-8 lang-es hidden">FIN</h2>
+                
+                <div class="lang-en text-lg md:text-xl space-y-4">
+                    <p>In the chiaroscuro of the soul, where shadows once reigned, the Master has laid His hand.</p>
+                    <p>Every stroke of guilt has been softened by the oil of mercy, and the dark wood of the cross reflects now a light of eternal gold.</p>
+                    <p class="italic text-gold mt-6">It was You, Lord, who turned the cracked canvas of my life into a portrait of redemption.</p>
+                </div>
+
+                <div class="lang-es hidden text-lg md:text-xl space-y-4">
+                    <p>En el claroscuro del alma, donde antes reinaban las sombras, el Maestro ha puesto Su mano.</p>
+                    <p>Cada trazo de culpa ha sido suavizado por el óleo de la misericordia, y la madera oscura del madero refleja ahora una luz de oro eterno.</p>
+                    <p class="italic text-gold mt-6">Fuiste Tú, Señor, quien convirtió el lienzo agrietado de mi vida en un retrato de redención.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        let currentPage = 0;
+        const totalPages = document.querySelectorAll('.page').length;
+        const container = document.getElementById('container');
+        const progressBar = document.getElementById('progressBar');
+        let currentFontSize = 24;
+
+        function updateNavigation() {
+            container.style.transform = `translateX(-${currentPage * 100}vw)`;
+            progressBar.style.width = `${((currentPage + 1) / totalPages) * 100}%`;
+            
+            // Toggle nav buttons
+            document.getElementById('prevBtn').style.opacity = currentPage === 0 ? '0.3' : '1';
+            document.getElementById('nextBtn').style.opacity = currentPage === totalPages - 1 ? '0.3' : '1';
+        }
+
+        function movePage(direction) {
+            currentPage = Math.max(0, Math.min(totalPages - 1, currentPage + direction));
+            updateNavigation();
+        }
+
+        function setLanguage(lang) {
+            const enTexts = document.querySelectorAll('.lang-en');
+            const esTexts = document.querySelectorAll('.lang-es');
+            const btnEn = document.getElementById('btn-en');
+            const btnEs = document.getElementById('btn-es');
+
+            if (lang === 'es') {
+                enTexts.forEach(el => el.classList.add('hidden'));
+                esTexts.forEach(el => el.classList.remove('hidden'));
+                btnEs.classList.add('active');
+                btnEn.classList.remove('active');
+            } else {
+                esTexts.forEach(el => el.classList.add('hidden'));
+                enTexts.forEach(el => el.classList.remove('hidden'));
+                btnEn.classList.add('active');
+                btnEs.classList.remove('active');
+            }
+        }
+
+        function changeFontSize(delta) {
+            currentFontSize = Math.max(16, Math.min(48, currentFontSize + delta));
+            const storyTexts = document.querySelectorAll('.story-text');
+            storyTexts.forEach(text => {
+                text.style.fontSize = `${currentFontSize}px`;
+            });
+        }
+
+        // Swipe Detection
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        window.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        window.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleGesture();
+        }, false);
+
+        function handleGesture() {
+            if (touchEndX < touchStartX - 50) movePage(1);
+            if (touchEndX > touchStartX + 50) movePage(-1);
+        }
+
+        // Keyboard Navigation
+        window.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === ' ') movePage(1);
+            if (e.key === 'ArrowLeft') movePage(-1);
+        });
+
+        // Music Toggle
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            const btn = document.getElementById('music-btn');
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+            } else {
+                audio.pause();
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/></svg>';
+            }
+        }
+
+        // Initial setup
+        updateNavigation();
+    </script>
+</body>
+</html>

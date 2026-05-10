@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecos del San José | Graphic Novel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sienna: '#4B3621',
+                        gold: '#FFD700',
+                        abyssal: '#001A3D',
+                        sepulcher: '#F5F5F5',
+                        crimson: '#800020',
+                    },
+                    fontFamily: {
+                        gothic: ['MedievalSharp', 'serif'],
+                        display: ['Cinzel', 'serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 0px; }
+        body { background-color: #000; color: #F5F5F5; overflow: hidden; }
+        .glass-panel {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        }
+        .carousel-container {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+            height: 100vh;
+            width: 100%;
+        }
+        .slide {
+            min-width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slide img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        .text-overlay {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+            padding: 2rem;
+            margin: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out 0.4s;
+        }
+        .active .text-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .gold-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .nav-btn {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #FFD700;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.1);
+        }
+        .lang-active {
+            color: #FFD700;
+            border-bottom: 2px solid #FFD700;
+        }
+        .story-text {
+            transition: font-size 0.3s ease;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body class="font-body">
+
+    <!-- Audio Background -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="./music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center glass-panel border-b-0">
+        <div class="flex items-center gap-6">
+            <h1 class="font-display text-gold font-bold tracking-widest text-lg md:text-xl hidden md:block">ECOS DEL SAN JOSÉ</h1>
+            <div class="flex items-center gap-2 bg-black/40 rounded-full px-4 py-1 border border-gold/20">
+                <button onclick="setLang('en')" id="btn-en" class="text-xs uppercase tracking-tighter hover:text-gold transition px-2 py-1">EN</button>
+                <span class="text-gold/20">|</span>
+                <button onclick="setLang('es')" id="btn-es" class="text-xs uppercase tracking-tighter hover:text-gold transition px-2 py-1 lang-active">ES</button>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 bg-black/40 rounded-full px-3 py-1 border border-gold/20">
+                <button onclick="changeFontSize(-2)" class="p-1 hover:text-gold transition">A-</button>
+                <button onclick="changeFontSize(2)" class="p-1 hover:text-gold transition">A+</button>
+            </div>
+            <button onclick="toggleMusic()" id="music-btn" class="bg-black/40 rounded-full px-3 py-1 border border-gold/20 hover:text-gold transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Navigation Arrows -->
+    <button onclick="prevSlide()" class="fixed left-4 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full flex items-center justify-center nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+    </button>
+    <button onclick="nextSlide()" class="fixed right-4 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full flex items-center justify-center nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+    </button>
+
+    <!-- Progress Dots -->
+    <div id="progress-dots" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 flex gap-3">
+        <!-- Dots injected via JS -->
+    </div>
+
+    <!-- Main Content Carousel -->
+    <main class="carousel-container" id="carousel">
+        
+        <!-- SLIDE 1: COVER -->
+        <section class="slide">
+            <img src='./images/media_new1.jpg' alt='Cover Image: Ecos del San José' />
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-60 z-[2]"></div>
+            <div class="text-overlay glass-panel text-center active-trigger">
+                <h2 class="font-display text-3xl md:text-5xl text-gold gold-glow mb-4">ECOS DEL SAN JOSÉ</h2>
+                <p class="font-gothic text-xl text-sepulcher/90 italic">Un suspiro en el abismo del Caribe</p>
+                <div class="w-24 h-1 bg-gold/50 mx-auto mt-6"></div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: THE BREACH -->
+        <section class="slide">
+            <img src='./images/media_new2.jpg' alt='The Breach and Darkness' />
+            <div class="absolute inset-0 bg-black/40 z-[2]"></div>
+            <div class="text-overlay glass-panel">
+                <h3 class="font-display text-gold mb-3 text-lg tracking-widest border-b border-gold/30 pb-2">I. LA BRECHA / THE BREACH</h3>
+                <div class="lang-content es font-gothic story-text text-lg">
+                    El caos estalla. El San José se estremece mientras el agua helada invade las cubiertas. Escucho gritos que se ahogan en la pólvora y el salitre.
+                </div>
+                <div class="lang-content en hidden font-gothic story-text text-lg">
+                    Chaos erupts. The San José shudders as ice-cold water invades the decks. I hear screams drowning in gunpowder and saltpeter.
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: FIRST BREATH -->
+        <section class="slide">
+            <img src='./images/media_new3.jpg' alt='Encounter with Death' />
+            <div class="absolute inset-0 bg-black/30 z-[2]"></div>
+            <div class="text-overlay glass-panel">
+                <h3 class="font-display text-gold mb-3 text-lg tracking-widest border-b border-gold/30 pb-2">II. PRIMER SUSPIRO / FIRST BREATH</h3>
+                <div class="lang-content es font-gothic story-text text-lg">
+                    En medio de la desesperación, una presencia serena me observa. La Muerte, vestida de negro, susurra: "Tranquilo, todo pasará. Estoy aquí porque ella así me lo pidió."
+                </div>
+                <div class="lang-content en hidden font-gothic story-text text-lg">
+                    Amidst the despair, a serene presence watches me. Death, dressed in black, whispers: "Be calm, everything will pass. I am here because she asked me to be."
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: PURGATORY -->
+        <section class="slide">
+            <img src='./images/media_new4.jpg' alt='The Purgatory of the Corridors' />
+            <div class="absolute inset-0 bg-black/40 z-[2]"></div>
+            <div class="text-overlay glass-panel">
+                <h3 class="font-display text-gold mb-3 text-lg tracking-widest border-b border-gold/30 pb-2">III. EL PURGATORIO / THE PURGATORY</h3>
+                <div class="lang-content es font-gothic story-text text-lg">
+                    Corredores estrechos donde las ratas huyen y los hombres pierden su alma por oro. Busco las escaleras, buscando la salvación en las alturas.
+                </div>
+                <div class="lang-content en hidden font-gothic story-text text-lg">
+                    Narrow corridors where rats flee and men lose their souls for gold. I seek the stairs, looking for salvation in the heights.
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: DECK OF RUIN -->
+        <section class="slide">
+            <img src='./images/media_new5.jpg' alt='The Deck of Ruin' />
+            <div class="absolute inset-0 bg-black/40 z-[2]"></div>
+            <div class="text-overlay glass-panel">
+                <h3 class="font-display text-gold mb-3 text-lg tracking-widest border-b border-gold/30 pb-2">IV. RUINA / RUIN</h3>
+                <div class="lang-content es font-gothic story-text text-lg">
+                    La cubierta es un escenario de devastación. El humo de los cañones oscurece el sol. Muchos buscan en mi hábito una absolución que yo mismo necesito.
+                </div>
+                <div class="lang-content en hidden font-gothic story-text text-lg">
+                    The deck is a scene of devastation. Cannon smoke obscures the sun. Many seek absolution in my habit that I myself need.
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: THE TILTING -->
+        <section class="slide">
+            <img src='./images/media_new6.jpg' alt='The Tilting Galeón' />
+            <div class="absolute inset-0 bg-black/40 z-[2]"></div>
+            <div class="text-overlay glass-panel">
+                <h3 class="font-display text-gold mb-3 text-lg tracking-widest border-b border-gold/30 pb-2">V. EL COLOSO CAE / THE COLOSSUS FALLS</h3>
+                <div class="lang-content es font-gothic story-text text-lg">
+                    El San José se inclina hacia estribor. Una mano blanca y fría me sostiene. "Aún no", dice ella. Mi destino aguarda en la madera tallada.
+                </div>
+                <div class="lang-content en hidden font-gothic story-text text-lg">
+                    The San José tilts to starboard. A cold, white hand holds me. "Not yet," she says. My destiny awaits in the carved wood.
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: REVELATION -->
+        <section class="slide">
+            <img src='./images/media_new7.jpg' alt='The Woman of the Cell' />
+            <div class="absolute inset-0 bg-black/40 z-[2]"></div>
+            <div class="text-overlay glass-panel">
+                <h3 class="font-display text-gold mb-3 text-lg tracking-widest border-b border-gold/30 pb-2">VI. REVELACIÓN / REVELATION</h3>
+                <div class="lang-content es font-gothic story-text text-lg">
+                    La muerte se transforma. Reconozco sus ojos café, su piel cálida. Es ella, la mujer de mi celda, quien me dio su último suspiro y reclamó el mío.
+                </div>
+                <div class="lang-content en hidden font-gothic story-text text-lg">
+                    Death transforms. I recognize her brown eyes, her warm skin. It is her, the woman from my cell, who gave me her last breath and claimed mine.
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: FINAL EMBRACE -->
+        <section class="slide">
+            <img src='./images/media_new8.jpg' alt='The Abyssal Silence' />
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-abyssal/90 z-[2]"></div>
+            <div class="text-overlay glass-panel">
+                <h3 class="font-display text-gold mb-3 text-lg tracking-widest border-b border-gold/30 pb-2">VII. SILENCIO / SILENCE</h3>
+                <div class="lang-content es font-gothic story-text text-lg">
+                    Nos hundimos seiscientos pies bajo las olas. Sus brazos son mi eternidad, nuestro amor el tesoro más grande oculto en el infinito del mar.
+                </div>
+                <div class="lang-content en hidden font-gothic story-text text-lg">
+                    We sink six hundred feet beneath the waves. Her arms are my eternity, our love the greatest treasure hidden in the infinity of the sea.
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: CLOSING -->
+        <section class="slide bg-abyssal">
+            <div class="text-overlay glass-panel text-center !max-w-2xl">
+                <div class="mb-8">
+                    <svg class="w-16 h-16 mx-auto text-gold mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
+                    <h2 class="font-display text-gold text-3xl mb-4 gold-glow">Ecos del San José</h2>
+                </div>
+                
+                <div class="lang-content es font-body text-sepulcher/80 space-y-4">
+                    <p class="italic">"Inscritos en la infinitud del mar, ocultos en la eternidad en los brazos del uno y el otro."</p>
+                    <p class="text-sm">Una obra de investigación y narrativa inspirada en los galeones de las Indias y los olvidos regionales del Caribe.</p>
+                </div>
+                
+                <div class="lang-content en hidden font-body text-sepulcher/80 space-y-4">
+                    <p class="italic">"Inscribed in the infinity of the sea, hidden in eternity in each other's arms."</p>
+                    <p class="text-sm">A work of research and narrative inspired by the galleons of the Indies and the regional forgetfulness of the Caribbean.</p>
+                </div>
+                
+                <div class="mt-10 pt-6 border-t border-gold/20">
+                    <button onclick="goToSlide(0)" class="font-display text-gold border border-gold px-8 py-3 hover:bg-gold hover:text-black transition uppercase tracking-widest text-xs">
+                        Comenzar de nuevo / Restart
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        let currentSlide = 0;
+        let fontSize = 18;
+        const carousel = document.getElementById('carousel');
+        const slides = document.querySelectorAll('.slide');
+        const progressContainer = document.getElementById('progress-dots');
+        let currentLang = 'es';
+
+        // Initialize progress dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-gold w-6' : 'bg-gold/30'}`;
+            dot.onclick = () => goToSlide(i);
+            dot.id = `dot-${i}`;
+            progressContainer.appendChild(dot);
+        });
+
+        function updateSlide() {
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            slides.forEach((s, i) => {
+                if (i === currentSlide) s.classList.add('active');
+                else s.classList.remove('active');
+                
+                const dot = document.getElementById(`dot-${i}`);
+                if (dot) {
+                    dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-gold w-6' : 'bg-gold/30'}`;
+                }
+            });
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlide();
+        }
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll(`.lang-content.${lang}`).forEach(el => el.classList.remove('hidden'));
+            
+            document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
+            document.getElementById('btn-es').classList.toggle('lang-active', lang === 'es');
+        }
+
+        function changeFontSize(delta) {
+            fontSize = Math.max(12, Math.min(32, fontSize + delta));
+            document.querySelectorAll('.story-text').forEach(el => {
+                el.style.fontSize = fontSize + 'px';
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) nextSlide();
+            if (touchEndX - touchStartX > 50) prevSlide();
+        });
+
+        // Music Toggle
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            const btn = document.getElementById('music-btn');
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+            } else {
+                audio.pause();
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/></svg>';
+            }
+        }
+
+        // Initial setup
+        updateSlide();
+    </script>
+</body>
+</html>
