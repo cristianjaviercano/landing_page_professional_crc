@@ -69,6 +69,7 @@ const juegos = [
     color: "orange",
     platform: "Python / Pygame",
     hotmartUrl: "https://pay.hotmart.com/R101270360M",
+    repoUrl: "https://toc-factory-simuladores-9jlwiw6zw.vercel.app/",
     badge: "Demo Gratis",
   },
   {
@@ -81,6 +82,7 @@ const juegos = [
     color: "cyan",
     platform: "Python / Pygame",
     hotmartUrl: "https://pay.hotmart.com/R101270360M",
+    repoUrl: "https://toc-factory-simuladores-9jlwiw6zw.vercel.app/",
     badge: "Demo Gratis",
   },
 ];
@@ -332,9 +334,14 @@ export default function AprendePage() {
                     >
                       <Lock className="w-3 h-3" /> Versión Completa
                     </a>
-                    <span className="inline-flex items-center gap-1.5 text-slate-400 text-xs px-3 py-2 rounded-lg border border-slate-700">
-                      <Download className="w-3 h-3" /> Demo incluida
-                    </span>
+                    <a
+                      href={j.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-slate-300 text-xs px-3 py-2 rounded-lg border border-slate-700 hover:border-slate-500 hover:text-white transition-colors"
+                    >
+                      <Download className="w-3 h-3" /> Demo gratis
+                    </a>
                   </div>
                 </div>
               );
