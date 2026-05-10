@@ -51,7 +51,7 @@ const links = {
     {
       title: "Textil App",
       description: "Nivelador de capacidad textil",
-      url: "https://textilapp.vercel.app",
+      url: "https://textilapp.vercel.app/dashboard",
       icon: Code,
     },
     {
