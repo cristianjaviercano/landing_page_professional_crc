@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink, BookOpen, Wrench, GraduationCap, Gift, ArrowLeft, Gamepad2, FileText } from "lucide-react";
+import { ExternalLink, BookOpen, Wrench, GraduationCap, Gift, ArrowLeft, Gamepad2, FileText, Download, Lock } from "lucide-react";
 
 const libros = [
   {
@@ -57,6 +57,52 @@ const herramientas = [
     icon: Wrench,
   },
 ];
+
+const juegos = [
+  {
+    title: "TOC FACTORY — Jobshop",
+    subtitle: "Simulador de producción Job Shop con Teoría de Restricciones",
+    description:
+      "Gestiona una fábrica de 6 máquinas, identifica cuellos de botella y optimiza la producción bajo restricciones reales. Demo gratuita de 2 semanas. Incluye KPIs, logros y exportación de reportes PDF.",
+    tags: ["TOC", "Job Shop", "Pygame", "Ingeniería Industrial"],
+    demoLevels: "2 semanas gratis · 3 niveles completos",
+    color: "orange",
+    platform: "Python / Pygame",
+    hotmartUrl: "https://pay.hotmart.com/R101270360M",
+    badge: "Demo Gratis",
+  },
+  {
+    title: "TOC FACTORY — Flowshop",
+    subtitle: "Planta embotelladora con gestión económica y setup de máquinas",
+    description:
+      "Produce botellas de bebidas en una línea flowshop. El reto es minimizar setups y maximizar utilidad neta. Demo: Nivel 1 completo gratis. Versión full incluye 4 niveles con nuevos productos y restricciones.",
+    tags: ["Flow Shop", "Setup", "Pygame", "Simulación"],
+    demoLevels: "Nivel 1 completo gratis · 4 niveles en versión full",
+    color: "cyan",
+    platform: "Python / Pygame",
+    hotmartUrl: "https://pay.hotmart.com/R101270360M",
+    badge: "Demo Gratis",
+  },
+];
+
+const gameColorMap: Record<string, { bg: string; border: string; badge: string; btn: string; tag: string; accent: string }> = {
+  orange: {
+    bg: "bg-orange-950/30",
+    border: "border-orange-700/40",
+    badge: "bg-orange-700/40 text-orange-300",
+    btn: "bg-orange-600 hover:bg-orange-500",
+    tag: "bg-orange-900/40 text-orange-400",
+    accent: "text-orange-400",
+  },
+  cyan: {
+    bg: "bg-cyan-950/30",
+    border: "border-cyan-700/40",
+    badge: "bg-cyan-700/40 text-cyan-300",
+    btn: "bg-cyan-600 hover:bg-cyan-500",
+    tag: "bg-cyan-900/40 text-cyan-400",
+    accent: "text-cyan-400",
+  },
+};
 
 const gratuitos = [
   {
@@ -235,6 +281,60 @@ export default function AprendePage() {
                         Adquirir <ExternalLink className="w-3 h-3" />
                       </a>
                     </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Juegos / Simuladores */}
+        <section className="mb-10">
+          <h2 className="text-white font-semibold text-sm mb-4 flex items-center gap-2">
+            <Gamepad2 className="w-4 h-4 text-orange-400" />
+            Simuladores de Producción
+            <span className="ml-auto text-xs text-slate-500">Python / Pygame · Demo gratis</span>
+          </h2>
+          <div className="space-y-4">
+            {juegos.map((j, i) => {
+              const c = gameColorMap[j.color];
+              return (
+                <div key={i} className={`rounded-2xl border p-5 ${c.bg} ${c.border}`}>
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${c.badge}`}>
+                      <Gamepad2 className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${c.badge}`}>{j.badge}</span>
+                        <span className="text-xs text-slate-500">{j.platform}</span>
+                      </div>
+                      <h3 className="text-white font-bold text-base">{j.title}</h3>
+                      <p className="text-slate-400 text-xs mt-0.5">{j.subtitle}</p>
+                    </div>
+                  </div>
+                  <p className="text-slate-400 text-xs leading-relaxed mb-3">{j.description}</p>
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {j.tags.map((tag) => (
+                      <span key={tag} className={`text-xs px-2 py-0.5 rounded-full ${c.tag}`}>{tag}</span>
+                    ))}
+                  </div>
+                  <div className={`text-xs mb-3 flex items-center gap-1 ${c.accent}`}>
+                    <Download className="w-3 h-3" />
+                    {j.demoLevels}
+                  </div>
+                  <div className="flex gap-2">
+                    <a
+                      href={j.hotmartUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex items-center gap-1.5 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors ${c.btn}`}
+                    >
+                      <Lock className="w-3 h-3" /> Versión Completa
+                    </a>
+                    <span className="inline-flex items-center gap-1.5 text-slate-400 text-xs px-3 py-2 rounded-lg border border-slate-700">
+                      <Download className="w-3 h-3" /> Demo incluida
+                    </span>
                   </div>
                 </div>
               );
