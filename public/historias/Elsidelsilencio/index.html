@@ -148,6 +148,21 @@
             filter: brightness(0.7) contrast(1.1);
         }
 
+        .story-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .story-bg-0 { background: radial-gradient(ellipse at 60% 40%, #1a0e00 0%, #0a0600 50%, #000 100%); }
+        .story-bg-1 { background: radial-gradient(ellipse at 30% 60%, #0d1520 0%, #060b12 50%, #000 100%); }
+        .story-bg-2 { background: radial-gradient(ellipse at 50% 30%, #1a1000 0%, #0d0800 50%, #000 100%); }
+        .story-bg-3 { background: radial-gradient(ellipse at 70% 50%, #00100d 0%, #000b08 50%, #000 100%); }
+        .story-bg-4 { background: radial-gradient(ellipse at 40% 70%, #150008 0%, #0a0005 50%, #000 100%); }
+        .story-bg-5 { background: radial-gradient(ellipse at 60% 40%, #1a0e08 0%, #0d0702 50%, #000 100%); }
+        .story-bg-6 { background: radial-gradient(ellipse at 30% 50%, #100d00 0%, #080600 50%, #000 100%); }
+        .story-bg-7 { background: radial-gradient(ellipse at 50% 60%, #0a0610 0%, #050308 50%, #000 100%); }
+
         .chara-glow {
             text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
         }
@@ -213,7 +228,7 @@
             <!-- Cover Page -->
             <section class="slide">
                 <div class="absolute inset-0 bg-black/40 z-10"></div>
-                <img src="https://opal.google/board/blobs/cc6fb0be-38be-454e-849c-888327a3b3d8" alt="Cover: El Sí del Silencio" class="story-img">
+                <div class="story-bg story-bg-0"></div>
                 <div class="absolute z-20 text-center px-4">
                     <h2 class="font-display text-4xl md:text-7xl text-sacred-gold chara-glow mb-4">EL SÍ DEL SILENCIO</h2>
                     <p class="font-gothic text-xl md:text-2xl text-white/80 italic tracking-widest uppercase">The Yes of Silence</p>
@@ -225,7 +240,7 @@
 
             <!-- Segment 1 -->
             <section class="slide">
-                <img src="https://opal.google/board/blobs/77003219-5cb3-442b-b44c-b087bfa25eef" alt="The Carpenter of Nazareth" class="story-img">
+                <div class="story-bg story-bg-1"></div>
                 <div class="slide-overlay">
                     <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">I. The Mystery / El Misterio</h3>
                     <p class="story-text font-gothic text-white leading-relaxed" data-en="I am a man of tools and certainties, accustomed to measuring before acting. Upon encountering the mystery of Mary's pregnancy, my initial instinct was to retreat into the shadows. I struggled to comprehend how heaven could fit in the womb of my betrothed. The weight of the law conflicted with the fire of my love. I considered stepping aside, but a dream commanded: 'Do not fear.' Following this awakening, my voice fell silent, and my life became a cry of faith." data-es="Soy un hombre de herramientas y certezas, acostumbrado a medir antes de actuar. Al encontrarme con el misterio del embarazo de María, mi instinto inicial fue retirarme a las sombras. Me costaba comprender cómo el cielo podía caber en el vientre de mi prometida. El peso de la ley chocaba con el fuego de mi amor. Consideré dar un paso al lado, pero un sueño mandó: 'No temas'. Tras este despertar, mi voz calló y mi vida se convirtió en un grito de fe."></p>
@@ -234,7 +249,7 @@
 
             <!-- Segment 2 -->
             <section class="slide">
-                <img src="https://opal.google/board/blobs/8e3b4244-9ad2-4f83-b636-48a82c599b66" alt="The Dream of the Mandate" class="story-img">
+                <div class="story-bg story-bg-2"></div>
                 <div class="slide-overlay">
                     <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">II. The Mandate / El Mandato</h3>
                     <p class="story-text font-gothic text-white leading-relaxed" data-en="I accepted the burden God placed on my carpenter's shoulders. Not as a load, but as the most fragile treasure in the universe. I became the custodian of the Light in the darkest night of Bethlehem. My hands, hardened by oak, had to learn the tenderness of holding God. No palaces, only the breath of beasts and my cloak spread out to protect the sacred. Closed doors were but opportunities to trust in a path God was charting beyond my sight." data-es="Acepté la carga que Dios puso sobre mis hombros de carpintero. No como un peso, sino como el tesoro más frágil del universo. Me convertí en el custodio de la Luz en la noche más oscura de Belén. Mis manos, curtidas por el roble, tuvieron que aprender la ternura de sostener a Dios. Sin palacios, solo el aliento de las bestias y mi manto extendido para proteger lo sagrado. Las puertas cerradas no eran sino oportunidades para confiar en un camino que Dios trazaba más allá de mi vista."></p>
@@ -243,7 +258,7 @@
 
             <!-- Segment 3 -->
             <section class="slide">
-                <img src="https://opal.google/board/blobs/e9d37572-ea4c-47d0-982a-e4bd487ca6c8" alt="The Guardian of Bethlehem" class="story-img">
+                <div class="story-bg story-bg-3"></div>
                 <div class="slide-overlay">
                     <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">III. The Guardian / El Guardián</h3>
                     <p class="story-text font-gothic text-white leading-relaxed" data-en="In the cave-hewn shelter of Bethlehem, I stood watch. The cold night air was thick with the scent of straw and warm animal breath. I was the silent shield. Every scene required a protector, and I offered my broad frame to shield the Child and His Mother. My silence was not absence, but an active, reaching strength that held the world's savior in its calloused palms." data-es="En el refugio de piedra de Belén, me mantuve en vela. El aire frío de la noche estaba impregnado del aroma de la paja y el cálido aliento de los animales. Yo era el escudo silencioso. Cada escena requería un protector, y ofrecí mi robusta figura para resguardar al Niño y a su Madre. Mi silencio no era ausencia, sino una fuerza activa y protectora que sostenía al salvador del mundo en sus palmas callosas."></p>
@@ -252,7 +267,7 @@
 
             <!-- Segment 4 -->
             <section class="slide">
-                <img src="https://opal.google/board/blobs/d8ed2a6b-b6f5-4e4e-b8de-a99f3f562403" alt="The Sacred Weight" class="story-img">
+                <div class="story-bg story-bg-4"></div>
                 <div class="slide-overlay">
                     <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">IV. The Weight / El Peso</h3>
                     <p class="story-text font-gothic text-white leading-relaxed" data-en="I carry the sacred weight of responsibility. Love is stronger than hunger, stronger than the exhaustion that pulls at my knees. My hands, once only for wood, now cradle the Divine Light. This is the vocation of the hidden foundation: to disappear so that He may grow. In this surrender, I find the true stature of a man—defined by the capacity to love and obey even when the heavens seem silent." data-es="Cargo con el peso sagrado de la responsabilidad. El amor es más fuerte que el hambre, más fuerte que el cansancio que abate mis rodillas. Mis manos, antes solo para la madera, ahora acunan la Luz Divina. Esta es la vocación del cimiento oculto: desaparecer para que Él crezca. En esta entrega, encuentro la verdadera estatura de un hombre, definida por la capacidad de amar y obedecer incluso cuando los cielos parecen callar."></p>
@@ -261,7 +276,7 @@
 
             <!-- Segment 5 -->
             <section class="slide">
-                <img src="https://opal.google/board/blobs/74b12dbe-4971-4ee7-a3f9-ffd92c017e29" alt="The Flight into Egypt" class="story-img">
+                <div class="story-bg story-bg-5"></div>
                 <div class="slide-overlay">
                     <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">V. The Flight / La Huida</h3>
                     <p class="story-text font-gothic text-white leading-relaxed" data-en="I am the man of midnight escapes. When danger threatened, I did not ask 'why?' but adjusted my sandals and took my staff. We crossed desolate deserts under the high horizon. I felt human fear—the fear of a stranger in a foreign land—but I knew that fatherhood is giving life every day through the sweat of labor and constant vigilance. My sacrifices are engraved in the calluses of my fingers." data-es="Soy el hombre de las huidas a medianoche. Cuando el peligro acechaba, no pregunté '¿por qué?', sino que ajusté mis sandalias y tomé mi báculo. Cruzamos desiertos desolados bajo el horizonte alto. Sentí el miedo humano —el miedo del extraño en tierra ajena— pero supe que la paternidad es dar la vida cada día a través del sudor del trabajo y la vigilancia constante. Mis sacrificios están grabados en los callos de mis dedos."></p>
@@ -270,7 +285,7 @@
 
             <!-- Segment 6 -->
             <section class="slide">
-                <img src="https://opal.google/board/blobs/793ba3ce-7933-498e-b858-ff5bb5b5e97a" alt="The Labor of Love" class="story-img">
+                <div class="story-bg story-bg-6"></div>
                 <div class="slide-overlay">
                     <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">VI. The Labor / El Trabajo</h3>
                     <p class="story-text font-gothic text-white leading-relaxed" data-en="Back in Nazareth, the workshop became a sanctuary of silence and wood. Dust motes dance in the shafts of light. Every strike of the hammer, every shaving of cedar was a prayer. To you, who carry your own doubts and exiles: my 'yes' was not a single word but a habit. I sought no glory, only to be the shield for Mary and the refuge for Jesus." data-es="De regreso en Nazaret, el taller se convirtió en un santuario de silencio y madera. Motas de polvo bailan en los haces de luz. Cada golpe de martillo, cada viruta de cedro era una oración. Para ti, que cargas tus propias dudas y exilios: mi 'sí' no fue una sola palabra, sino un hábito. No busqué la gloria, solo ser el escudo de María y el refugio de Jesús."></p>
@@ -279,7 +294,7 @@
 
             <!-- Segment 7 -->
             <section class="slide">
-                <img src="https://opal.google/board/blobs/018d2229-28b1-46b6-8c94-58c734855e7e" alt="The Silent Shield" class="story-img">
+                <div class="story-bg story-bg-7"></div>
                 <div class="slide-overlay">
                     <h3 class="font-display text-sacred-gold text-xl mb-4 border-b border-sacred-gold/30 pb-2">VII. The Legacy / El Legado</h3>
                     <p class="story-text font-gothic text-white leading-relaxed" data-en="The sun sets on Nazareth. I watch Jesus; His hands, once small, now guide a chisel with grace. My strength has faded, but my heart is full. I am the bridge between the promise and the fulfillment—the humble wooden frame for a divine masterpiece. My work is finished. I find peace in the silence, like a servant who has walked in the light of the Most High." data-es="El sol se pone sobre Nazaret. Observo a Jesús; sus manos, antes pequeñas, ahora guían el cincel con gracia. Mi fuerza se ha desvanecido, pero mi corazón está lleno. Soy el puente entre la promesa y el cumplimiento: el humilde marco de madera para una obra maestra divina. Mi trabajo ha terminado. Encuentro la paz en el silencio, como un siervo que ha caminado a la luz del Altísimo."></p>

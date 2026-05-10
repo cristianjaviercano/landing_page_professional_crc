@@ -13,7 +13,7 @@ const libros = [
     badge: "Libro Técnico",
     color: "blue",
     icon: BookOpen,
-    cover: "https://m.media-amazon.com/images/I/81IFxyA2JnL._SY522_.jpg",
+    cover: "/covers/logistic_book.jpg",
   },
   {
     title: "The Requiem of the Sea",
@@ -26,7 +26,7 @@ const libros = [
     badge: "Novela",
     color: "purple",
     icon: BookOpen,
-    cover: "https://m.media-amazon.com/images/I/81pbaTGwrPL._SY522_.jpg",
+    cover: "/covers/requiem_sea.jpg",
   },
   {
     title: "Ecos del San José",
@@ -39,7 +39,7 @@ const libros = [
     badge: "Novela + Experiencia",
     color: "indigo",
     icon: BookOpen,
-    cover: "https://m.media-amazon.com/images/I/41U3MC3NLVL._SY445_SX342_ControlCacheEqualizer_.jpg",
+    cover: "/covers/ecos_san_jose.jpg",
   },
 ];
 
