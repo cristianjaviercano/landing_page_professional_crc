@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { ExternalLink, BookOpen, Code, GraduationCap, Mail, MapPin, Briefcase, Activity, Music, Gamepad2, BookHeart, ShoppingBag } from "lucide-react";
+import Link from "next/link";
+import { ExternalLink, BookOpen, Code, GraduationCap, Mail, MapPin, Briefcase, Activity, Music, Gamepad2, BookHeart, ShoppingBag, ArrowRight } from "lucide-react";
 
 const LinkedInIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -115,32 +116,6 @@ const links = {
     { title: "El Silencio", description: "Lo que no se dice también habla", url: "/historias/Elsidelsilencio/", ready: true },
     { title: "El Sueño de Mi Vida", description: "Perseguir lo que el alma pide", url: "/historias/", ready: false },
     { title: "Lo que las Letras Sienten", description: "Palabras que cobran vida propia", url: "/historias/", ready: false },
-  ],
-  hotmart: [
-    {
-      title: "Logistic Book",
-      description: "Cuaderno de logística para ingeniería industrial",
-      url: "https://pay.hotmart.com/R101270360M",
-      badge: "Libro",
-    },
-    {
-      title: "The Requiem of the Sea",
-      description: "Novela épica — el galeón San José y sus secretos",
-      url: "https://pay.hotmart.com/Q100177044E",
-      badge: "Novela",
-    },
-    {
-      title: "Ecos del San José",
-      description: "Historia interactiva de fantasía y memoria",
-      url: "https://pay.hotmart.com/C100167402Y",
-      badge: "Novela",
-    },
-    {
-      title: "OptiStock Pro — Gestión de Inventarios",
-      description: "Herramienta profesional de control de stock",
-      url: "https://cristianjcanom.gumroad.com/l/Optistock",
-      badge: "Herramienta",
-    },
   ],
 };
 
@@ -284,32 +259,23 @@ export default function Home() {
               <ShoppingBag className="w-4 h-4" />
               Aprende &amp; Apoya
             </h2>
-            <p className="text-slate-500 text-xs mb-3">Herramientas, libros y cursos disponibles para adquirir.</p>
-            <div className="space-y-3">
-              {links.hotmart.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block bg-gradient-to-r from-orange-600/10 to-amber-600/10 hover:from-orange-600/20 hover:to-amber-600/20 border border-orange-600/20 hover:border-orange-500/40 rounded-xl p-4 transition-all group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500/30 transition-colors">
-                      <ShoppingBag className="w-5 h-5 text-orange-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-white font-medium text-sm truncate">{item.title}</h3>
-                        <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded-full flex-shrink-0">{item.badge}</span>
-                      </div>
-                      <p className="text-orange-200/60 text-xs truncate">{item.description}</p>
-                    </div>
-                    <ExternalLink className="w-4 h-4 text-orange-400/50 group-hover:text-orange-400 transition-colors flex-shrink-0" />
-                  </div>
-                </a>
-              ))}
-            </div>
+            <Link
+              href="/aprende"
+              className="block bg-gradient-to-r from-orange-600/10 to-amber-600/10 hover:from-orange-600/20 hover:to-amber-600/20 border border-orange-600/20 hover:border-orange-500/40 rounded-xl p-5 transition-all group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500/30 transition-colors">
+                  <ShoppingBag className="w-6 h-6 text-orange-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-white font-semibold text-sm mb-1">Libros, Herramientas y Recursos</h3>
+                  <p className="text-orange-200/60 text-xs leading-relaxed">
+                    3 libros · 1 herramienta web · recursos gratuitos de logística y simulación
+                  </p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-orange-400/50 group-hover:text-orange-400 transition-colors flex-shrink-0" />
+              </div>
+            </Link>
           </section>
 
           <section>
