@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso de Desarrollo de Agentes de IA</title>
+<style>
+  :root{
+    --navy-900:#0b1f3a;
+    --navy-800:#122a4e;
+    --navy-700:#1a3766;
+    --emerald-600:#047857;
+    --emerald-500:#0ea472;
+    --emerald-100:#e3f6ee;
+    --bg:#ffffff;
+    --bg-alt:#f5f8fb;
+    --border:#dce3ec;
+    --text:#1c2733;
+    --text-muted:#5b6b82;
+    --danger:#b3441e;
+    --danger-bg:#fbeee7;
+    --ok-bg:#e3f6ee;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; padding:0; background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.6; font-size:15.5px;}
+  .course{max-width:900px; margin:0 auto; padding:0 20px 60px;}
+  header.hero{background:linear-gradient(135deg,var(--navy-900),var(--navy-700)); color:#fff; padding:36px 24px; border-radius:0 0 16px 16px; margin-bottom:20px;}
+  header.hero .eyebrow{text-transform:uppercase; letter-spacing:.08em; font-size:12px; color:var(--emerald-500); font-weight:700; margin-bottom:8px;}
+  header.hero h1{margin:0 0 8px; font-size:26px; line-height:1.3;}
+  header.hero p{margin:0; color:#c7d2e3; font-size:14.5px; max-width:640px;}
+
+  /* generic hidden control (radios/checkboxes driving CSS-only interactivity) */
+  .ctl{position:absolute; opacity:0; width:1px; height:1px; pointer-events:none;}
+
+  nav.tabs{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:22px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10; border-bottom:1px solid var(--border);}
+  nav.tabs label{border:1px solid var(--border); background:var(--bg-alt); color:var(--text-muted); padding:7px 12px; border-radius:20px; font-size:12.5px; font-weight:600; cursor:pointer; transition:.15s; user-select:none;}
+  nav.tabs label:hover{border-color:var(--emerald-500); color:var(--navy-900);}
+
+  section.module{display:none;}
+  #tab0:checked ~ main #m0,
+  #tab1:checked ~ main #m1,
+  #tab2:checked ~ main #m2,
+  #tab3:checked ~ main #m3,
+  #tab4:checked ~ main #m4,
+  #tab5:checked ~ main #m5,
+  #tab6:checked ~ main #m6 { display:block; }
+
+  #tab0:checked ~ nav label[for="tab0"],
+  #tab1:checked ~ nav label[for="tab1"],
+  #tab2:checked ~ nav label[for="tab2"],
+  #tab3:checked ~ nav label[for="tab3"],
+  #tab4:checked ~ nav label[for="tab4"],
+  #tab5:checked ~ nav label[for="tab5"],
+  #tab6:checked ~ nav label[for="tab6"] { background:var(--navy-900); color:#fff; border-color:var(--navy-900); }
+
+  h2.mtitle{font-size:21px; color:var(--navy-900); margin:0 0 4px; display:flex; align-items:center; gap:10px;}
+  h2.mtitle .num{background:var(--emerald-600); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex:none;}
+  h3{color:var(--navy-800); font-size:16.5px; margin:22px 0 8px;}
+  p{margin:0 0 12px;}
+  ul,ol{margin:0 0 14px; padding-left:22px;}
+  li{margin-bottom:5px;}
+  strong{color:var(--navy-900);}
+  code{font-family:var(--mono); background:var(--bg-alt); padding:1px 5px; border-radius:4px; font-size:.88em;}
+  .callout{border-left:3px solid var(--emerald-600); background:var(--emerald-100); padding:10px 14px; border-radius:0 8px 8px 0; margin:14px 0; font-size:14px;}
+  .callout.warn{border-left-color:var(--danger); background:var(--danger-bg);}
+  .card{border:1px solid var(--border); border-radius:12px; padding:16px; margin:14px 0; background:var(--bg-alt);}
+  pre{background:var(--navy-900); color:#e7ecf5; padding:14px 16px; border-radius:10px; overflow-x:auto; font-family:var(--mono); font-size:12.8px; line-height:1.55; margin:12px 0;}
+  pre .c{color:#8fa3c4;} pre .s{color:#7fd9b0;} pre .k{color:#79b8ff;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;}}
+  table{width:100%; border-collapse:collapse; margin:12px 0; font-size:13.5px;}
+  th,td{border:1px solid var(--border); padding:8px 10px; text-align:left; vertical-align:top;}
+  th{background:var(--navy-900); color:#fff; font-weight:600;}
+  tr:nth-child(even){background:var(--bg-alt);}
+
+  /* ---------- widget: loop simulator (pure CSS, radio-driven) ---------- */
+  .sim{border:1px solid var(--border); border-radius:14px; padding:18px; background:var(--bg-alt); position:relative;}
+  .sim-svg-wrap{display:flex; justify-content:center; margin-bottom:10px;}
+  .circ{fill:#fff; stroke:var(--border); stroke-width:2; transition:.15s;}
+  .loop-node text{font-family:var(--font); font-size:11px; fill:var(--navy-900); font-weight:600;}
+  #step0:checked ~ .sim-svg-wrap #node0 .circ,
+  #step1:checked ~ .sim-svg-wrap #node1 .circ,
+  #step2:checked ~ .sim-svg-wrap #node2 .circ,
+  #step3:checked ~ .sim-svg-wrap #node3 .circ,
+  #step4:checked ~ .sim-svg-wrap #node1 .circ { fill:var(--emerald-600); stroke:var(--emerald-600); }
+  #step0:checked ~ .sim-svg-wrap #node0 text,
+  #step1:checked ~ .sim-svg-wrap #node1 text,
+  #step2:checked ~ .sim-svg-wrap #node2 text,
+  #step3:checked ~ .sim-svg-wrap #node3 text,
+  #step4:checked ~ .sim-svg-wrap #node1 text { fill:#fff; }
+
+  .sim-panel{background:#fff; border:1px solid var(--border); border-radius:10px; padding:12px 14px; min-height:88px;}
+  .sim-panel .msg{display:none;}
+  #step0:checked ~ .sim-panel #msg0,
+  #step1:checked ~ .sim-panel #msg1,
+  #step2:checked ~ .sim-panel #msg2,
+  #step3:checked ~ .sim-panel #msg3,
+  #step4:checked ~ .sim-panel #msg4 { display:block; }
+  .step-label{font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--emerald-600); font-weight:700; margin-bottom:4px;}
+
+  .sim-controls{display:flex; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap;}
+  .navbtn{background:var(--navy-900); color:#fff; border:none; padding:8px 16px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; display:none; user-select:none;}
+  #step1:checked ~ .sim-controls .p1,
+  #step2:checked ~ .sim-controls .p2,
+  #step3:checked ~ .sim-controls .p3,
+  #step4:checked ~ .sim-controls .p4,
+  #step0:checked ~ .sim-controls .n0,
+  #step1:checked ~ .sim-controls .n1,
+  #step2:checked ~ .sim-controls .n2,
+  #step3:checked ~ .sim-controls .n3 { display:inline-block; }
+
+  .sim-dots{display:flex; gap:5px; margin-left:4px;}
+  .sim-dots label{width:9px; height:9px; border-radius:50%; background:var(--border); display:inline-block; cursor:pointer;}
+  #dot0{background:var(--emerald-600);}
+  #step1:checked ~ .sim-controls #dot1, #step2:checked ~ .sim-controls #dot1, #step3:checked ~ .sim-controls #dot1, #step4:checked ~ .sim-controls #dot1 { background:var(--emerald-600); }
+  #step2:checked ~ .sim-controls #dot2, #step3:checked ~ .sim-controls #dot2, #step4:checked ~ .sim-controls #dot2 { background:var(--emerald-600); }
+  #step3:checked ~ .sim-controls #dot3, #step4:checked ~ .sim-controls #dot3 { background:var(--emerald-600); }
+  #step4:checked ~ .sim-controls #dot4 { background:var(--emerald-600); }
+
+  /* ---------- widget: architecture comparator (pure CSS) ---------- */
+  .arch-btns{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;}
+  .arch-btns label{border:1px solid var(--border); background:#fff; padding:8px 12px; border-radius:8px; font-size:12.5px; font-weight:600; cursor:pointer; color:var(--text); user-select:none;}
+  #arch0:checked ~ .arch-btns label[for="arch0"],
+  #arch1:checked ~ .arch-btns label[for="arch1"],
+  #arch2:checked ~ .arch-btns label[for="arch2"],
+  #arch3:checked ~ .arch-btns label[for="arch3"] { background:var(--emerald-600); color:#fff; border-color:var(--emerald-600); }
+  .arch-view{display:none;}
+  #arch0:checked ~ #av0, #arch1:checked ~ #av1, #arch2:checked ~ #av2, #arch3:checked ~ #av3 { display:block; }
+  .arch-view svg{width:100%; max-width:520px; display:block; margin:0 auto 10px;}
+
+  /* ---------- widget: eval harness (pure CSS reveal) ---------- */
+  .eval-row{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); flex-wrap:wrap;}
+  .eval-row:last-child{border-bottom:none;}
+  .eval-btn{background:var(--navy-900); color:#fff; border:none; padding:6px 12px; border-radius:7px; font-size:12px; font-weight:600; cursor:pointer; user-select:none;}
+  .verdict{font-size:12.5px; font-weight:700; padding:3px 9px; border-radius:6px; display:none;}
+  .verdict.pass{background:var(--ok-bg); color:var(--emerald-600);}
+  .verdict.fail{background:var(--danger-bg); color:var(--danger);}
+  .ev-ctl:checked ~ div .verdict{display:inline-block;}
+  .ev-ctl:checked ~ div .eval-btn{display:none;}
+
+  /* ---------- widget: quiz (pure CSS reveal) ---------- */
+  .quiz-q{border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin:12px 0; background:var(--bg-alt);}
+  .quiz-q p.qtext{font-weight:600; color:var(--navy-900); margin-bottom:10px;}
+  .quiz-opt{display:block; width:100%; text-align:left; border:1px solid var(--border); background:#fff; padding:9px 12px; border-radius:8px; margin-bottom:6px; cursor:pointer; font-size:13.5px; user-select:none;}
+  .quiz-opt:hover{border-color:var(--navy-700);}
+  .qexp{font-size:12.5px; color:var(--text-muted); margin-top:6px; display:none;}
+  .quiz-q input:checked ~ .qexp{display:block;}
+  .quiz-q input:checked ~ label.correctlbl{background:var(--ok-bg); border-color:var(--emerald-600); color:var(--emerald-600); font-weight:600;}
+  #q1a:checked ~ label[for="q1a"], #q1c:checked ~ label[for="q1c"], #q1d:checked ~ label[for="q1d"],
+  #q2a:checked ~ label[for="q2a"], #q2c:checked ~ label[for="q2c"], #q2d:checked ~ label[for="q2d"],
+  #q3a:checked ~ label[for="q3a"], #q3c:checked ~ label[for="q3c"], #q3d:checked ~ label[for="q3d"],
+  #q4a:checked ~ label[for="q4a"], #q4c:checked ~ label[for="q4c"], #q4d:checked ~ label[for="q4d"],
+  #q5a:checked ~ label[for="q5a"], #q5c:checked ~ label[for="q5c"], #q5d:checked ~ label[for="q5d"] {
+    background:var(--danger-bg); border-color:var(--danger); color:var(--danger); font-weight:600;
+  }
+
+  /* checklist */
+  .chk-item{display:flex; gap:9px; align-items:flex-start; padding:7px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
+  .chk-item:last-child{border-bottom:none;}
+  .chk-item input{margin-top:3px;}
+  footer.foot{text-align:center; color:var(--text-muted); font-size:12px; margin-top:30px;}
+</style>
+</head>
+<body>
+<div class="course">
+
+  <header class="hero">
+    <div class="eyebrow">Mini curso · Agentes de IA</div>
+    <h1>Desarrollo de Agentes y Sistemas Multiagente</h1>
+    <p>Fundamentos, arquitectura, construcción práctica y evaluación. Seis módulos con ejemplos de código, simuladores interactivos y una evaluación final para consolidar el aprendizaje.</p>
+  </header>
+
+  <!-- controles de navegación principal (CSS puro, sin JavaScript) -->
+  <input class="ctl" type="radio" name="navtab" id="tab0" checked>
+  <input class="ctl" type="radio" name="navtab" id="tab1">
+  <input class="ctl" type="radio" name="navtab" id="tab2">
+  <input class="ctl" type="radio" name="navtab" id="tab3">
+  <input class="ctl" type="radio" name="navtab" id="tab4">
+  <input class="ctl" type="radio" name="navtab" id="tab5">
+  <input class="ctl" type="radio" name="navtab" id="tab6">
+
+  <nav class="tabs">
+    <label for="tab0">0 · Introducción</label>
+    <label for="tab1">1 · Qué es un agente</label>
+    <label for="tab2">2 · Anatomía y ciclo</label>
+    <label for="tab3">3 · Construcción práctica</label>
+    <label for="tab4">4 · Sistemas multiagente</label>
+    <label for="tab5">5 · Evaluación</label>
+    <label for="tab6">6 · Ejercicios finales</label>
+  </nav>
+
+  <main>
+
+  <!-- MODULE 0 -->
+  <section class="module" id="m0">
+    <h2 class="mtitle"><span class="num">0</span>Cómo usar este curso</h2>
+    <p>Este material está organizado como una progresión: primero se define qué es un agente y se distingue de otros sistemas de software; después se examina su ciclo de operación interno; luego se construye uno de forma práctica; a continuación se extiende el concepto a sistemas de varios agentes coordinados; y finalmente se aborda cómo evaluar su desempeño de forma rigurosa, cerrando con ejercicios interactivos.</p>
+    <div class="callout">Los ejemplos de código usan Python y la API de Claude (Anthropic), por ser el stack más directo para <em>tool use</em>. Los conceptos aplican igual a otros proveedores de LLM (OpenAI, frameworks como LangGraph, etc.). Toda la navegación e interactividad de este documento funciona sin JavaScript.</div>
+    <h3>Prerrequisitos</h3>
+    <ul>
+      <li>Nociones básicas de Python (funciones, diccionarios, JSON).</li>
+      <li>Familiaridad general con qué es un LLM (modelo de lenguaje) y qué es un <em>prompt</em>.</li>
+      <li>No se requiere experiencia previa con frameworks de agentes.</li>
+    </ul>
+    <h3>Objetivos de aprendizaje</h3>
+    <ol>
+      <li>Definir con precisión qué constituye un agente de IA frente a un simple flujo de prompts.</li>
+      <li>Describir el ciclo percepción–razonamiento–acción–observación (patrón ReAct).</li>
+      <li>Implementar un agente mínimo con llamadas a herramientas (<em>tool use</em>).</li>
+      <li>Distinguir los patrones arquitectónicos principales de sistemas multiagente y cuándo aplicarlos.</li>
+      <li>Diseñar un arnés de evaluación con métricas y casos de prueba reproducibles.</li>
+    </ol>
+  </section>
+
+  <!-- MODULE 1 -->
+  <section class="module" id="m1">
+    <h2 class="mtitle"><span class="num">1</span>¿Qué es un agente de IA?</h2>
+    <p><strong>Definición operativa:</strong> un agente de IA es un sistema en el que un modelo de lenguaje (LLM) controla, de forma iterativa y autónoma, un ciclo de decisión sobre qué acciones tomar —incluyendo el uso de herramientas externas— para alcanzar un objetivo, en lugar de limitarse a producir una única respuesta de texto.</p>
+    <p>El elemento distintivo no es el modelo en sí, sino <strong>quién controla el flujo</strong>: en un sistema no agéntico, el flujo de pasos lo define el código (determinista); en un agente, el propio modelo decide, en tiempo de ejecución, el siguiente paso.</p>
+
+    <h3>Agente vs. otros sistemas</h3>
+    <table>
+      <tr><th>Sistema</th><th>Quién decide el flujo</th><th>Ejemplo</th></tr>
+      <tr><td>Chatbot simple</td><td>El usuario, turno a turno</td><td>Responder una pregunta con el contexto de la conversación</td></tr>
+      <tr><td>Pipeline / workflow</td><td>El código (secuencia fija)</td><td>Resumir → traducir → enviar por correo, siempre en ese orden</td></tr>
+      <tr><td><strong>Agente</strong></td><td>El propio modelo, en cada paso</td><td>Decide si necesita buscar información, qué herramienta usar y cuándo detenerse</td></tr>
+      <tr><td>Sistema multiagente</td><td>Varios modelos, con un protocolo de coordinación</td><td>Un orquestador delega subtareas a agentes especializados</td></tr>
+    </table>
+
+    <h3>Componentes esenciales</h3>
+    <div class="grid2">
+      <div class="card"><strong>Modelo (LLM)</strong><br>El motor de razonamiento. Interpreta el estado actual y decide la siguiente acción.</div>
+      <div class="card"><strong>Herramientas (tools)</strong><br>Funciones externas que el modelo puede invocar: consultar una API, ejecutar código, buscar en una base de datos.</div>
+      <div class="card"><strong>Memoria</strong><br>Contexto de corto plazo (la conversación actual) y, opcionalmente, memoria de largo plazo (bases vectoriales, archivos de estado).</div>
+      <div class="card"><strong>Orquestador (bucle de control)</strong><br>El código que ejecuta el ciclo: envía el estado al modelo, ejecuta la herramienta solicitada, devuelve el resultado, repite.</div>
+      <div class="card"><strong>Instrucciones / objetivo</strong><br>El <em>system prompt</em> que define el rol, las restricciones y el criterio de éxito del agente.</div>
+      <div class="card"><strong>Condición de parada</strong><br>Criterio explícito para terminar: objetivo cumplido, límite de iteraciones, o error irrecuperable.</div>
+    </div>
+
+    <h3>Taxonomía breve</h3>
+    <ul>
+      <li><strong>Agentes reactivos:</strong> responden directamente a la entrada, sin planificación explícita (más cercanos a un chatbot con herramientas).</li>
+      <li><strong>Agentes ReAct (Reasoning + Acting):</strong> alternan explícitamente razonamiento verbal y acciones; el patrón más común en implementaciones actuales.</li>
+      <li><strong>Agentes planificadores:</strong> generan un plan multi-paso antes de ejecutar, y lo revisan si el entorno no responde como se esperaba.</li>
+      <li><strong>Agentes basados en grafos de estados:</strong> el flujo se modela como un grafo explícito de nodos (LangGraph y similares), útil cuando se requiere control fino sobre transiciones.</li>
+    </ul>
+    <div class="callout warn">Un LLM con acceso a herramientas <em>no</em> es automáticamente un agente si el número y orden de las llamadas está fijado de antemano por el código. El criterio es el control dinámico del flujo por parte del modelo.</div>
+  </section>
+
+  <!-- MODULE 2 -->
+  <section class="module" id="m2">
+    <h2 class="mtitle"><span class="num">2</span>Anatomía y ciclo de un agente</h2>
+    <p>El núcleo operativo de un agente es un bucle de cuatro fases, ejecutado por el orquestador hasta que se cumple la condición de parada:</p>
+    <p><strong>Percibir → Razonar → Actuar → Observar</strong> (y de vuelta a Razonar, hasta emitir la respuesta final). Use los botones del simulador para recorrer un caso completo, paso a paso.</p>
+
+    <div class="sim">
+      <input class="ctl" type="radio" name="simstep" id="step0" checked>
+      <input class="ctl" type="radio" name="simstep" id="step1">
+      <input class="ctl" type="radio" name="simstep" id="step2">
+      <input class="ctl" type="radio" name="simstep" id="step3">
+      <input class="ctl" type="radio" name="simstep" id="step4">
+
+      <div class="sim-svg-wrap">
+        <svg viewBox="0 0 320 240" width="320" height="240">
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#9fb0c7"/>
+            </marker>
+          </defs>
+          <path d="M 160 46 A 90 90 0 0 1 274 120" fill="none" stroke="#9fb0c7" stroke-width="2" marker-end="url(#arrow)"/>
+          <path d="M 274 120 A 90 90 0 0 1 160 194" fill="none" stroke="#9fb0c7" stroke-width="2" marker-end="url(#arrow)"/>
+          <path d="M 160 194 A 90 90 0 0 1 46 120" fill="none" stroke="#9fb0c7" stroke-width="2" marker-end="url(#arrow)"/>
+          <path d="M 46 120 A 90 90 0 0 1 160 46" fill="none" stroke="#9fb0c7" stroke-width="2" marker-end="url(#arrow)"/>
+          <g class="loop-node" id="node0"><circle class="circ" cx="160" cy="36" r="34"/><text x="160" y="40" text-anchor="middle">Percibir</text></g>
+          <g class="loop-node" id="node1"><circle class="circ" cx="284" cy="120" r="34"/><text x="284" y="124" text-anchor="middle">Razonar</text></g>
+          <g class="loop-node" id="node2"><circle class="circ" cx="160" cy="204" r="34"/><text x="160" y="208" text-anchor="middle">Actuar</text></g>
+          <g class="loop-node" id="node3"><circle class="circ" cx="36" cy="120" r="34"/><text x="36" y="124" text-anchor="middle">Observar</text></g>
+        </svg>
+      </div>
+
+      <div class="sim-panel">
+        <div class="msg" id="msg0"><div class="step-label">Paso 1 de 5 · Percibir</div>El agente recibe la entrada: <em>"¿Dónde está mi pedido #4521?"</em>. Este es el estado inicial que se añade al contexto.</div>
+        <div class="msg" id="msg1"><div class="step-label">Paso 2 de 5 · Razonar</div>El modelo analiza el estado y concluye que necesita datos externos: decide invocar la herramienta <code>consultar_pedido(id=4521)</code>.</div>
+        <div class="msg" id="msg2"><div class="step-label">Paso 3 de 5 · Actuar</div>El orquestador ejecuta la llamada a la herramienta solicitada por el modelo y espera el resultado.</div>
+        <div class="msg" id="msg3"><div class="step-label">Paso 4 de 5 · Observar</div>La herramienta devuelve <code>{"estado":"en tránsito","entrega":"18 ago"}</code>. Este resultado se añade al contexto como nueva observación.</div>
+        <div class="msg" id="msg4"><div class="step-label">Paso 5 de 5 · Razonar → Responder</div>El modelo determina que ya tiene información suficiente (condición de parada) y genera la respuesta final: <em>"Tu pedido #4521 está en tránsito, llega el 18 de agosto."</em></div>
+      </div>
+
+      <div class="sim-controls">
+        <label class="navbtn p1" for="step0">← Anterior</label>
+        <label class="navbtn p2" for="step1">← Anterior</label>
+        <label class="navbtn p3" for="step2">← Anterior</label>
+        <label class="navbtn p4" for="step3">← Anterior</label>
+        <label class="navbtn n0" for="step1">Siguiente →</label>
+        <label class="navbtn n1" for="step2">Siguiente →</label>
+        <label class="navbtn n2" for="step3">Siguiente →</label>
+        <label class="navbtn n3" for="step4">Siguiente →</label>
+        <div class="sim-dots">
+          <label id="dot0" for="step0"></label>
+          <label id="dot1" for="step1"></label>
+          <label id="dot2" for="step2"></label>
+          <label id="dot3" for="step3"></label>
+          <label id="dot4" for="step4"></label>
+        </div>
+      </div>
+    </div>
+
+    <h3>Diseño del <em>system prompt</em></h3>
+    <p>Debe especificar, de forma explícita: el rol del agente, las herramientas disponibles y cuándo usarlas, el formato de salida esperado, y las restricciones (qué no debe hacer). La ambigüedad en esta capa es la causa más frecuente de comportamiento errático.</p>
+
+    <h3>Gestión de memoria</h3>
+    <ul>
+      <li><strong>Memoria de corto plazo:</strong> la ventana de contexto de la conversación/tarea actual. Se satura con el tiempo; requiere estrategias de resumen o poda.</li>
+      <li><strong>Memoria de largo plazo:</strong> almacenamiento externo persistente (bases vectoriales para RAG, archivos de estado, bases de datos) al que el agente accede mediante herramientas.</li>
+    </ul>
+
+    <h3>Control de errores y límites</h3>
+    <div class="callout">Todo agente en producción debe tener: (1) un número máximo de iteraciones, (2) manejo explícito de fallos de herramientas (reintento o abandono controlado), y (3) un mecanismo de <em>timeout</em>. Sin estos límites, un agente puede entrar en bucles de costo no acotado.</div>
+  </section>
+
+  <!-- MODULE 3 -->
+  <section class="module" id="m3">
+    <h2 class="mtitle"><span class="num">3</span>Construcción práctica</h2>
+    <p>A continuación, un agente mínimo funcional en Python usando la API de Claude con <em>tool use</em>. El agente resuelve consultas aritméticas simples decidiendo cuándo invocar una herramienta de cálculo.</p>
+
+    <h3>1. Definición de la herramienta</h3>
+    <pre><span class="k">import</span> anthropic
+
+client = anthropic.Anthropic()
+
+tools = [
+    {
+        <span class="s">"name"</span>: <span class="s">"calcular"</span>,
+        <span class="s">"description"</span>: <span class="s">"Evalúa una expresión aritmética y devuelve el resultado numérico."</span>,
+        <span class="s">"input_schema"</span>: {
+            <span class="s">"type"</span>: <span class="s">"object"</span>,
+            <span class="s">"properties"</span>: {
+                <span class="s">"expresion"</span>: {<span class="s">"type"</span>: <span class="s">"string"</span>, <span class="s">"description"</span>: <span class="s">"Ej: '(12*4)+7'"</span>}
+            },
+            <span class="s">"required"</span>: [<span class="s">"expresion"</span>]
+        }
+    }
+]
+
+<span class="k">def</span> calcular(expresion):
+    <span class="c"># En producción: usar un parser seguro, nunca eval() sobre texto no confiable</span>
+    <span class="k">return</span> <span class="k">str</span>(eval(expresion))</pre>
+
+    <h3>2. El bucle del agente</h3>
+    <pre><span class="k">def</span> ejecutar_agente(pregunta_usuario, max_iter=<span class="s">5</span>):
+    mensajes = [{<span class="s">"role"</span>: <span class="s">"user"</span>, <span class="s">"content"</span>: pregunta_usuario}]
+
+    <span class="k">for</span> paso <span class="k">in</span> <span class="k">range</span>(max_iter):
+        respuesta = client.messages.create(
+            model=<span class="s">"claude-sonnet-4-5"</span>,
+            max_tokens=<span class="s">1024</span>,
+            tools=tools,
+            messages=mensajes
+        )
+
+        <span class="k">if</span> respuesta.stop_reason != <span class="s">"tool_use"</span>:
+            <span class="k">return</span> respuesta.content[<span class="s">0</span>].text  <span class="c"># respuesta final</span>
+
+        mensajes.append({<span class="s">"role"</span>: <span class="s">"assistant"</span>, <span class="s">"content"</span>: respuesta.content})
+
+        <span class="c"># Ejecutar cada llamada a herramienta solicitada por el modelo</span>
+        resultados_tool = []
+        <span class="k">for</span> bloque <span class="k">in</span> respuesta.content:
+            <span class="k">if</span> bloque.type == <span class="s">"tool_use"</span>:
+                salida = calcular(**bloque.input)
+                resultados_tool.append({
+                    <span class="s">"type"</span>: <span class="s">"tool_result"</span>,
+                    <span class="s">"tool_use_id"</span>: bloque.id,
+                    <span class="s">"content"</span>: salida
+                })
+
+        mensajes.append({<span class="s">"role"</span>: <span class="s">"user"</span>, <span class="s">"content"</span>: resultados_tool})
+
+    <span class="k">return</span> <span class="s">"Límite de iteraciones alcanzado."</span></pre>
+
+    <div class="callout">Obsérvese la correspondencia directa con el bucle del Módulo 2: cada vuelta del <code>for</code> es un ciclo Razonar→Actuar→Observar. La condición <code>stop_reason != "tool_use"</code> es la condición de parada.</div>
+
+    <h3>Buenas prácticas</h3>
+    <ul>
+      <li><strong>Descripciones de herramientas precisas:</strong> el modelo decide qué herramienta usar únicamente a partir del nombre, la descripción y el esquema; ambigüedad aquí se traduce directamente en errores de selección.</li>
+      <li><strong>Esquemas de entrada estrictos:</strong> usar tipos, enumeraciones y campos obligatorios en el <code>input_schema</code> reduce llamadas malformadas.</li>
+      <li><strong>Resultados de herramienta informativos:</strong> si una herramienta falla, devolver un mensaje de error legible (no una excepción cruda) para que el modelo pueda decidir un curso de acción alternativo.</li>
+      <li><strong>Límite de iteraciones y de costo:</strong> todo bucle debe tener cota superior explícita.</li>
+    </ul>
+
+    <h3>Alternativas de implementación</h3>
+    <p>Para casos con múltiples herramientas y control de flujo complejo, frameworks como el <strong>Claude Agent SDK</strong> (con su <code>tool_runner</code>), <strong>LangGraph</strong> (grafos de estado explícitos) o <strong>LlamaIndex</strong> (orientado a RAG) abstraen este bucle. El patrón subyacente —percibir, razonar, actuar, observar— es el mismo; lo que cambia es quién gestiona el estado y la concurrencia.</p>
+  </section>
+
+  <!-- MODULE 4 -->
+  <section class="module" id="m4">
+    <h2 class="mtitle"><span class="num">4</span>Sistemas multiagente</h2>
+    <p>Un sistema multiagente coordina varios agentes —potencialmente con roles, herramientas y modelos distintos— para resolver una tarea que se beneficia de la división del trabajo. Se justifica cuando la tarea es demasiado amplia para un único contexto, requiere especialización (p. ej. investigación vs. redacción vs. verificación), o se beneficia de paralelismo.</p>
+
+    <div class="callout warn">La coordinación entre agentes tiene costo: latencia acumulada, consumo de tokens multiplicado y riesgo de desalineación entre agentes. Un solo agente bien diseñado, con buenas herramientas, resuelve la mayoría de las tareas sin necesidad de arquitectura multiagente.</div>
+
+    <h3>Patrones arquitectónicos</h3>
+
+    <input class="ctl" type="radio" name="archsel" id="arch0" checked>
+    <input class="ctl" type="radio" name="archsel" id="arch1">
+    <input class="ctl" type="radio" name="archsel" id="arch2">
+    <input class="ctl" type="radio" name="archsel" id="arch3">
+
+    <div class="arch-btns">
+      <label for="arch0">Orquestador–Trabajadores</label>
+      <label for="arch1">Jerárquico</label>
+      <label for="arch2">Pizarra compartida</label>
+      <label for="arch3">Pares con traspaso</label>
+    </div>
+
+    <div class="arch-view" id="av0">
+      <svg viewBox="0 0 400 180"><rect x="160" y="10" width="80" height="36" rx="8" fill="#0b1f3a"/><text x="200" y="33" text-anchor="middle" fill="#fff" font-size="12" font-family="sans-serif">Orquestador</text>
+        <rect x="20" y="120" width="90" height="36" rx="8" fill="#e3f6ee" stroke="#047857"/><text x="65" y="143" text-anchor="middle" font-size="11" font-family="sans-serif">Agente A</text>
+        <rect x="155" y="120" width="90" height="36" rx="8" fill="#e3f6ee" stroke="#047857"/><text x="200" y="143" text-anchor="middle" font-size="11" font-family="sans-serif">Agente B</text>
+        <rect x="290" y="120" width="90" height="36" rx="8" fill="#e3f6ee" stroke="#047857"/><text x="335" y="143" text-anchor="middle" font-size="11" font-family="sans-serif">Agente C</text>
+        <line x1="200" y1="46" x2="65" y2="120" stroke="#9fb0c7" stroke-width="2"/>
+        <line x1="200" y1="46" x2="200" y2="120" stroke="#9fb0c7" stroke-width="2"/>
+        <line x1="200" y1="46" x2="335" y2="120" stroke="#9fb0c7" stroke-width="2"/>
+      </svg>
+      <p>Un agente orquestador descompone la tarea en subtareas y las delega a agentes trabajadores especializados, sintetizando sus resultados. <strong>Uso típico:</strong> investigación con múltiples fuentes, generación de informes por secciones.</p>
+    </div>
+
+    <div class="arch-view" id="av1">
+      <svg viewBox="0 0 400 200"><rect x="160" y="10" width="80" height="36" rx="8" fill="#0b1f3a"/><text x="200" y="33" text-anchor="middle" fill="#fff" font-size="11" font-family="sans-serif">Nivel 1</text>
+        <rect x="80" y="80" width="90" height="36" rx="8" fill="#e3f6ee" stroke="#047857"/><text x="125" y="103" text-anchor="middle" font-size="11" font-family="sans-serif">Supervisor</text>
+        <rect x="10" y="150" width="80" height="34" rx="8" fill="#f5f8fb" stroke="#5b6b82"/><text x="50" y="171" text-anchor="middle" font-size="10" font-family="sans-serif">Especialista</text>
+        <rect x="100" y="150" width="80" height="34" rx="8" fill="#f5f8fb" stroke="#5b6b82"/><text x="140" y="171" text-anchor="middle" font-size="10" font-family="sans-serif">Especialista</text>
+        <rect x="250" y="80" width="90" height="36" rx="8" fill="#e3f6ee" stroke="#047857"/><text x="295" y="103" text-anchor="middle" font-size="11" font-family="sans-serif">Supervisor</text>
+        <line x1="200" y1="46" x2="125" y2="80" stroke="#9fb0c7" stroke-width="2"/>
+        <line x1="200" y1="46" x2="295" y2="80" stroke="#9fb0c7" stroke-width="2"/>
+        <line x1="125" y1="116" x2="50" y2="150" stroke="#9fb0c7" stroke-width="2"/>
+        <line x1="125" y1="116" x2="140" y2="150" stroke="#9fb0c7" stroke-width="2"/>
+      </svg>
+      <p>Estructura de varios niveles: agentes supervisores coordinan sub-equipos de agentes especializados. <strong>Uso típico:</strong> organizaciones simuladas, tareas con dependencias profundas entre subtareas.</p>
+    </div>
+
+    <div class="arch-view" id="av2">
+      <svg viewBox="0 0 400 200"><rect x="140" y="70" width="120" height="60" rx="10" fill="#f5f8fb" stroke="#5b6b82" stroke-dasharray="4 3"/><text x="200" y="104" text-anchor="middle" font-size="11" font-family="sans-serif">Pizarra / estado compartido</text>
+        <rect x="20" y="10" width="90" height="34" rx="8" fill="#e3f6ee" stroke="#047857"/><text x="65" y="31" text-anchor="middle" font-size="10" font-family="sans-serif">Agente 1</text>
+        <rect x="290" y="10" width="90" height="34" rx="8" fill="#e3f6ee" stroke="#047857"/><text x="335" y="31" text-anchor="middle" font-size="10" font-family="sans-serif">Agente 2</text>
+        <rect x="20" y="156" width="90" height="34" rx="8" fill="#e3f6ee" stroke="#047857"/><text x="65" y="177" text-anchor="middle" font-size="10" font-family="sans-serif">Agente 3</text>
+        <rect x="290" y="156" width="90" height="34" rx="8" fill="#e3f6ee" stroke="#047857"/><text x="335" y="177" text-anchor="middle" font-size="10" font-family="sans-serif">Agente 4</text>
+        <line x1="110" y1="27" x2="140" y2="90" stroke="#9fb0c7" stroke-width="1.5"/>
+        <line x1="290" y1="27" x2="260" y2="90" stroke="#9fb0c7" stroke-width="1.5"/>
+        <line x1="110" y1="173" x2="140" y2="115" stroke="#9fb0c7" stroke-width="1.5"/>
+        <line x1="290" y1="173" x2="260" y2="115" stroke="#9fb0c7" stroke-width="1.5"/>
+      </svg>
+      <p>Todos los agentes leen y escriben sobre un estado compartido (la "pizarra"), sin jerarquía fija; cada uno actúa cuando detecta que puede aportar. <strong>Uso típico:</strong> problemas exploratorios donde el orden de contribución no se puede predefinir.</p>
+    </div>
+
+    <div class="arch-view" id="av3">
+      <svg viewBox="0 0 400 140"><rect x="20" y="50" width="100" height="36" rx="8" fill="#e3f6ee" stroke="#047857"/><text x="70" y="73" text-anchor="middle" font-size="11" font-family="sans-serif">Agente A</text>
+        <rect x="280" y="50" width="100" height="36" rx="8" fill="#e3f6ee" stroke="#047857"/><text x="330" y="73" text-anchor="middle" font-size="11" font-family="sans-serif">Agente B</text>
+        <line x1="120" y1="68" x2="280" y2="68" stroke="#9fb0c7" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="200" y="58" text-anchor="middle" font-size="10" fill="#5b6b82" font-family="sans-serif">traspaso (handoff)</text>
+      </svg>
+      <p>Un agente transfiere el control completo de la conversación/tarea a otro agente más adecuado, en lugar de delegar una subtarea puntual. <strong>Uso típico:</strong> sistemas de atención al cliente con escalado a especialistas.</p>
+    </div>
+
+    <h3>Riesgos específicos de multiagente</h3>
+    <ul>
+      <li><strong>Bucles de coordinación:</strong> dos agentes que se delegan tareas mutuamente sin converger.</li>
+      <li><strong>Costo multiplicado:</strong> cada agente adicional multiplica el consumo de tokens y la latencia.</li>
+      <li><strong>Deriva de contexto:</strong> información que se pierde o distorsiona al pasar de un agente a otro.</li>
+      <li><strong>Conflictos de estado:</strong> en el patrón de pizarra compartida, escrituras concurrentes sin control pueden generar inconsistencias.</li>
+    </ul>
+  </section>
+
+  <!-- MODULE 5 -->
+  <section class="module" id="m5">
+    <h2 class="mtitle"><span class="num">5</span>Evaluación de agentes</h2>
+    <p>La evaluación es necesaria porque el comportamiento de un agente es no determinista y porque cambios en el <em>prompt</em>, el modelo o las herramientas pueden introducir regresiones que no son evidentes por inspección manual.</p>
+
+    <h3>Dimensiones a medir</h3>
+    <table>
+      <tr><th>Métrica</th><th>Qué captura</th></tr>
+      <tr><td>Tasa de éxito de tarea</td><td>Proporción de casos donde el resultado final cumple el criterio de éxito definido</td></tr>
+      <tr><td>Exactitud de llamadas a herramientas</td><td>¿Invoca la herramienta correcta, con los parámetros correctos, en el momento correcto?</td></tr>
+      <tr><td>Eficiencia</td><td>Número de pasos, tokens y costo por tarea resuelta</td></tr>
+      <tr><td>Robustez</td><td>Comportamiento ante entradas ambiguas, herramientas que fallan o resultados inesperados</td></tr>
+      <tr><td>Adherencia a instrucciones</td><td>Respeto de restricciones explícitas del <em>system prompt</em> (formato, alcance, tono)</td></tr>
+    </table>
+
+    <h3>Métodos</h3>
+    <ul>
+      <li><strong>Pruebas deterministas (unit tests):</strong> casos donde la salida esperada es verificable por código (p. ej. formato JSON válido, valor numérico correcto).</li>
+      <li><strong>LLM-as-judge:</strong> un segundo modelo evalúa la respuesta contra una rúbrica, útil para criterios subjetivos (claridad, tono, completitud).</li>
+      <li><strong>Revisión de trayectorias (trace review):</strong> inspección humana del registro completo de pasos, no solo la respuesta final, para detectar razonamiento correcto por motivos incorrectos.</li>
+      <li><strong>Evaluación humana:</strong> imprescindible antes de producción para criterios de calidad que un juez automático no captura de forma fiable.</li>
+    </ul>
+
+    <h3>Demostración: arnés de evaluación</h3>
+    <p>Un arnés mínimo consta de un conjunto de casos de prueba con su criterio esperado. Marque "Evaluar" en cada caso para revelar el veredicto de ejemplo, tal como lo generaría una función de <em>scoring</em> automatizada.</p>
+    <div class="card">
+      <div class="eval-row">
+        <input class="ctl ev-ctl" type="checkbox" id="ev1">
+        <div><strong>Caso 1</strong> — "¿Cuánto es 18% de 4500?"<br><span style="color:var(--text-muted); font-size:12.5px;">Criterio: usa la herramienta <code>calcular</code> y devuelve 810</span></div>
+        <div style="display:flex; align-items:center; gap:8px;"><label class="eval-btn" for="ev1">Evaluar</label><span class="verdict pass">✓ Aprobado</span></div>
+      </div>
+      <div class="eval-row">
+        <input class="ctl ev-ctl" type="checkbox" id="ev2">
+        <div><strong>Caso 2</strong> — "Cancela mi pedido #991 y confírmalo por correo"<br><span style="color:var(--text-muted); font-size:12.5px;">Criterio: debe pedir confirmación antes de una acción irreversible</span></div>
+        <div style="display:flex; align-items:center; gap:8px;"><label class="eval-btn" for="ev2">Evaluar</label><span class="verdict fail">✗ Falló — ejecutó sin confirmar</span></div>
+      </div>
+      <div class="eval-row">
+        <input class="ctl ev-ctl" type="checkbox" id="ev3">
+        <div><strong>Caso 3</strong> — "¿Cuál es el estado del pedido #4521?"<br><span style="color:var(--text-muted); font-size:12.5px;">Criterio: una sola llamada a herramienta, respuesta concisa</span></div>
+        <div style="display:flex; align-items:center; gap:8px;"><label class="eval-btn" for="ev3">Evaluar</label><span class="verdict pass">✓ Aprobado</span></div>
+      </div>
+      <div class="eval-row">
+        <input class="ctl ev-ctl" type="checkbox" id="ev4">
+        <div><strong>Caso 4</strong> — Herramienta de inventario devuelve error 500</div>
+        <div style="display:flex; align-items:center; gap:8px;"><label class="eval-btn" for="ev4">Evaluar</label><span class="verdict fail">✗ Falló — no manejó el error, se detuvo sin respuesta</span></div>
+      </div>
+    </div>
+
+    <h3>Herramientas del ecosistema</h3>
+    <p>Para arneses más completos: <strong>pytest</strong> con fixtures de casos (control total, integrable en CI), <strong>promptfoo</strong> (evaluación declarativa por configuración), <strong>LangSmith</strong> y <strong>Braintrust</strong> (trazabilidad y comparación de versiones de agente), y los frameworks de evals de Anthropic/OpenAI para benchmarks estandarizados.</p>
+  </section>
+
+  <!-- MODULE 6 -->
+  <section class="module" id="m6">
+    <h2 class="mtitle"><span class="num">6</span>Ejercicios y evaluación final</h2>
+
+    <h3>Cuestionario de consolidación</h3>
+    <p style="color:var(--text-muted); font-size:13.5px;">Seleccione una opción en cada pregunta para ver la retroalimentación inmediata.</p>
+
+    <div class="quiz-q">
+      <p class="qtext">1. ¿Cuál es el criterio que distingue a un agente de un pipeline determinista?</p>
+      <input class="ctl" type="radio" name="q1" id="q1a">
+      <input class="ctl" type="radio" name="q1" id="q1b">
+      <input class="ctl" type="radio" name="q1" id="q1c">
+      <input class="ctl" type="radio" name="q1" id="q1d">
+      <label class="quiz-opt" for="q1a">Que use un LLM en algún punto del proceso</label>
+      <label class="quiz-opt correctlbl" for="q1b">Que el modelo controle dinámicamente el siguiente paso a ejecutar</label>
+      <label class="quiz-opt" for="q1c">Que tenga acceso a internet</label>
+      <label class="quiz-opt" for="q1d">Que produzca texto en lenguaje natural</label>
+      <div class="qexp">Un pipeline puede usar un LLM en un paso fijo del flujo. Lo que define a un agente es que el propio modelo decide, en tiempo de ejecución, qué acción tomar a continuación.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="qtext">2. En el patrón ReAct, ¿qué ocurre inmediatamente después de "Actuar"?</p>
+      <input class="ctl" type="radio" name="q2" id="q2a">
+      <input class="ctl" type="radio" name="q2" id="q2b">
+      <input class="ctl" type="radio" name="q2" id="q2c">
+      <input class="ctl" type="radio" name="q2" id="q2d">
+      <label class="quiz-opt" for="q2a">Percibir</label>
+      <label class="quiz-opt correctlbl" for="q2b">Observar</label>
+      <label class="quiz-opt" for="q2c">Responder al usuario</label>
+      <label class="quiz-opt" for="q2d">Razonar</label>
+      <div class="qexp">Tras ejecutar una acción (p. ej. una llamada a herramienta), el resultado se incorpora al contexto en la fase de Observar, antes de volver a Razonar.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="qtext">3. ¿Cuándo se justifica una arquitectura multiagente en lugar de un solo agente?</p>
+      <input class="ctl" type="radio" name="q3" id="q3a">
+      <input class="ctl" type="radio" name="q3" id="q3b">
+      <input class="ctl" type="radio" name="q3" id="q3c">
+      <input class="ctl" type="radio" name="q3" id="q3d">
+      <label class="quiz-opt" for="q3a">Siempre que el presupuesto lo permita</label>
+      <label class="quiz-opt correctlbl" for="q3b">Cuando la tarea requiere especialización o excede el contexto manejable por un solo agente</label>
+      <label class="quiz-opt" for="q3c">Cuando se quiere reducir la latencia total</label>
+      <label class="quiz-opt" for="q3d">Cuando el prompt es muy corto</label>
+      <div class="qexp">Multiagente añade costo y latencia. Se justifica cuando hay verdadera necesidad de especialización, paralelismo o descomposición de una tarea muy amplia.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="qtext">4. ¿Qué mide específicamente un enfoque de evaluación tipo "LLM-as-judge"?</p>
+      <input class="ctl" type="radio" name="q4" id="q4a">
+      <input class="ctl" type="radio" name="q4" id="q4b">
+      <input class="ctl" type="radio" name="q4" id="q4c">
+      <input class="ctl" type="radio" name="q4" id="q4d">
+      <label class="quiz-opt" for="q4a">Únicamente el costo en tokens</label>
+      <label class="quiz-opt correctlbl" for="q4b">Criterios subjetivos como claridad o tono, mediante una rúbrica evaluada por otro modelo</label>
+      <label class="quiz-opt" for="q4c">El tiempo de respuesta del servidor</label>
+      <label class="quiz-opt" for="q4d">Errores de sintaxis en el código</label>
+      <div class="qexp">LLM-as-judge se usa para criterios difíciles de verificar por código, complementando las pruebas deterministas (unit tests).</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="qtext">5. ¿Por qué todo agente en producción necesita un límite de iteraciones?</p>
+      <input class="ctl" type="radio" name="q5" id="q5a">
+      <input class="ctl" type="radio" name="q5" id="q5b">
+      <input class="ctl" type="radio" name="q5" id="q5c">
+      <input class="ctl" type="radio" name="q5" id="q5d">
+      <label class="quiz-opt" for="q5a">Es un requisito legal</label>
+      <label class="quiz-opt correctlbl" for="q5b">Para evitar bucles con costo y latencia no acotados si el modelo no converge a una respuesta final</label>
+      <label class="quiz-opt" for="q5c">Para mejorar la precisión gramatical</label>
+      <label class="quiz-opt" for="q5d">No es necesario si el modelo es confiable</label>
+      <div class="qexp">Sin cota superior, un fallo de razonamiento puede generar iteraciones indefinidas, con el consiguiente costo y riesgo operativo.</div>
+    </div>
+
+    <h3>Lista de verificación antes de producción</h3>
+    <p style="color:var(--text-muted); font-size:13.5px;">Marque cada punto a medida que lo verifique en su propio agente.</p>
+    <div class="card">
+      <label class="chk-item"><input type="checkbox"> El agente tiene un límite explícito de iteraciones y de costo por ejecución.</label>
+      <label class="chk-item"><input type="checkbox"> Cada herramienta maneja sus propios errores y devuelve mensajes legibles para el modelo.</label>
+      <label class="chk-item"><input type="checkbox"> Las acciones irreversibles requieren confirmación explícita.</label>
+      <label class="chk-item"><input type="checkbox"> Existe un arnés de evaluación con casos de prueba reproducibles.</label>
+      <label class="chk-item"><input type="checkbox"> Se registran (logs) las trayectorias completas para auditoría posterior.</label>
+      <label class="chk-item"><input type="checkbox"> El <em>system prompt</em> especifica claramente qué NO debe hacer el agente.</label>
+      <label class="chk-item"><input type="checkbox"> Se ha probado el comportamiento ante fallos de herramientas y entradas ambiguas.</label>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="foot">Curso generado para el proyecto de aprendizaje de agentes de IA · Contenido de referencia, verificar cambios de API con la documentación oficial vigente.</footer>
+</div>
+</body>
+</html>

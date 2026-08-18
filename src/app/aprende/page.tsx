@@ -135,6 +135,20 @@ const gratuitos = [
     icon: BookOpen,
     tag: "Gratis",
   },
+  {
+    title: "Curso: Fabricación de Agentes de IA",
+    description: "Curso completo interactivo — metodología de Línea de Producción Multi-Agente, desde primeros pasos hasta orquestación con MCP y casos prácticos.",
+    url: "/cursos/agentes-ia/",
+    icon: GraduationCap,
+    tag: "Gratis",
+  },
+  {
+    title: "Diapositivas: Fabricación de Agentes de IA",
+    description: "Presentación interactiva Reveal.js del curso, con diagramas, código y fórmulas navegables.",
+    url: "/cursos/agentes-ia/slides.html",
+    icon: FileText,
+    tag: "Gratis",
+  },
 ];
 
 const colorMap: Record<string, { bg: string; border: string; badge: string; badgeText: string; btn: string; tag: string; tagText: string }> = {

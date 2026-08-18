@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fabricación y Orquestación de Agentes de IA | Reveal.js Whiteboard Edition</title>
+  
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css" id="theme">
+  
+  <!-- Highlight.js theme for code blocks -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
+  
+  <!-- KaTeX for math formulas -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/contrib/auto-render.min.js" onload="document.addEventListener('DOMContentLoaded', function() { renderMathInElement(document.body); });"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ==========================================================================
+       WHITEBOARD THEME CUSTOM STYLES
+       ========================================================================== */
+    :root {
+      --wb-bg: #f8fafc;
+      --wb-grid: #e2e8f0;
+      --wb-border: #1e293b;
+      --wb-primary: #2563eb;
+      --wb-secondary: #7c3aed;
+      --wb-accent: #059669;
+      --wb-warning: #d97706;
+      --wb-danger: #dc2626;
+      --font-hand: 'Caveat', 'Architects Daughter', cursive;
+      --font-title: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-code: 'Fira Code', monospace;
+    }
+
+    body {
+      background-color: var(--wb-bg);
+      background-image: 
+        radial-gradient(#cbd5e1 1.5px, transparent 1.5px), 
+        radial-gradient(#cbd5e1 1.5px, var(--wb-bg) 1.5px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+      font-family: var(--font-body);
+      color: #0f172a;
+    }
+
+    .reveal {
+      font-family: var(--font-body);
+      font-size: 22px;
+      color: #0f172a;
+    }
+
+    /* Headings */
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: var(--font-title);
+      color: #0f172a;
+      text-transform: none;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+    }
+
+    .reveal h1 { font-size: 2.4em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.8em; margin-bottom: 20px; }
+    .reveal h3 { font-size: 1.3em; }
+    .reveal h4 { font-size: 1.1em; }
+
+    .handwriting {
+      font-family: var(--font-hand);
+      color: var(--wb-primary);
+      font-size: 1.25em;
+      font-weight: 700;
+    }
+
+    .marker-yellow {
+      background: linear-gradient(120deg, rgba(254, 240, 138, 0.7) 0%, rgba(253, 224, 71, 0.9) 100%);
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .marker-cyan {
+      background: linear-gradient(120deg, rgba(186, 230, 253, 0.7) 0%, rgba(125, 211, 252, 0.9) 100%);
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .marker-green {
+      background: linear-gradient(120deg, rgba(187, 247, 208, 0.7) 0%, rgba(134, 239, 172, 0.9) 100%);
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    /* Whiteboard Cards */
+    .wb-card {
+      background: #ffffff;
+      border: 2px solid var(--wb-border);
+      border-radius: 14px 225px 18px 255px/255px 16px 225px 14px;
+      box-shadow: 4px 5px 0px var(--wb-border);
+      padding: 24px;
+      margin-bottom: 20px;
+      text-align: left;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .wb-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 6px 7px 0px var(--wb-border);
+    }
+
+    /* Post-It Notes */
+    .post-it {
+      background: #fef08a;
+      border: 2px solid #ca8a04;
+      border-radius: 2px 2px 2px 25px/2px 2px 2px 10px;
+      box-shadow: 3px 4px 8px rgba(0,0,0,0.12);
+      padding: 18px;
+      font-family: var(--font-hand);
+      font-size: 1.2em;
+      color: #713f12;
+      transform: rotate(-1.5deg);
+      position: relative;
+    }
+
+    .post-it::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 40%;
+      width: 40px;
+      height: 16px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(0,0,0,0.08);
+      transform: rotate(2deg);
+    }
+
+    .post-it.blue { background: #bae6fd; border-color: #0284c7; color: #0c4a6e; transform: rotate(1deg); }
+    .post-it.green { background: #bbf7d0; border-color: #16a34a; color: #14532d; transform: rotate(-2deg); }
+    .post-it.purple { background: #ddd6fe; border-color: #9333ea; color: #581c87; transform: rotate(1.5deg); }
+
+    /* Layout Grids */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    /* Badges */
+    .badge-wb {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      border: 2px solid var(--wb-border);
+      padding: 4px 14px;
+      border-radius: 50px;
+      font-size: 0.8em;
+      font-weight: 700;
+      box-shadow: 2px 2px 0px var(--wb-border);
+    }
+
+    /* Buttons */
+    .btn-wb {
+      background: #ffffff;
+      border: 2px solid var(--wb-border);
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9em;
+      color: #0f172a;
+      cursor: pointer;
+      box-shadow: 3px 3px 0px var(--wb-border);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-wb:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px var(--wb-border);
+      background: #f8fafc;
+    }
+
+    .btn-wb:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px var(--wb-border);
+    }
+
+    .btn-wb.primary { background: #2563eb; color: #ffffff; border-color: #1e3a8a; }
+    .btn-wb.primary:hover { background: #1d4ed8; }
+    .btn-wb.success { background: #10b981; color: #ffffff; border-color: #065f46; }
+    .btn-wb.success:hover { background: #059669; }
+
+    /* Code Blocks */
+    .reveal pre {
+      box-shadow: 4px 5px 0px var(--wb-border);
+      border: 2px solid var(--wb-border);
+      border-radius: 10px;
+      width: 100%;
+      margin: 15px 0;
+    }
+    .reveal pre code {
+      font-family: var(--font-code);
+      font-size: 0.75em;
+      padding: 16px;
+      border-radius: 8px;
+      max-height: 400px;
+    }
+
+    /* Interactive Widgets UI Styling */
+    .widget-container {
+      background: #ffffff;
+      border: 2px dashed var(--wb-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 15px;
+      text-align: left;
+    }
+
+    .widget-title {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: #1e293b;
+    }
+
+    .log-box {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: var(--font-code);
+      font-size: 0.75em;
+      padding: 12px;
+      border-radius: 8px;
+      min-height: 120px;
+      max-height: 220px;
+      overflow-y: auto;
+      margin-top: 10px;
+      white-space: pre-wrap;
+    }
+
+    /* Progress Indicators */
+    .step-pill {
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 2px solid #cbd5e1;
+      font-size: 0.8em;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: #64748b;
+      transition: all 0.3s ease;
+    }
+    .step-pill.active {
+      background: #dbeafe;
+      border-color: #2563eb;
+      color: #1d4ed8;
+      transform: scale(1.05);
+    }
+    .step-pill.completed {
+      background: #dcfce7;
+      border-color: #16a34a;
+      color: #15803d;
+    }
+
+    /* Quiz Option Buttons */
+    .quiz-option {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin: 8px 0;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+    .quiz-option:hover {
+      border-color: var(--wb-primary);
+      background: #eff6ff;
+    }
+    .quiz-option.correct {
+      background: #dcfce7 !important;
+      border-color: #16a34a !important;
+      color: #14532d;
+      font-weight: 600;
+    }
+    .quiz-option.wrong {
+      background: #fee2e2 !important;
+      border-color: #dc2626 !important;
+      color: #7f1d1d;
+    }
+
+    /* Footer branding */
+    .footer-brand {
+      position: fixed;
+      bottom: 15px;
+      left: 20px;
+      font-family: var(--font-hand);
+      font-size: 1.1em;
+      color: #64748b;
+      z-index: 99;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="footer-brand">
+    ✏️ Grupo SILOGE — UPB | Fabricación de Agentes
+  </div>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ==========================================================
+           SLIDE 1: PORTADA / CARÁTULA
+           ========================================================== -->
+      <section data-background-color="#f8fafc">
+        <div style="text-align: center;">
+          <div style="margin-bottom: 15px;">
+            <span class="badge-wb" style="background: #dbeafe; color: #1e40af;">
+              <i data-lucide="sparkles"></i> Edición Pizarra Digital Interactivas
+            </span>
+            <span class="badge-wb" style="background: #fef3c7; color: #92400e;">
+              <i data-lucide="cpu"></i> Ecosistema Antigravity + MCP
+            </span>
+          </div>
+
+          <h1 style="margin-bottom: 10px;">Fabricación y Orquestación de<br><span class="marker-yellow">Agentes de IA Autónomos</span></h1>
+          
+          <p class="handwriting" style="font-size: 1.6em; margin-top: 10px; color: var(--wb-secondary);">
+            Metodología "Línea de Producción Multi-Agente"
+          </p>
+
+          <div class="wb-card" style="max-width: 800px; margin: 30px auto 0 auto; background: #ffffff;">
+            <div class="grid-2" style="align-items: center;">
+              <div>
+                <p style="font-weight: 700; font-size: 1.05em; margin-bottom: 4px;">Capacitador Principal:</p>
+                <p style="color: #475569; margin: 0;">Msc. Cristian Javier Cano Mogollón</p>
+                <p style="font-size: 0.85em; color: #64748b; margin-top: 2px;">Grupo SILOGE — Universidad Pontificia Bolivariana</p>
+              </div>
+              <div style="border-left: 2px dashed #cbd5e1; padding-left: 20px;">
+                <p style="font-size: 0.9em; margin: 0; color: #334155;">
+                  <strong>Stack Tecnológico:</strong><br>
+                  • Google Antigravity SDK & Gemini 2.5 Pro<br>
+                  • Anthropic Claude 3.5 Sonnet<br>
+                  • Model Context Protocol (MCP) + NotebookLM
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SLIDE 2: MAPA DE CONTENIDOS (VISIÓN HOLÍSTICA)
+           ========================================================== -->
+      <section data-background-color="#f8fafc">
+        <h2>🗺️ Mapa Unificado del Curso</h2>
+        <p class="handwriting" style="margin-top: -15px;">Haz clic en cualquier nodo para ir a la sección correspondiente</p>
+
+        <div class="grid-3" style="margin-top: 25px;">
+          
+          <div class="wb-card" onclick="Reveal.slide(2)" style="cursor: pointer;">
+            <span class="badge-wb" style="background: #e0e7ff; color: #3730a3;">Módulo 1</span>
+            <h3 style="margin-top: 10px; font-size: 1.15em;">Chatbot vs Agente</h3>
+            <p style="font-size: 0.85em; color: #475569; margin: 5px 0;">Los 4 componentes esenciales y la guía de construcción en 5 pasos.</p>
+            <span class="handwriting" style="font-size: 0.95em; color: var(--wb-primary);">Ver comparativo interactivo ➔</span>
+          </div>
+
+          <div class="wb-card" onclick="Reveal.slide(3)" style="cursor: pointer;">
+            <span class="badge-wb" style="background: #fce7f3; color: #9d174d;">Módulo 2</span>
+            <h3 style="margin-top: 10px; font-size: 1.15em;">Anatomía & Ciclo ReAct</h3>
+            <p style="font-size: 0.85em; color: #475569; margin: 5px 0;">Razonamiento + Acción, instruccionales Python y gestión de memoria.</p>
+            <span class="handwriting" style="font-size: 0.95em; color: var(--wb-secondary);">Ver depurador ReAct ➔</span>
+          </div>
+
+          <div class="wb-card" onclick="Reveal.slide(5)" style="cursor: pointer;">
+            <span class="badge-wb" style="background: #dcfce7; color: #166534;">Módulo 3</span>
+            <h3 style="margin-top: 10px; font-size: 1.15em;">Línea de Producción</h3>
+            <p style="font-size: 0.85em; color: #475569; margin: 5px 0;">Cadena de montaje multi-agente y Supervisor Q1 (Quality Control).</p>
+            <span class="handwriting" style="font-size: 0.95em; color: var(--wb-accent);">Simular ensamblado ➔</span>
+          </div>
+
+          <div class="wb-card" onclick="Reveal.slide(6)" style="cursor: pointer;">
+            <span class="badge-wb" style="background: #fef3c7; color: #92400e;">Módulo 4</span>
+            <h3 style="margin-top: 10px; font-size: 1.15em;">MCP & NotebookLM</h3>
+            <p style="font-size: 0.85em; color: #475569; margin: 5px 0;">Conexión a `notebooklm-mcp` (Libreta 6cd6fc11) y `context.md`.</p>
+            <span class="handwriting" style="font-size: 0.95em; color: var(--wb-warning);">Explorar inspector ➔</span>
+          </div>
+
+          <div class="wb-card" onclick="Reveal.slide(7)" style="cursor: pointer;">
+            <span class="badge-wb" style="background: #ccfbf1; color: #115e59;">Módulo 5</span>
+            <h3 style="margin-top: 10px; font-size: 1.15em;">Caso Práctico PR3</h3>
+            <p style="font-size: 0.85em; color: #475569; margin: 5px 0;">Pipeline de investigación científica SILOGE a 0 alucinaciones.</p>
+            <span class="handwriting" style="font-size: 0.95em; color: #0d9488;">Ver código fuente ➔</span>
+          </div>
+
+          <div class="wb-card" onclick="Reveal.slide(8)" style="cursor: pointer;">
+            <span class="badge-wb" style="background: #e0f2fe; color: #075985;">Módulo 6</span>
+            <h3 style="margin-top: 10px; font-size: 1.15em;">Glosario & Quiz</h3>
+            <p style="font-size: 0.85em; color: #475569; margin: 5px 0;">Evaluación interactiva y repositorio de recursos del curso.</p>
+            <span class="handwriting" style="font-size: 0.95em; color: #0284c7;">Iniciar test en vivo ➔</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SLIDE 3: CHATBOT VS AGENTE + WIDGET 1
+           ========================================================== -->
+      <section data-background-color="#f8fafc">
+        <h2>💬 Chatbot Tradicional vs 🤖 Agente de IA</h2>
+        
+        <div class="grid-2" style="margin-top: 10px;">
+          <div class="wb-card">
+            <h3>💬 El Chatbot (Consultor de Pasillo)</h3>
+            <p style="font-size: 0.85em; color: #475569;">
+              Solo autocompleta texto basado en su entrenamiento general. <strong style="color: #dc2626;">No ejecuta acciones reales</strong> en tus archivos ni en tu computadora.
+            </p>
+            <div style="background: #f1f5f9; padding: 10px; border-radius: 6px; font-size: 0.8em; border-left: 3px solid #64748b;">
+              Prompt ➔ LLM ➔ Salida de texto pasiva
+            </div>
+          </div>
+
+          <div class="wb-card" style="border-color: var(--wb-primary);">
+            <h3>🤖 El Agente de IA (Empleado Autónomo)</h3>
+            <p style="font-size: 0.85em; color: #475569;">
+              <strong>Piensa, decide y actúa</strong>. Usa herramientas en Python, abre bases de datos, realiza cálculos matemáticos exactos y genera entregables probados.
+            </p>
+            <div style="background: #dbeafe; padding: 10px; border-radius: 6px; font-size: 0.8em; border-left: 3px solid var(--wb-primary); font-weight: 600;">
+              Meta ➔ Razonar ➔ Buscar Datos ➔ Invocación Herramientas ➔ Entregable
+            </div>
+          </div>
+        </div>
+
+        <!-- WIDGET INTERACTIVO 1: SIMULADOR CHATBOT VS AGENTE -->
+        <div class="widget-container">
+          <div class="widget-title">
+            <i data-lucide="play-circle" style="color: var(--wb-primary);"></i>
+            <span>Widget Interactivo 1: Experimenta la Diferencia en Tiempo Real</span>
+          </div>
+          
+          <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <select id="w1-prompt-select" style="padding: 8px; border-radius: 6px; border: 1.5px solid #cbd5e1; flex: 1; font-size: 0.85em;">
+              <option value="1">"¿Cuál es el stock de Amoxicilina e Ibuprofeno en bodega?"</option>
+              <option value="2">"Calcula el índice Cpk de capacidad operacional del proceso SILOGE"</option>
+              <option value="3">"Redacta un resumen del artículo de Ras Tilapia con norma APA 7"</option>
+            </select>
+            <button class="btn-wb primary" onclick="runWidget1()">
+              <i data-lucide="zap"></i> Ejecutar Prueba
+            </button>
+          </div>
+
+          <div class="grid-2" style="gap: 12px; margin-top: 10px;">
+            <div>
+              <span class="badge-wb" style="background: #f1f5f9;">Respuesta del Chatbot</span>
+              <div id="w1-chatbot-output" class="log-box" style="background: #f8fafc; color: #334155; border: 1px solid #cbd5e1;">
+                Selecciona una prueba y presiona "Ejecutar Prueba"...
+              </div>
+            </div>
+            <div>
+              <span class="badge-wb" style="background: #dbeafe; color: #1e40af;">Ejecución del Agente de IA</span>
+              <div id="w1-agent-output" class="log-box">
+                Esperando comando...
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SLIDE 4: LOS 4 PILARES TÉCNICOS
+           ========================================================== -->
+      <section data-background-color="#f8fafc">
+        <h2>🧩 Los 4 Pilares Técnicos de la Anatomía del Agente</h2>
+        
+        <div class="grid-4" style="margin-top: 20px;">
+          <div class="wb-card">
+            <h3 style="font-size: 1.1em; color: var(--wb-primary);">🧠 1. El Cerebro</h3>
+            <p style="font-size: 0.8em; color: #475569;">
+              Modelo Backend de IA encargada del razonamiento.
+            </p>
+            <ul style="font-size: 0.75em; padding-left: 14px; color: #334155;">
+              <li>Google Gemini 2.5 Pro / Flash</li>
+              <li>Anthropic Claude 3.5 Sonnet</li>
+            </ul>
+          </div>
+
+          <div class="wb-card">
+            <h3 style="font-size: 1.1em; color: var(--wb-secondary);">📜 2. El Contrato</h3>
+            <p style="font-size: 0.8em; color: #475569;">
+              `system_instructions` / Persona.
+            </p>
+            <ul style="font-size: 0.75em; padding-left: 14px; color: #334155;">
+              <li>Define rol y especialización</li>
+              <li>Límites éticos y tono</li>
+              <li>Reglas de formato (APA 7)</li>
+            </ul>
+          </div>
+
+          <div class="wb-card">
+            <h3 style="font-size: 1.1em; color: var(--wb-accent);">🧰 3. Herramientas</h3>
+            <p style="font-size: 0.8em; color: #475569;">
+              Python Tools & Function Calling.
+            </p>
+            <ul style="font-size: 0.75em; padding-left: 14px; color: #334155;">
+              <li>Funciones nativas asíncronas</li>
+              <li>Lectura de docstrings y args</li>
+              <li>Acceso al sistema y la web</li>
+            </ul>
+          </div>
+
+          <div class="wb-card">
+            <h3 style="font-size: 1.1em; color: var(--wb-warning);">📝 4. Memoria</h3>
+            <p style="font-size: 0.8em; color: #475569;">
+              Estado de Trabajo & Contexto.
+            </p>
+            <ul style="font-size: 0.75em; padding-left: 14px; color: #334155;">
+              <li>Historial de conversación</li>
+              <li>Archivo rector `context.md`</li>
+              <li>Variables persistentes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="post-it yellow" style="max-width: 900px; margin: 15px auto 0 auto; font-size: 1em;">
+          <strong>💡 Regla de Oro en Python:</strong> El agente decide cuándo invocar una función leyendo únicamente su <u>nombre</u>, los <u>tipos de parámetros</u> y el <u>docstring</u> (<code>"""..."""</code>).
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SLIDE 5: EL CICLO REACT + WIDGET 2
+           ========================================================== -->
+      <section data-background-color="#f8fafc">
+        <h2>🔄 El Bucle ReAct (Reasoning + Acting)</h2>
+        
+        <p style="font-size: 0.9em; color: #475569;">
+          En lugar de responder en un solo paso pasivo, el agente ejecuta de forma autónoma una secuencia iterativa:
+        </p>
+
+        <div style="background: #ffffff; border: 2px solid var(--wb-border); box-shadow: 3px 4px 0px var(--wb-border); padding: 14px 20px; border-radius: 12px; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
+          <span class="badge-wb" style="background: #dbeafe; color: #1e40af; font-size: 0.9em; padding: 8px 14px;">🧠 1. Pensar (Reasoning)</span>
+          <span style="font-size: 1.2em; font-weight: 800; color: var(--wb-primary);">➔</span>
+          <span class="badge-wb" style="background: #fce7f3; color: #9d174d; font-size: 0.9em; padding: 8px 14px;">🧰 2. Actuar (Tool Call)</span>
+          <span style="font-size: 1.2em; font-weight: 800; color: var(--wb-secondary);">➔</span>
+          <span class="badge-wb" style="background: #fef3c7; color: #92400e; font-size: 0.9em; padding: 8px 14px;">👁️ 3. Observar (System Output)</span>
+          <span style="font-size: 1.2em; font-weight: 800; color: var(--wb-warning);">➔</span>
+          <span class="badge-wb" style="background: #dcfce7; color: #166534; font-size: 0.9em; padding: 8px 14px;">💬 4. Responder</span>
+        </div>
+
+        <!-- WIDGET INTERACTIVO 2: DEPURADOR PASO A PASO REACT -->
+        <div class="widget-container">
+          <div class="widget-title">
+            <i data-lucide="cpu" style="color: var(--wb-secondary);"></i>
+            <span>Widget Interactivo 2: Depurador del Ciclo ReAct en Vivo</span>
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+            <span id="react-step-1" class="step-pill active">1. Entrada</span>
+            <span id="react-step-2" class="step-pill">2. Pensamiento (Reasoning)</span>
+            <span id="react-step-3" class="step-pill">3. Acción (Tool Execution)</span>
+            <span id="react-step-4" class="step-pill">4. Observación</span>
+            <span id="react-step-5" class="step-pill">5. Respuesta Final</span>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <button class="btn-wb primary" onclick="nextReActStep()">
+              <i data-lucide="arrow-right"></i> Avanzar Siguiente Paso
+            </button>
+            <button class="btn-wb" onclick="resetReAct()">
+              <i data-lucide="rotate-ccw"></i> Reiniciar Bucle
+            </button>
+          </div>
+
+          <div id="react-console" class="log-box">
+[INICIO DEL BUCLE REACT]
+Entrada del usuario: "Consulta la existencia de Ibuprofeno y calcula si la bodega está abastecida."
+Presiona "Avanzar Siguiente Paso" para ver cómo el LLM razona y actúa...
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SLIDE 6: LÍNEA DE PRODUCCIÓN MULTI-AGENTE + WIDGET 3
+           ========================================================== -->
+      <section data-background-color="#f8fafc">
+        <h2>🏭 Línea de Producción Multi-Agente & Supervisor Q1</h2>
+        
+        <p style="font-size: 0.85em; color: #475569;">
+          Analogía industrial: Ningún operario fabrica el auto completo solo. Cada agente cumple una etapa acotada y el <strong>Supervisor Q1 auditador de calidad</strong> erradica alucinaciones.
+        </p>
+
+        <!-- WIDGET INTERACTIVO 3: SIMULADOR DE LÍNEA DE PRODUCCIÓN -->
+        <div class="widget-container">
+          <div class="widget-title">
+            <i data-lucide="factory" style="color: var(--wb-accent);"></i>
+            <span>Widget Interactivo 3: Simulador de Ensamblado & Control de Calidad Q1</span>
+          </div>
+
+          <div class="grid-4" style="gap: 10px; margin-bottom: 12px;">
+            <div id="st-1" class="wb-card" style="padding: 10px; border-width: 1.5px; font-size: 0.75em;">
+              <strong>1. Ingestor Semántico</strong><br>
+              <span style="color: #64748b;">Extrae metadatos base.</span>
+            </div>
+            <div id="st-2" class="wb-card" style="padding: 10px; border-width: 1.5px; font-size: 0.75em;">
+              <strong>2. Sintetizador</strong><br>
+              <span style="color: #64748b;">Crea matriz metaconocimiento.</span>
+            </div>
+            <div id="st-3" class="wb-card" style="padding: 10px; border-width: 1.5px; font-size: 0.75em;">
+              <strong>3. Redactor Especializado</strong><br>
+              <span style="color: #64748b;">Genera borrador candidata.</span>
+            </div>
+            <div id="st-4" class="wb-card" style="padding: 10px; border-width: 1.5px; font-size: 0.75em; background: #fff7ed;">
+              <strong>4. Supervisor Q1 Auditor</strong><br>
+              <span style="color: #c2410c;">Control cero tolerancia.</span>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <label style="font-size: 0.85em; font-weight: 600;">Modo de Prueba:</label>
+            <select id="w3-mode" style="padding: 6px; border-radius: 6px; border: 1.5px solid #cbd5e1; font-size: 0.85em;">
+              <option value="clean">Pasada Limpia (100% Sin Errores)</option>
+              <option value="error">Forzar Error en Citas APA 7 (Activa Reproceso)</option>
+            </select>
+            <button class="btn-wb success" onclick="runAssemblyLine()">
+              <i data-lucide="play"></i> Iniciar Línea de Producción
+            </button>
+          </div>
+
+          <div id="w3-log" class="log-box" style="margin-top: 10px; min-height: 100px;">
+Línea de producción lista. Presiona "Iniciar Línea de Producción"...
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SLIDE 7: PROTOCOLO MCP & NOTEBOOKLM + WIDGET 4
+           ========================================================== -->
+      <section data-background-color="#f8fafc">
+        <h2>🔌 Protocolo Abierto MCP & Google NotebookLM</h2>
+        
+        <div class="grid-2">
+          <div>
+            <div class="wb-card">
+              <h3>¿Qué es el Model Context Protocol (MCP)?</h3>
+              <p style="font-size: 0.85em; color: #475569;">
+                Es el <strong>"enchufe universal" de la IA</strong> (estándar abierto) que conecta agentes a bases de datos, APIs y herramientas sin código frágil custom.
+              </p>
+              <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 8px; font-size: 0.75em; font-family: var(--font-code);">
+                Agente / SDK ◄── JSON-RPC (stdio/HTTP) ──► Servidor MCP
+              </div>
+            </div>
+
+            <div class="post-it blue" style="font-size: 0.9em; margin-top: 10px;">
+              <strong>Libreta Oficial del Curso:</strong><br>
+              <code>ID: 6cd6fc11-46e4-4325-bab3-902ff6fdd048</code><br>
+              Permite consultas RAG en vivo con Gemini 2.5.
+            </div>
+          </div>
+
+          <!-- WIDGET INTERACTIVO 4: MCP SANDBOX -->
+          <div>
+            <div class="widget-container" style="margin-top: 0;">
+              <div class="widget-title">
+                <i data-lucide="terminal" style="color: var(--wb-warning);"></i>
+                <span>Widget Interactivo 4: Sandbox Inspector MCP</span>
+              </div>
+
+              <label style="font-size: 0.8em; font-weight: 600;">Seleccionar Herramienta MCP:</label>
+              <select id="mcp-tool-select" style="width: 100%; padding: 6px; margin: 4px 0 10px 0; border-radius: 6px; border: 1.5px solid #cbd5e1; font-size: 0.8em;">
+                <option value="ask">ask_question(notebook_id="6cd6fc11...", query="...")</option>
+                <option value="add">add_source(notebook_id="6cd6fc11...", file="tesis.pdf")</option>
+                <option value="audio">generate_audio_summary(notebook_id="6cd6fc11...")</option>
+              </select>
+
+              <button class="btn-wb primary" onclick="sendMCPRequest()" style="width: 100%; justify-content: center;">
+                <i data-lucide="send"></i> Enviar Petición JSON-RPC
+              </button>
+
+              <div id="mcp-log" class="log-box" style="min-height: 140px; margin-top: 8px;">
+Selecciona una herramienta y haz clic en Enviar Petición...
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SLIDE 8: CASO PRÁCTICO REAL MODO PR3
+           ========================================================== -->
+      <section data-background-color="#f8fafc">
+        <h2>🧪 Caso Práctico Real: Pipeline Científico Modo PR3</h2>
+        <p class="handwriting" style="margin-top: -15px; color: var(--wb-primary);">Desarrollado para el Grupo de Investigación SILOGE (UPB)</p>
+
+        <div class="grid-2" style="margin-top: 15px;">
+          <div>
+            <div class="wb-card">
+              <h3>🎯 El Desafío SILOGE</h3>
+              <p style="font-size: 0.8em; color: #475569;">
+                Convertir literatura científica, datos experimentales (Multidrogas / RAS Tilapia) y código Python en manuscritos publicables en norma <strong>APA 7ma Edición</strong> y con <strong>cero alucinaciones bibliográficas</strong>.
+              </p>
+            </div>
+
+            <div class="wb-card" style="background: #faf5ff; border-color: #a855f7;">
+              <h3 style="font-size: 1.05em; color: #7e22ce;">📄 Módulos del Repositorio</h3>
+              <ul style="font-size: 0.75em; color: #3b0764; padding-left: 16px;">
+                <li><code>agente/pr3_tools.py</code>: Herramientas de auditoría e ingestión.</li>
+                <li><code>agente/pr3_pipeline.py</code>: Orquestador multi-agente asíncrono.</li>
+                <li><code>agente/pr3_multidrogas_pipeline.py</code>: Aplicación práctica.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <pre><code class="language-python"># Ejemplo: Orquestación del Bucle Autónomo PR3
+async def bucle_linea_produccion(prompt_inicial: str):
+    borrador = await operario_redactor.chat(prompt_inicial)
+    aprobado = False
+    
+    while not aprobado:
+        # Supervisor Q1 independiente audita vs fuentes reales
+        dictamen = await supervisor_q1.chat(f"Auditar:\n{borrador}")
+        if "APROBADO" in dictamen.text().upper():
+            aprobado = True
+            print("✅ Manuscrito aprobado 100% sin alucinaciones.")
+        else:
+            print("🔄 Inconformidad detectada. Reprocesando autónomamente...")
+            borrador = await operario_redactor.chat(f"Corrige:\n{dictamen.text()}")
+            
+    return borrador</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SLIDE 9: GLOSARIO & QUIZ INTERACTIVO + WIDGET 5
+           ========================================================== -->
+      <section data-background-color="#f8fafc">
+        <h2>📖 Quiz Interactivo & Autoevaluación</h2>
+        <p style="font-size: 0.85em; color: #475569;">Ponte a prueba sobre los conceptos clave del curso de fabricación de agentes:</p>
+
+        <!-- WIDGET INTERACTIVO 5: QUIZ DE CONOCIMIENTO -->
+        <div class="widget-container" style="max-width: 900px; margin: 10px auto;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div class="widget-title" style="margin: 0;">
+              <i data-lucide="help-circle" style="color: var(--wb-primary);"></i>
+              <span id="quiz-q-num">Pregunta 1 de 4</span>
+            </div>
+            <span id="quiz-score" class="badge-wb" style="background: #fef08a;">Puntaje: 0 pts</span>
+          </div>
+
+          <div id="quiz-card" class="wb-card" style="background: #f8fafc; border-width: 1.5px; margin-bottom: 10px; padding: 16px;">
+            <p id="quiz-question" style="font-weight: 700; font-size: 0.95em; margin-bottom: 10px; color: #0f172a;">
+              ¿Cuál es la función principal del Supervisor Q1 en la línea de producción?
+            </p>
+            <div id="quiz-options">
+              <!-- Options populated by JS -->
+            </div>
+          </div>
+
+          <div id="quiz-feedback" style="display: none; padding: 10px; border-radius: 8px; font-size: 0.85em; margin-top: 8px;">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SLIDE 10: CONCLUSIONES & RECURSOS
+           ========================================================== -->
+      <section data-background-color="#f8fafc">
+        <h2>📌 Reglas de Oro & Conclusiones</h2>
+        
+        <div class="grid-2" style="margin-top: 20px;">
+          <div class="wb-card" style="border-top: 5px solid var(--wb-primary);">
+            <h3>💡 Las 4 Reglas de Oro del Creador de Agentes</h3>
+            <ol style="font-size: 0.8em; color: #334155; padding-left: 18px; line-height: 1.5;">
+              <li style="margin-bottom: 6px;"><strong>Especialización Única:</strong> Jamás obligues a un solo agente a resolver todo el problema.</li>
+              <li style="margin-bottom: 6px;"><strong>Independencia del Auditor:</strong> El redactor NUNCA debe inspeccionar su propio trabajo.</li>
+              <li style="margin-bottom: 6px;"><strong>Parametrización Rectora:</strong> Define reglas léxicas y de formato en <code>context.md</code>.</li>
+              <li><strong>Conexión Estándar:</strong> Conecta fuentes de conocimiento reales usando servidores MCP (NotebookLM).</li>
+            </ol>
+          </div>
+
+          <div class="wb-card" style="border-top: 5px solid var(--wb-accent);">
+            <h3>📚 Enlaces Directos al Proyecto Local</h3>
+            <ul style="font-size: 0.8em; color: #334155; padding-left: 18px; line-height: 1.6;">
+              <li>📄 <a href="file:///Users/cristianjaviercanomogollon/Documents/Proyectosv2.0/3_Academico_y_Cursos/agente/GUIA_CREACION_AGENTES.md" style="color: var(--wb-primary); text-decoration: underline;">Guía de Creación de Agentes</a></li>
+              <li>📄 <a href="file:///Users/cristianjaviercanomogollon/Documents/Proyectosv2.0/3_Academico_y_Cursos/agente/GUIA_MODO_PR3.md" style="color: var(--wb-primary); text-decoration: underline;">Guía Oficial Modo PR3</a></li>
+              <li>🤖 <a href="file:///Users/cristianjaviercanomogollon/Documents/Proyectosv2.0/3_Academico_y_Cursos/agente/notebooklm_mcp_integration.py" style="color: var(--wb-primary); text-decoration: underline;">Integración NotebookLM MCP</a></li>
+              <li>🤖 <a href="file:///Users/cristianjaviercanomogollon/Documents/Proyectosv2.0/3_Academico_y_Cursos/agente/agente_creador_cursos.py" style="color: var(--wb-primary); text-decoration: underline;">Agente Creador de Cursos</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 25px;">
+          <span class="handwriting" style="font-size: 1.8em; color: var(--wb-secondary);">
+            ¡Gracias! La era de la orquestación multi-agente ha comenzado.
+          </span>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
+
+  <script>
+    // Initialize Reveal.js
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      transition: 'slide',
+      width: 1200,
+      height: 700,
+      margin: 0.08,
+      plugins: [ RevealHighlight, RevealNotes ]
+    });
+
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    /* ==========================================================================
+       WIDGET 1 LOGIC: CHATBOT VS AGENTE SIMULATOR
+       ========================================================================== */
+    function runWidget1() {
+      const val = document.getElementById('w1-prompt-select').value;
+      const chatOut = document.getElementById('w1-chatbot-output');
+      const agentOut = document.getElementById('w1-agent-output');
+
+      chatOut.innerHTML = 'Generando respuesta pasiva...';
+      agentOut.innerHTML = '[AGENTE INICIADO]\n> Analizando meta y verificando herramientas disponibles...';
+
+      setTimeout(() => {
+        if (val === '1') {
+          chatOut.innerHTML = 'Para conocer el stock de Amoxicilina e Ibuprofeno, te recomiendo revisar la base de datos de tu inventario o consultar al encargado del almacén farmacéutico.';
+          agentOut.innerHTML = `[AGENTE - PASO 1]: Pensando... "Necesito llamar a la función obtener_estado_inventario() para Amoxicilina e Ibuprofeno."
+[AGENTE - TOOL EXECUTION]:
+  >>> obtener_estado_inventario(producto="amoxicilina")
+  <<< "Inventario actual de amoxicilina: 200 unidades."
+  >>> obtener_estado_inventario(producto="ibuprofeno")
+  <<< "Inventario actual de ibuprofeno: 0 unidades."
+[AGENTE - RESULTADO FINAL]:
+  "Stock reportado: Amoxicilina cuenta con 200 unidades disponibles. Ibuprofeno se encuentra AGOTADO (0 unidades). Se requiere reorden inmediata."`;
+        } else if (val === '2') {
+          chatOut.innerHTML = 'El índice Cpk mide la capacidad de un proceso. La fórmula general es Cpk = min((USL - media)/(3*std), (media - LSL)/(3*std)). Debes ingresar tus datos para calcularlo.';
+          agentOut.innerHTML = `[AGENTE - PASO 1]: Pensando... "Invocaré la herramienta matemática calcular_capacidad_proceso_cpk() con los valores observados del sistema SILOGE."
+[AGENTE - TOOL EXECUTION]:
+  >>> calcular_capacidad_proceso_cpk(media=2.1, usl=5.0, desviacion=0.6)
+  <<< "Índice Cpk Calculado: 1.611 | Estado: Capaz (>= 1.33)"
+[AGENTE - RESULTADO FINAL]:
+  "El proceso de fabricación SILOGE tiene un Cpk de 1.611. El proceso cumple rigurosamente con los límites de tolerancia."`;
+        } else {
+          chatOut.innerHTML = 'El cultivo de tilapia en sistemas RAS requiere control de amonio y nitritos. Recuerda usar el formato APA 7 con citas (Autor, Año).';
+          agentOut.innerHTML = `[AGENTE - PASO 1]: Consultando libreta de NotebookLM vía MCP server...
+[AGENTE - TOOL EXECUTION]:
+  >>> ask_question(notebook_id="6cd6fc11...", query="Ras Tilapia parámetros")
+  <<< "Fuente recuperada: Tesis_SILOGE_2025.pdf (Pág 14-22)"
+[AGENTE - SUPERVISOR Q1]: Auditando citas APA 7 y verificando ausencia de alucinaciones... APROBADO 100%.
+[AGENTE - RESULTADO FINAL]:
+  "Manuscrito redactado bajo directriz context.md (Sin negritas, acrónimos entre comas y citas respaldadas)."`;
+        }
+      }, 600);
+    }
+
+    /* ==========================================================================
+       WIDGET 2 LOGIC: STEP-BY-STEP REACT DEBUGGER
+       ========================================================================== */
+    let currentReActStep = 1;
+    function nextReActStep() {
+      if (currentReActStep < 5) currentReActStep++;
+      updateReActUI();
+    }
+    function resetReAct() {
+      currentReActStep = 1;
+      updateReActUI();
+    }
+    function updateReActUI() {
+      for (let i = 1; i <= 5; i++) {
+        const el = document.getElementById(`react-step-${i}`);
+        el.className = 'step-pill';
+        if (i === currentReActStep) el.classList.add('active');
+        if (i < currentReActStep) el.classList.add('completed');
+      }
+
+      const consoleEl = document.getElementById('react-console');
+      switch(currentReActStep) {
+        case 1:
+          consoleEl.innerHTML = `[PASO 1: ENTRADA DEL USUARIO]
+Consulta: "¿Cuál es el stock de Ibuprofeno y está la bodega abastecida?"`;
+          break;
+        case 2:
+          consoleEl.innerHTML = `[PASO 2: REASONING / PENSAMIENTO DEL LLM]
+Pensamiento: "El usuario solicita información cuantitativa de bodega. Debo verificar la función registral 'obtener_estado_inventario' pasando 'ibuprofeno' como argumento."`;
+          break;
+        case 3:
+          consoleEl.innerHTML = `[PASO 3: ACTING / EJECUCIÓN DE HERRAMIENTA]
+Acción: Invocando función Python local...
+>>> obtener_estado_inventario(producto="ibuprofeno")`;
+          break;
+        case 4:
+          consoleEl.innerHTML = `[PASO 4: OBSERVACIÓN DEL SISTEMA]
+Observación recibida del entorno Python:
+"Inventario actual de ibuprofeno: 0 unidades."`;
+          break;
+        case 5:
+          consoleEl.innerHTML = `[PASO 5: GENERACIÓN DE RESPUESTA FINAL]
+Respuesta al Usuario:
+"Actualmente el stock de Ibuprofeno es de 0 unidades. La bodega se encuentra desabastecida para esta referencia."
+[BUCLE REACT COMPLETADO CON ÉXITO]`;
+          break;
+      }
+    }
+
+    /* ==========================================================================
+       WIDGET 3 LOGIC: MULTI-AGENT PRODUCTION LINE SIMULATOR
+       ========================================================================== */
+    function runAssemblyLine() {
+      const mode = document.getElementById('w3-mode').value;
+      const log = document.getElementById('w3-log');
+      log.innerHTML = '⚙️ [ESTACIÓN 1]: Operario Ingestor procesando archivos PDF base...';
+
+      const s1 = document.getElementById('st-1');
+      const s2 = document.getElementById('st-2');
+      const s3 = document.getElementById('st-3');
+      const s4 = document.getElementById('st-4');
+
+      s1.style.borderColor = '#2563eb'; s1.style.background = '#dbeafe';
+
+      setTimeout(() => {
+        log.innerHTML += '\n⚙️ [ESTACIÓN 2]: Operario Sintetizador generando matriz de meta-conocimiento...';
+        s1.style.borderColor = '#cbd5e1'; s1.style.background = '#fff';
+        s2.style.borderColor = '#2563eb'; s2.style.background = '#dbeafe';
+      }, 700);
+
+      setTimeout(() => {
+        log.innerHTML += '\n⚙️ [ESTACIÓN 3]: Operario Redactor construyendo borrador preliminar APA 7...';
+        s2.style.borderColor = '#cbd5e1'; s2.style.background = '#fff';
+        s3.style.borderColor = '#2563eb'; s3.style.background = '#dbeafe';
+      }, 1400);
+
+      setTimeout(() => {
+        s3.style.borderColor = '#cbd5e1'; s3.style.background = '#fff';
+        s4.style.borderColor = '#d97706'; s4.style.background = '#fef3c7';
+        log.innerHTML += '\n🔍 [ESTACIÓN 4]: Supervisor Q1 auditando borrador contra la libreta de fuentes...';
+
+        setTimeout(() => {
+          if (mode === 'clean') {
+            s4.style.borderColor = '#16a34a'; s4.style.background = '#dcfce7';
+            log.innerHTML += '\n✅ [SUPERVISOR Q1]: DICTAMEN = "APROBADO 100%". Cero alucinaciones detectadas. Entregable liberado.';
+          } else {
+            s4.style.borderColor = '#dc2626'; s4.style.background = '#fee2e2';
+            log.innerHTML += '\n❌ [SUPERVISOR Q1]: DICTAMEN = "RECHAZADO". Inconformidad: Cita en pág 4 no tiene respaldo en .bib y contiene negritas de resalte.';
+            
+            setTimeout(() => {
+              log.innerHTML += '\n🔄 [BUCLE DE REPROCESO AUTÓNOMO]: Devolviendo borrador a Estación 3 con dictamen específico...';
+              s3.style.borderColor = '#2563eb'; s3.style.background = '#dbeafe';
+              
+              setTimeout(() => {
+                log.innerHTML += '\n⚙️ [ESTACIÓN 3]: Operario Redactor aplicando correcciones del Supervisor Q1...';
+                
+                setTimeout(() => {
+                  s3.style.borderColor = '#cbd5e1'; s3.style.background = '#fff';
+                  s4.style.borderColor = '#16a34a'; s4.style.background = '#dcfce7';
+                  log.innerHTML += '\n✅ [SUPERVISOR Q1]: Re-evaluación completada = "APROBADO 100%". Manuscrito libre de defectos.';
+                }, 1000);
+              }, 900);
+            }, 900);
+          }
+        }, 800);
+      }, 2100);
+    }
+
+    /* ==========================================================================
+       WIDGET 4 LOGIC: MCP & NOTEBOOKLM SANDBOX
+       ========================================================================== */
+    function sendMCPRequest() {
+      const tool = document.getElementById('mcp-tool-select').value;
+      const log = document.getElementById('mcp-log');
+      
+      log.innerHTML = 'Enviando trama MCP JSON-RPC a través de stdio...';
+
+      setTimeout(() => {
+        if (tool === 'ask') {
+          log.innerHTML = `[ENVÍO MCP -> SERVIDOR notebooklm-mcp]:
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "ask_question",
+    "arguments": {
+      "notebook_id": "6cd6fc11-46e4-4325-bab3-902ff6fdd048",
+      "question": "¿Cuáles son los 4 pilares de un agente autónomo?"
+    }
+  },
+  "id": 101
+}
+
+[RESPUESTA SERVIDOR MCP]:
+{
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Según la libreta oficial: 1. Cerebro (LLM), 2. Persona (System Instructions), 3. Herramientas (Python Tools), 4. Memoria (context.md)."
+      }
+    ]
+  }
+}`;
+        } else if (tool === 'add') {
+          log.innerHTML = `[ENVÍO MCP -> SERVIDOR notebooklm-mcp]:
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "add_source",
+    "arguments": {
+      "notebook_id": "6cd6fc11-46e4-4325-bab3-902ff6fdd048",
+      "file_path": "/documentos/Tesis_SILOGE_2025.pdf"
+    }
+  },
+  "id": 102
+}
+
+[RESPUESTA SERVIDOR MCP]:
+{
+  "result": {
+    "status": "success",
+    "source_id": "src_99841a",
+    "message": "Fuente de estudio vinculada correctamente a la libreta."
+  }
+}`;
+        } else {
+          log.innerHTML = `[ENVÍO MCP -> SERVIDOR notebooklm-mcp]:
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "generate_audio_summary",
+    "arguments": {
+      "notebook_id": "6cd6fc11-46e4-4325-bab3-902ff6fdd048"
+    }
+  },
+  "id": 103
+}
+
+[RESPUESTA SERVIDOR MCP]:
+{
+  "result": {
+    "audio_url": "https://notebooklm.google.com/audio/podcast_6cd6fc11.mp3",
+    "duration": "08:45"
+  }
+}`;
+        }
+      }, 500);
+    }
+
+    /* ==========================================================================
+       WIDGET 5 LOGIC: INTERACTIVE QUIZ
+       ========================================================================== */
+    const quizData = [
+      {
+        q: "¿Cuál es la función principal del Supervisor Q1 en la línea de producción?",
+        options: [
+          "Generar los gráficos y código Python de la tesis",
+          "Auditar el borrador contra fuentes reales para erradicar alucinaciones",
+          "Conectar el servidor MCP a Google Drive",
+          "Crear los prompts iniciales del chatbot"
+        ],
+        correct: 1,
+        exp: "¡Correcto! El Supervisor Q1 actúa como un auditor independiente que evalúa el trabajo del Agente Redactor contra tolerancia cero a errores."
+      },
+      {
+        q: "¿Cómo sabe un Agente de IA en Python cuándo debe invocar una herramienta?",
+        options: [
+          "Por la cantidad de código escrito en la función",
+          "Leyendo el nombre, los tipos de parámetros y el docstring ('''...''')",
+          "Por medio de un comando `if/else` manual programado en duro",
+          "El agente no puede decidir, siempre requiere intervención humana"
+        ],
+        correct: 1,
+        exp: "¡Excelente! La regla de oro establece que el LLM inspecciona la firma de la función y su docstring descriptivo para decidir cuándo usarla."
+      },
+      {
+        q: "¿Qué significa el acrónimo ReAct en la arquitectura de agentes?",
+        options: [
+          "React Javascript Framework",
+          "Reasoning + Acting (Razonamiento y Acción)",
+          "Recursive Action Control Tool",
+          "Real-time Active Communication"
+        ],
+        correct: 1,
+        exp: "¡Muy bien! ReAct describe el bucle iterativo donde la IA piensa (Reasoning), ejecuta una herramienta (Acting) y observa el resultado."
+      },
+      {
+        q: "¿Qué ventaja principal ofrece el protocolo MCP (Model Context Protocol)?",
+        options: [
+          "Reemplaza a Python como lenguaje de programación",
+          "Es un estándar abierto para conectar cualquier LLM a cualquier fuente de datos (ej. NotebookLM)",
+          "Permite crear imágenes 3D de proteínas",
+          "Es un antivirus para servidores de IA"
+        ],
+        correct: 1,
+        exp: "¡Correcto! MCP actúa como el enchufe universal para conectar modelos como Gemini o Claude con servidores de datos sin integraciones frágiles."
+      }
+    ];
+
+    let currentQ = 0;
+    let quizScore = 0;
+
+    function loadQuestion() {
+      const qObj = quizData[currentQ];
+      document.getElementById('quiz-q-num').innerText = `Pregunta ${currentQ + 1} de ${quizData.length}`;
+      document.getElementById('quiz-question').innerText = qObj.q;
+      
+      const optContainer = document.getElementById('quiz-options');
+      optContainer.innerHTML = '';
+      
+      qObj.options.forEach((opt, idx) => {
+        const btn = document.createElement('div');
+        btn.className = 'quiz-option';
+        btn.innerText = opt;
+        btn.onclick = () => selectAnswer(idx);
+        optContainer.appendChild(btn);
+      });
+
+      document.getElementById('quiz-feedback').style.display = 'none';
+    }
+
+    function selectAnswer(idx) {
+      const qObj = quizData[currentQ];
+      const opts = document.querySelectorAll('.quiz-option');
+      const fb = document.getElementById('quiz-feedback');
+
+      opts.forEach((o, i) => {
+        o.onclick = null;
+        if (i === qObj.correct) o.classList.add('correct');
+        if (i === idx && idx !== qObj.correct) o.classList.add('wrong');
+      });
+
+      fb.style.display = 'block';
+      if (idx === qObj.correct) {
+        quizScore += 25;
+        fb.style.background = '#dcfce7';
+        fb.style.color = '#14532d';
+        fb.innerText = '✅ ' + qObj.exp;
+      } else {
+        fb.style.background = '#fee2e2';
+        fb.style.color = '#7f1d1d';
+        fb.innerText = '❌ Respuesta incorrecta. ' + qObj.exp;
+      }
+
+      document.getElementById('quiz-score').innerText = `Puntaje: ${quizScore} pts`;
+
+      setTimeout(() => {
+        if (currentQ < quizData.length - 1) {
+          currentQ++;
+          loadQuestion();
+        } else {
+          document.getElementById('quiz-card').innerHTML = `
+            <div style="text-align: center; padding: 20px;">
+              <h3 style="color: var(--wb-primary); font-size: 1.4em;">🎉 ¡Quiz Completado!</h3>
+              <p style="font-size: 1.1em;">Puntaje Final: <strong>${quizScore} / 100 pts</strong></p>
+              <p class="handwriting" style="font-size: 1.3em; color: var(--wb-secondary);">
+                ${quizScore >= 75 ? '¡Excelente! Dominas los principios de Fabricación de Agentes.' : 'Buen intento. Te recomendamos repasar los módulos del curso.'}
+              </p>
+              <button class="btn-wb primary" onclick="resetQuiz()">Reiniciar Quiz</button>
+            </div>
+          `;
+        }
+      }, 2500);
+    }
+
+    function resetQuiz() {
+      currentQ = 0;
+      quizScore = 0;
+      document.getElementById('quiz-score').innerText = `Puntaje: 0 pts`;
+      document.getElementById('quiz-card').innerHTML = `
+        <p id="quiz-question" style="font-weight: 700; font-size: 0.95em; margin-bottom: 10px; color: #0f172a;"></p>
+        <div id="quiz-options"></div>
+      `;
+      loadQuestion();
+    }
+
+    // Initialize Quiz on load
+    loadQuestion();
+  </script>
+</body>
+</html>
