@@ -61,6 +61,46 @@ const projects = [
     color: "purple",
     demoUrl: "https://wms-upb-myvr.vercel.app",
     features: ["Novelas Gráficas Interactivas", "Música Original", "Experiencia Inmersiva", "Diseño Gótico"]
+  },
+  {
+    id: "rca-quality-control",
+    title: "Auditoría RCA & Control Estadístico",
+    description: "Toolkit cuantitativo de control estadístico de procesos y análisis de causa raíz para redes de distribución. Cartas EWMA, capacidad de proceso (Cp/Cpk) y ranking de causas por evidencia real.",
+    tags: ["Python", "SPC", "Root-Cause Analysis", "Estadística"],
+    icon: "R",
+    color: "orange",
+    demoUrl: "/proyectos/rca-quality-control/",
+    features: ["Cartas de Control EWMA", "Análisis de Capacidad Cp/Cpk", "Pruebas Kruskal-Wallis", "Ranking Cuantitativo de Causas"]
+  },
+  {
+    id: "last-mile-performance",
+    title: "Plataforma de Última Milla",
+    description: "Sistema de rendimiento de rutas e inventario para flotas de entrega de última milla. Compara tiempos teóricos vs. reales y unifica datos de clientes, productos y despachos.",
+    tags: ["Python", "Streamlit", "Logística", "Última Milla"],
+    icon: "L",
+    color: "teal",
+    demoUrl: "/proyectos/last-mile-performance/",
+    features: ["Benchmarking de Rutas", "Acceso por Roles", "Inventario Unificado", "Dashboard Ejecutivo"]
+  },
+  {
+    id: "zero-academic-platform",
+    title: "ZERO — Plataforma Académica",
+    description: "Plataforma operativa propia para gestión de cursos universitarios: cargue de listados, calificación asistida por IA, alertas tempranas de riesgo y escaneo de exámenes por visión artificial.",
+    tags: ["Python", "REST API", "AI-Assisted Grading", "Educación"],
+    icon: "Z",
+    color: "purple",
+    demoUrl: "/proyectos/zero-academic-platform/",
+    features: ["Cargue Masivo de Listados", "Indicadores de Riesgo Temprano", "Calificación Asistida por IA", "Escaneo de Exámenes por Cámara"]
+  },
+  {
+    id: "his-innovation-model",
+    title: "Modelo HIS — Innovación Abierta",
+    description: "Metodología de innovación abierta e I+D aplicada que combina prototipado rápido guiado por IA (vibe engineering) con evaluación estructurada de viabilidad tecnológica.",
+    tags: ["AI-Guided Prototyping", "I+D", "Innovación Abierta"],
+    icon: "H",
+    color: "green",
+    demoUrl: "/proyectos/his-innovation-model/",
+    features: ["Investigación Asistida por IA", "MVP en 48-72 Horas", "Evaluación de Nivel TRL", "Modelo de Negocio Tecnológico"]
   }
 ];
 

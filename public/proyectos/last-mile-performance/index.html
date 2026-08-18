@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Last-Mile Performance & Inventory Platform | Cristian Cano</title>
+<meta name="description" content="A route-performance and inventory management platform built for a mass-consumption last-mile delivery fleet.">
+<meta property="og:title" content="The Last Mile — Route Performance & Inventory Platform">
+<meta property="og:description" content="A route-performance and inventory management platform built for a mass-consumption last-mile delivery fleet.">
+<meta property="og:image" content="/proyectos/last-mile-performance/cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/proyectos/last-mile-performance/cover.png">
+<link rel="stylesheet" href="/proyectos/case-study.css">
+<style>
+  :root { --hero-glow: rgba(13,148,136,0.18); --hero-accent-text: #5eead4; --hero-accent-bg: rgba(13,148,136,0.15); --hero-accent-border: rgba(13,148,136,0.35); }
+  .mockup-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+  .mockup-map { background: linear-gradient(135deg, #e0f2f1 0%, #f0fdfa 100%); border-radius: 8px; height: 220px; position: relative; overflow: hidden; }
+  .mockup-map svg { width: 100%; height: 100%; }
+  .mockup-kpi { background: var(--card); border-radius: 8px; padding: 14px; }
+  .mockup-kpi .k-num { font-family: "Geist Mono", monospace; font-size: 22px; font-weight: 700; color: var(--ink); }
+  .mockup-kpi .k-cap { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+  .mockup-kpi + .mockup-kpi { margin-top: 10px; }
+  @media (max-width: 640px) { .mockup-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="back" href="/proyectos">&larr; Back to Projects</a>
+    <span class="brand">CRISTIAN CANO · CASE STUDY</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Last-Mile Logistics · Performance &amp; Inventory</span>
+    <h1>Measuring Real vs. Theoretical Route Time for a Last-Mile Delivery Fleet</h1>
+    <p class="lede">A route-performance and inventory management platform built for a mass-consumption distribution company running its own last-mile delivery fleet — sales reps, drivers, and warehouse staff working off three disconnected spreadsheets before this existed.</p>
+    <div class="tags">
+      <span>Route Benchmarking</span>
+      <span>Inventory Management</span>
+      <span>Python / Streamlit</span>
+      <span>Role-Based PWA</span>
+    </div>
+  </div>
+</header>
+
+<section class="block">
+  <div class="wrap">
+    <p class="kicker">The situation</p>
+    <h2>Nobody could tell a late delivery from a badly planned route</h2>
+    <p class="lead">The fleet ran on driver memory and paper logs. When a delivery ran late, there was no way to tell whether it was a bad route, a slow stop, or genuine traffic — because nothing recorded the theoretical time a route should have taken against what actually happened.</p>
+    <p>Inventory tracking sat in a separate system entirely, so a stockout at one distribution point and a delayed delivery at another looked like two unrelated problems, even when they had the same root cause.</p>
+  </div>
+</section>
+
+<section class="block tint">
+  <div class="wrap">
+    <p class="kicker">What was built</p>
+    <h2>One platform, four roles, one shared source of truth</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="idx"></span>
+        <div>
+          <h3>Route benchmarking engine</h3>
+          <p>Computes theoretical vs. actual route duration and distance for every delivery run, so "this route is slow" becomes a measured gap instead of a driver's opinion.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="idx"></span>
+        <div>
+          <h3>Role-based access for the whole chain</h3>
+          <p>Admin, sales rep, logistics manager, and owner each see the view relevant to them — the driver logs a delivery from the field, the manager sees fleet-wide KPIs, the owner sees business-level rollups.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="idx"></span>
+        <div>
+          <h3>Unified inventory and client data layer</h3>
+          <p>Client master data, product catalog, and delivery history live in one fast local data pipeline (pandas + JSON, cached) instead of three disconnected spreadsheets.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="idx"></span>
+        <div>
+          <h3>Executive-facing dashboard</h3>
+          <p>Delivery completion rate, order volume, and per-driver route efficiency in one interactive view — the numbers an owner actually checks weekly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="kicker">Representative interface</p>
+    <h2>What the dashboard shows, in practice</h2>
+    <p>This is an illustrative recreation of the platform's dashboard layout — not a literal screenshot of the client's branded system, out of respect for confidentiality — showing the actual metrics the real platform tracks.</p>
+    <div class="mockup">
+      <div class="mockup-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mockup-label">last-mile-ops — route dashboard</span></div>
+      <div class="mockup-body">
+        <div class="mockup-grid">
+          <div>
+            <div class="mockup-map">
+              <svg viewBox="0 0 300 180" preserveAspectRatio="none">
+                <polyline points="20,150 60,110 90,120 130,70 170,80 210,40 260,30" fill="none" stroke="#0d9488" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="20,150 50,140 100,150 140,130 190,140 230,110 260,30" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4 4" fill-opacity="0"/>
+                <circle cx="20" cy="150" r="5" fill="#0d9488"/>
+                <circle cx="260" cy="30" r="5" fill="#0f172a"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div class="mockup-kpi"><div class="k-num">94%</div><div class="k-cap">Route adherence</div></div>
+            <div class="mockup-kpi"><div class="k-num">124</div><div class="k-cap">Active deliveries today</div></div>
+            <div class="mockup-kpi"><div class="k-num">48 / 45</div><div class="k-cap">Theoretical vs. real (min)</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-note">Illustrative recreation — teal line: actual route taken · grey dashed: theoretical optimal route.</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="num mono">24%</div><div class="cap">Improvement in last-mile delivery timeliness</div></div>
+      <div class="stat"><div class="num mono">4</div><div class="cap">Role-based access levels</div></div>
+      <div class="stat"><div class="num mono">0</div><div class="cap">Spreadsheets left in the loop</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block tint">
+  <div class="wrap">
+    <p class="kicker">Why it matters to a client</p>
+    <h2>Backtracking and phantom "traffic delays" get named for what they are</h2>
+    <p>Any business running its own delivery fleet — distributors, wholesalers, regional couriers — hits the same wall: without a theoretical-vs-actual benchmark, every late delivery gets blamed on traffic instead of route design. This platform gives owners and logistics managers the same visibility a much larger enterprise TMS would, built to the size of the actual fleet.</p>
+    <div class="stack">
+      <span>Python</span><span>Streamlit PWA</span><span>Plotly</span><span>Pandas</span><span>Route optimization</span>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="note scope">
+      <span class="note-label">Honest scope note</span>
+      <p>The client's name and branding have been withheld from this write-up by design — this is a real, deployed system built for an actual mass-consumption distribution company, not a demo. The dashboard shown above is an illustrative recreation of the interface, not a literal screenshot, to keep the client's identity out of a public case study.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="wrap">
+    <h2>Running a delivery fleet on spreadsheets and driver memory?</h2>
+    <p>I build the same route-benchmarking and inventory layer around your fleet's real data.</p>
+    <a class="btn" href="/contacto">Get in touch →</a>
+  </div>
+</div>
+
+</body>
+</html>

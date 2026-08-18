@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Root-Cause Analysis & SPC Toolkit for Distribution Quality | Cristian Cano</title>
+<meta name="description" content="Statistical process control and quantitative root-cause analysis applied to complaint reduction at a pharmaceutical distribution operation.">
+<meta property="og:title" content="Signal from Noise — Root-Cause Analysis & SPC Toolkit">
+<meta property="og:description" content="Statistical process control and quantitative root-cause analysis applied to complaint reduction at a pharmaceutical distribution operation.">
+<meta property="og:image" content="/proyectos/rca-quality-control/cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/proyectos/rca-quality-control/cover.png">
+<link rel="stylesheet" href="/proyectos/case-study.css">
+<style>
+  :root { --hero-glow: rgba(180,83,9,0.16); --hero-accent-text: #fdba74; --hero-accent-bg: rgba(180,83,9,0.15); --hero-accent-border: rgba(180,83,9,0.35); }
+  .stat.flag .num { color: #b45309; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="back" href="/proyectos">&larr; Back to Projects</a>
+    <span class="brand">CRISTIAN CANO · CASE STUDY</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Statistical Process Control · Root-Cause Analysis</span>
+    <h1>Finding the Real Cause Behind a Distribution Network's Rising Complaint Rate</h1>
+    <p class="lede">A quantitative diagnostic toolkit built for a mass-consumption distribution operation — specifically a pharmaceutical distribution network — to separate statistical noise from genuine process failure, and rank root causes by actual weight of evidence instead of gut feeling.</p>
+    <div class="tags">
+      <span>SPC / EWMA Control Charts</span>
+      <span>Process Capability (Cp/Cpk)</span>
+      <span>Kruskal-Wallis Testing</span>
+      <span>Python</span>
+    </div>
+  </div>
+</header>
+
+<section class="block">
+  <div class="wrap">
+    <p class="kicker">The situation</p>
+    <h2>Complaints were rising. Nobody could say which cause was actually the biggest one.</h2>
+    <p class="lead">A distribution network handling pharmaceutical and mass-consumption goods was logging a growing stream of customer complaints (PQRS-type claims) — but the operations team's read on the "top cause" was based on whoever complained loudest last, not on data.</p>
+    <p>Before assigning corrective action budget, the real question had to be answered first: is this normal month-to-month variation, or is the process genuinely out of control — and if it's out of control, which specific failure mode is actually driving it, ranked by real weight of evidence?</p>
+  </div>
+</section>
+
+<section class="block tint">
+  <div class="wrap">
+    <p class="kicker">Method</p>
+    <h2>Four steps, in order — never skip straight to "fix it"</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="idx"></span>
+        <div>
+          <h3>Statistical audit first</h3>
+          <p>Before touching root causes, an EWMA (exponentially weighted moving average) control chart establishes whether the complaint rate is inside normal statistical variation or genuinely signaling special-cause events. This stops teams from reacting to noise as if it were a crisis.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="idx"></span>
+        <div>
+          <h3>Process capability check</h3>
+          <p>Cp and Cpk indices quantify whether the process, as currently designed, is even capable of meeting the target complaint rate — independent of any one bad month. A Cpk below 1.0 means the process needs structural intervention, not a pep talk.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="idx"></span>
+        <div>
+          <h3>Quantitative root-cause ranking</h3>
+          <p>Every logged complaint gets categorized by failure mode (FEFO date-rotation misses, picking count errors, packaging/transport damage, order-entry mistakes) and each category's share of total events is calculated — not guessed.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="idx"></span>
+        <div>
+          <h3>Significance testing before conclusions</h3>
+          <p>Non-parametric tests (Kruskal-Wallis) confirm whether observed differences between sites, shifts, or categories are statistically real before they get written into a report as a finding.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="kicker">Real output — statistical audit</p>
+    <h2>The control chart that separated signal from noise</h2>
+    <p>This is an actual EWMA control chart generated for this project. The blue band is the statistically normal range; the red markers are periods where the complaint rate genuinely broke control limits — the months worth investigating, out of two years of data.</p>
+    <figure class="figure">
+      <img src="img/ewma-chart.png" alt="EWMA control chart of monthly complaint volume, showing control limits and out-of-control periods" loading="lazy">
+      <figcaption>EWMA control chart (&lambda;=0.2) — monthly complaint volume against ±3σ control limits. Four periods breached the upper control limit.</figcaption>
+    </figure>
+
+    <p>The process capability analysis went further: even outside those flagged months, was the process capable of hitting its own target?</p>
+    <figure class="figure">
+      <img src="img/capability-analysis.png" alt="Process capability analysis showing Cp and Cpk indices below the acceptable threshold" loading="lazy">
+      <figcaption>Capability analysis — Cpk of -0.110 confirms the process was structurally incapable of meeting its target, independent of any single bad month.</figcaption>
+    </figure>
+
+    <div class="stats">
+      <div class="stat flag"><div class="num mono">-0.110</div><div class="cap">Cpk (below 1.0 = incapable)</div></div>
+      <div class="stat"><div class="num mono">40.9%</div><div class="cap">Coefficient of variation</div></div>
+      <div class="stat"><div class="num mono">4</div><div class="cap">Statistically significant OOC events flagged</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block tint">
+  <div class="wrap">
+    <p class="kicker">Real output — root-cause ranking</p>
+    <h2>Four causes explained 87% of all complaints</h2>
+    <p>Once every complaint was categorized and counted, the picture stopped being a debate. Redrawn here without the client's internal site/office labels — the ranking itself is the real finding:</p>
+    <div class="barchart">
+      <div class="bar-row"><span class="bar-label">FEFO date-rotation misses (picking)</span><div class="bar-track"><div class="bar-fill" style="width:81%"></div></div><span class="bar-val">37.7%</span></div>
+      <div class="bar-row"><span class="bar-label">Count errors (picking shortfalls)</span><div class="bar-track"><div class="bar-fill" style="width:39%"></div></div><span class="bar-val">18.3%</span></div>
+      <div class="bar-row"><span class="bar-label">Packaging / transport damage</span><div class="bar-track"><div class="bar-fill" style="width:34%"></div></div><span class="bar-val">16.0%</span></div>
+      <div class="bar-row"><span class="bar-label">Order-entry mistakes</span><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><span class="bar-val">15.2%</span></div>
+      <div class="bar-row"><span class="bar-label">All other causes combined</span><div class="bar-track"><div class="bar-fill" style="width:27%"></div></div><span class="bar-val">12.8%</span></div>
+    </div>
+    <p style="font-size:14px; color:var(--muted);">Top 4 causes accounted for 87.2% of all logged complaints — a Pareto-style concentration that turned a vague "quality is bad" complaint into four specific, assignable corrective actions.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="kicker">Why it matters to a client</p>
+    <h2>Corrective action budget goes to the cause with the evidence, not the loudest complaint</h2>
+    <p>Any operation handling regulated or time-sensitive goods — pharma, cold chain, food distribution — runs the same risk: reacting to whichever complaint reached a manager's desk instead of the one actually driving the numbers. This toolkit replaces that with a repeatable four-step audit any operations or quality team can run on their own complaint log.</p>
+    <div class="stack">
+      <span>Python</span><span>pandas</span><span>SciPy (Kruskal-Wallis, ANOVA)</span><span>EWMA / SPC</span><span>Process capability (Cp/Cpk)</span>
+    </div>
+  </div>
+</section>
+
+<section class="block tint">
+  <div class="wrap">
+    <div class="note scope">
+      <span class="note-label">Honest scope note</span>
+      <p>This is a diagnostic and statistical-ranking toolkit, not an automatic fix — it tells you which cause to attack first with real evidence behind the priority order. Implementing the corrective action itself is a separate, operations-specific step. Client and site names in this write-up have been generalized to protect confidentiality; the statistical results shown are real.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="wrap">
+    <h2>Have a process generating complaints or defects nobody can pin down?</h2>
+    <p>I build the same audit — control chart, capability check, quantitative root-cause ranking — around your own data.</p>
+    <a class="btn" href="/contacto">Get in touch →</a>
+  </div>
+</div>
+
+</body>
+</html>

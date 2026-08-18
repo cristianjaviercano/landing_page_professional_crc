@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZERO — Academic Operations Platform | Cristian Cano</title>
+<meta name="description" content="A self-built operations platform for running university courses: rosters, grading, attendance risk alerts, and AI-assisted rubric evaluation.">
+<meta property="og:title" content="ZERO — Academic Operations Platform">
+<meta property="og:description" content="A self-built operations platform for running university courses: rosters, grading, attendance risk alerts, and AI-assisted rubric evaluation.">
+<meta property="og:image" content="/proyectos/zero-academic-platform/cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/proyectos/zero-academic-platform/cover.png">
+<link rel="stylesheet" href="/proyectos/case-study.css">
+<style>
+  :root { --hero-glow: rgba(147,51,234,0.16); --hero-accent-text: #d8b4fe; --hero-accent-bg: rgba(147,51,234,0.15); --hero-accent-border: rgba(147,51,234,0.35); }
+  .modgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 8px; }
+  .modcard { background: var(--card); border-radius: 10px; padding: 16px 18px; }
+  .modcard h3 { font-size: 15px; margin-bottom: 6px; }
+  .modcard p { font-size: 13.5px; margin: 0; }
+  .mockup-row { display: flex; gap: 10px; margin-bottom: 10px; }
+  .mockup-pill { font-family: "Geist Mono", monospace; font-size: 11px; padding: 4px 9px; border-radius: 999px; }
+  .mockup-pill.ok { background: #f0fdf4; color: #15803d; }
+  .mockup-pill.risk { background: #fef2f2; color: #b91c1c; }
+  .mockup-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .mockup-table th { text-align: left; font-family: "Geist Mono", monospace; font-size: 11px; color: var(--muted); padding: 6px 10px 6px 0; border-bottom: 1px solid var(--line); }
+  .mockup-table td { padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="back" href="/proyectos">&larr; Back to Projects</a>
+    <span class="brand">CRISTIAN CANO · CASE STUDY</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Academic Operations · Internal Tooling</span>
+    <h1>ZERO — An Operations Platform for Running University Courses Without Losing Track of Anyone</h1>
+    <p class="lede">Built to run my own university course load: five subjects, roster uploads, grading, attendance, and a research group — replacing what used to be a scatter of spreadsheets, printed exams, and manual roster imports with one local system.</p>
+    <div class="tags">
+      <span>Course &amp; Roster Management</span>
+      <span>AI-Assisted Grading</span>
+      <span>Computer-Vision Exam Scanning</span>
+      <span>Python / REST API</span>
+    </div>
+  </div>
+</header>
+
+<section class="block">
+  <div class="wrap">
+    <p class="kicker">The situation</p>
+    <h2>Five courses, hundreds of students, and every semester started from a blank spreadsheet</h2>
+    <p class="lead">Running multiple sections every semester meant re-building rosters, grade sheets, and attendance trackers from scratch each time — with early warning signs of a struggling student buried somewhere in a spreadsheet nobody checked until it was too late to act.</p>
+    <p>Grading physical exams added another manual bottleneck: scan, read, transcribe, repeat — for every student, every exam.</p>
+  </div>
+</section>
+
+<section class="block tint">
+  <div class="wrap">
+    <p class="kicker">What was built</p>
+    <h2>One local platform, six operational modules</h2>
+    <div class="modgrid">
+      <div class="modcard"><h3>Roster &amp; bulk import</h3><p>Imports official CSV/Excel course rosters directly, no manual re-entry per section.</p></div>
+      <div class="modcard"><h3>Early-risk indicators</h3><p>Synthetic status badges (on track / critical risk) computed from current grade and attendance, so a struggling student surfaces before finals.</p></div>
+      <div class="modcard"><h3>AI-assisted rubric grading</h3><p>Structured rubric templates evaluated with AI assistance, injected directly into the grade sheet instead of transcribed by hand.</p></div>
+      <div class="modcard"><h3>Camera-based exam scanning</h3><p>A vision scanner reads answer sheets from a phone camera and writes the grade straight into the system — no manual transcription step.</p></div>
+      <div class="modcard"><h3>Research-group management</h3><p>Tracks the university research group's members and meetings alongside the teaching workload, in the same system.</p></div>
+      <div class="modcard"><h3>REST API + local dashboard</h3><p>A local HTTP server backs a single-page dashboard UI — everything runs on the instructor's own machine, no external dependency mid-semester.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="kicker">Representative interface</p>
+    <h2>What the roster view surfaces</h2>
+    <p>An illustrative recreation of the dashboard's course roster table — the real interface this system runs.</p>
+    <div class="mockup">
+      <div class="mockup-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mockup-label">zero — course roster</span></div>
+      <div class="mockup-body">
+        <table class="mockup-table">
+          <thead><tr><th>Student</th><th>Grade</th><th>Attendance</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Student A</td><td class="mono">4.2</td><td class="mono">92%</td><td><span class="mockup-pill ok">On track</span></td></tr>
+            <tr><td>Student B</td><td class="mono">2.6</td><td class="mono">61%</td><td><span class="mockup-pill risk">Critical risk</span></td></tr>
+            <tr><td>Student C</td><td class="mono">3.9</td><td class="mono">88%</td><td><span class="mockup-pill ok">On track</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mockup-note">Illustrative recreation with placeholder names — reflects the real fields the system tracks.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block tint">
+  <div class="wrap">
+    <p class="kicker">Why it matters to a client</p>
+    <h2>The pattern behind it generalizes past the classroom</h2>
+    <p>Strip out the academic vocabulary and this is a role-based operations platform with bulk data import, computed risk indicators, AI-assisted document processing, and a local REST API — the same architecture pattern fits training programs, certification bodies, or any operation tracking a roster of people against recurring evaluations.</p>
+    <div class="stack">
+      <span>Python</span><span>REST API</span><span>Computer vision (OMR/exam scanning)</span><span>AI-assisted evaluation</span><span>SPA dashboard</span>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="note scope">
+      <span class="note-label">Honest scope note</span>
+      <p>ZERO runs locally for one instructor's course load today — it was not built as a hosted multi-tenant SaaS. The roster table above uses placeholder names; the fields and logic shown reflect the real, working system.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="wrap">
+    <h2>Managing a roster of people against recurring evaluations, by hand?</h2>
+    <p>I build the same kind of operations layer around your own roster, grading, or certification workflow.</p>
+    <a class="btn" href="/contacto">Get in touch →</a>
+  </div>
+</div>
+
+</body>
+</html>
