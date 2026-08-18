@@ -34,6 +34,12 @@ const links = {
       url: "https://crcbookshell.gitbook.io/cristian-s-bookshell/logistics-management/technical-in-advanced-dispatch-operations/session-1-foundations-of-dispatch-management-and-dispatch-information-systems-dis/task-session-1",
       icon: GraduationCap,
     },
+    {
+      title: "Fabricación de Agentes de IA - Curso",
+      description: "Curso interactivo: metodología de línea de producción multi-agente",
+      url: "/cursos/agentes-ia/",
+      icon: BookOpen,
+    },
   ],
   projects: [
     {
@@ -58,6 +64,30 @@ const links = {
       title: "Sistema RAS - Pisicultura",
       description: "Control de sistema de recirculación acuática",
       url: "https://pisiculture-app.vercel.app",
+      icon: Code,
+    },
+    {
+      title: "Auditoría RCA & Control Estadístico",
+      description: "Toolkit de causa raíz y SPC para redes de distribución",
+      url: "/proyectos/rca-quality-control/",
+      icon: Code,
+    },
+    {
+      title: "Plataforma de Última Milla",
+      description: "Rendimiento de rutas e inventario para flotas de reparto",
+      url: "/proyectos/last-mile-performance/",
+      icon: Code,
+    },
+    {
+      title: "ZERO — Plataforma Académica",
+      description: "Gestión de cursos, calificación y alertas de riesgo temprano",
+      url: "/proyectos/zero-academic-platform/",
+      icon: Code,
+    },
+    {
+      title: "Modelo HIS — Innovación Abierta",
+      description: "Prototipado guiado por IA para I+D aplicada",
+      url: "/proyectos/his-innovation-model/",
       icon: Code,
     },
   ],
