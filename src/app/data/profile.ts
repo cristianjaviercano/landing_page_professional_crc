@@ -1,5 +1,5 @@
 export const contact = {
-  email: "msccristianjcanom@gmail.com",
+  email: "cristianjaviercano@gmail.com",
   linkedin: "https://www.linkedin.com/in/msccristianjcanom/",
   instagram: "https://www.instagram.com/crcjm11/",
   location: "Montería, Córdoba — Colombia",
