@@ -14,9 +14,9 @@ const FactoryScene = dynamic(() => import("./FactoryScene"), {
 });
 
 const metrics = [
-  { value: "16+", label: "años en industria" },
+  { value: "16+", label: "años de trayectoria" },
   { value: "6+", label: "años de docencia" },
-  { value: "8", label: "proyectos operativos" },
+  { value: "4", label: "universidades" },
   { value: "5", label: "modelos de simulación" },
 ];
 
@@ -30,7 +30,7 @@ export default function Hero() {
 
   return (
     <section className="hero-paper relative isolate overflow-hidden text-[#1B1B1B]">
-      <div className="mx-auto grid min-h-[100svh] max-w-7xl grid-cols-1 items-center gap-4 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-[1fr_1.15fr] lg:gap-0 lg:px-8 lg:pt-0">
+      <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-7xl grid-cols-1 items-center gap-4 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-[1fr_1.15fr] lg:gap-0 lg:px-8 lg:pt-0">
         <div className="relative z-10 order-2 lg:order-1">
           <motion.p
             custom={0}
@@ -75,9 +75,9 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p custom={2} variants={rise} initial="hidden" animate="show" className="mt-6 max-w-lg text-base leading-relaxed text-[#1B1B1B]/75 sm:text-lg">
-            <strong className="text-[#1B1B1B]">Cristian Javier Cano Mogollón</strong> — Ingeniero Industrial y MSc. en Gestión de la
-            Innovación. Optimizo logística, manufactura y consumo masivo, y formo ingenieros con simulación, datos e inteligencia
-            artificial.
+            <strong className="text-[#1B1B1B]">Cristian Javier Cano Mogollón</strong> — Ingeniero Industrial, MSc. en Gestión de la
+            Innovación y candidato a Doctor en IA y Ciencia de Datos. Dirijo operaciones, formo ingenieros y llevo la simulación y la
+            inteligencia artificial a la planta.
           </motion.p>
 
           <motion.div custom={3} variants={rise} initial="hidden" animate="show" className="mt-8 flex flex-wrap gap-3">
@@ -111,7 +111,7 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative order-1 h-[52svh] min-h-[340px] lg:order-2 lg:h-[88svh]"
+          className="relative order-1 h-[52svh] min-h-[340px] lg:order-2 lg:h-[80svh]"
         >
           <FactoryScene animate={!reduced} />
           <p className="font-hand pointer-events-none absolute bottom-2 right-4 rotate-[-3deg] text-xl text-[#1B1B1B]/70">
@@ -121,7 +121,7 @@ export default function Hero() {
       </div>
 
       <a
-        href="#cursos"
+        href="#sobre-mi"
         aria-label="Bajar al contenido"
         className="absolute bottom-5 left-1/2 hidden -translate-x-1/2 rounded-full border-2 border-[#1B1B1B] bg-[#F4C21B] p-2 lg:block"
       >

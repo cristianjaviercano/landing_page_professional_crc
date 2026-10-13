@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, BookOpen, Wrench, GraduationCap, Gift, ArrowLeft, Gamepad2, FileText, Download, Lock } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, BookOpen, Download, FileText, Gamepad2, Gift, GraduationCap, Lock, Wrench } from "lucide-react";
+import Reveal from "../components/home/Reveal";
+import SectionHeading, { Mark } from "../components/home/SectionHeading";
+
+export const metadata: Metadata = {
+  title: "Aprende & Apoya | Cristian Javier Cano Mogollón",
+  description: "Libros, herramientas, simuladores y recursos gratuitos de logística, simulación y narrativa.",
+};
 
 const libros = [
   {
@@ -87,25 +96,6 @@ const juegos = [
   },
 ];
 
-const gameColorMap: Record<string, { bg: string; border: string; badge: string; btn: string; tag: string; accent: string }> = {
-  orange: {
-    bg: "bg-orange-950/30",
-    border: "border-orange-700/40",
-    badge: "bg-orange-700/40 text-orange-300",
-    btn: "bg-orange-600 hover:bg-orange-500",
-    tag: "bg-orange-900/40 text-orange-400",
-    accent: "text-orange-400",
-  },
-  cyan: {
-    bg: "bg-cyan-950/30",
-    border: "border-cyan-700/40",
-    badge: "bg-cyan-700/40 text-cyan-300",
-    btn: "bg-cyan-600 hover:bg-cyan-500",
-    tag: "bg-cyan-900/40 text-cyan-400",
-    accent: "text-cyan-400",
-  },
-};
-
 const gratuitos = [
   {
     title: "GitBook — Cuaderno de Logística",
@@ -131,14 +121,14 @@ const gratuitos = [
   {
     title: "Historias Narradas por el Viento",
     description: "4 historias visuales interactivas con música. Narrativa gótica, fantasía y memoria.",
-    url: "/historias/",
+    url: "/historias/index.html",
     icon: BookOpen,
     tag: "Gratis",
   },
   {
     title: "Curso: Fabricación de Agentes de IA",
     description: "Curso completo interactivo — metodología de Línea de Producción Multi-Agente, desde primeros pasos hasta orquestación con MCP y casos prácticos.",
-    url: "/cursos/agentes-ia/",
+    url: "/cursos/agentes-ia/index.html",
     icon: GraduationCap,
     tag: "Gratis",
   },
@@ -151,256 +141,134 @@ const gratuitos = [
   },
 ];
 
-const colorMap: Record<string, { bg: string; border: string; badge: string; badgeText: string; btn: string; tag: string; tagText: string }> = {
-  blue: {
-    bg: "bg-blue-950/30",
-    border: "border-blue-800/40",
-    badge: "bg-blue-800/40 text-blue-300",
-    badgeText: "",
-    btn: "bg-blue-600 hover:bg-blue-500",
-    tag: "bg-blue-900/40 text-blue-400",
-    tagText: "",
-  },
-  purple: {
-    bg: "bg-purple-950/30",
-    border: "border-purple-800/40",
-    badge: "bg-purple-800/40 text-purple-300",
-    badgeText: "",
-    btn: "bg-purple-600 hover:bg-purple-500",
-    tag: "bg-purple-900/40 text-purple-400",
-    tagText: "",
-  },
-  indigo: {
-    bg: "bg-indigo-950/30",
-    border: "border-indigo-800/40",
-    badge: "bg-indigo-800/40 text-indigo-300",
-    badgeText: "",
-    btn: "bg-indigo-600 hover:bg-indigo-500",
-    tag: "bg-indigo-900/40 text-indigo-400",
-    tagText: "",
-  },
-  green: {
-    bg: "bg-green-950/30",
-    border: "border-green-800/40",
-    badge: "bg-green-800/40 text-green-300",
-    badgeText: "",
-    btn: "bg-green-600 hover:bg-green-500",
-    tag: "bg-green-900/40 text-green-400",
-    tagText: "",
-  },
-};
+const card = "rounded-2xl border-2 border-[#1B1B1B] bg-[#F7F3EA] shadow-[5px_5px_0_#1B1B1B]";
+const tagCls = "rounded-md bg-[#1B1B1B]/[0.07] px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wide";
+const badgeCls = "rounded-full border-2 border-[#1B1B1B] bg-[#F4C21B] px-2.5 py-0.5 text-xs font-bold";
+const primaryBtn =
+  "inline-flex items-center gap-1.5 rounded-xl border-2 border-[#1B1B1B] bg-[#1B1B1B] px-4 py-2 text-sm font-semibold text-[#F4C21B] transition-transform hover:-translate-y-0.5";
+const secondaryBtn =
+  "inline-flex items-center gap-1.5 rounded-xl border-2 border-[#1B1B1B] bg-white/70 px-4 py-2 text-sm font-semibold transition-colors hover:bg-[#F4C21B]";
 
 export default function AprendePage() {
   return (
-    <div className="min-h-screen">
-      <div className="max-w-2xl mx-auto px-4 py-10">
+    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <Link href="/#cursos" className="mb-10 inline-flex items-center gap-2 text-sm font-semibold hover:underline">
+        <ArrowLeft className="h-4 w-4" /> Volver al inicio
+      </Link>
 
-        <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-white text-sm mb-8 transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Volver al inicio
-        </Link>
+      <SectionHeading index="→" kicker="aprende & apoya" title={<>Recursos para seguir <Mark>aprendiendo</Mark>.</>}>
+        Libros, herramientas y contenido gratuito en logística, simulación y narrativa. Al adquirir un producto apoyas la creación de
+        más contenido libre.
+      </SectionHeading>
 
-        {/* Header */}
-        <div className="mb-10">
-          <h1 className="text-2xl font-bold text-white mb-2">Aprende &amp; Apoya</h1>
-          <p className="text-slate-400 text-sm leading-relaxed">
-            Recursos para seguir aprendiendo — libros, herramientas y contenido gratuito en logística, simulación y narrativa.
-            Al adquirir un producto apoyas la creación de más contenido libre.
-          </p>
-        </div>
-
-        {/* Libros */}
-        <section className="mb-10">
-          <h2 className="text-white font-semibold text-sm mb-4 flex items-center gap-2">
-            <BookOpen className="w-4 h-4 text-orange-400" />
-            Libros y Novelas
-            <span className="ml-auto text-xs text-slate-500">disponibles en Hotmart</span>
-          </h2>
-          <div className="space-y-4">
-            {libros.map((libro, i) => {
-              const c = colorMap[libro.color];
-              const Icon = libro.icon;
-              return (
-                <div key={i} className={`rounded-2xl border p-5 ${c.bg} ${c.border}`}>
-                  <div className="flex items-start gap-4">
-                    {libro.cover && (
-                      <img
-                        src={libro.cover}
-                        alt={libro.title}
-                        className="w-16 h-20 object-cover rounded-lg flex-shrink-0 shadow-lg"
-                      />
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${c.badge}`}>{libro.badge}</span>
-                        <span className="text-xs text-slate-500">{libro.platform}</span>
-                      </div>
-                      <h3 className="text-white font-bold text-base leading-tight">{libro.title}</h3>
-                      <p className="text-slate-400 text-xs mt-0.5 mb-2">{libro.subtitle}</p>
-                      <p className="text-slate-400 text-xs leading-relaxed mb-3">{libro.description}</p>
-                      <div className="flex flex-wrap gap-1 mb-3">
-                        {libro.tags.map((tag) => (
-                          <span key={tag} className={`text-xs px-2 py-0.5 rounded-full ${c.tag}`}>{tag}</span>
-                        ))}
-                      </div>
-                      <a
-                        href={libro.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`inline-flex items-center gap-1.5 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors ${c.btn}`}
-                      >
-                        Adquirir <ExternalLink className="w-3 h-3" />
-                      </a>
-                    </div>
-                  </div>
+      <section className="mb-20">
+        <h2 className="mb-5 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
+          <BookOpen className="h-4 w-4" /> Libros y novelas <span className="font-normal normal-case text-[#1B1B1B]/55">· Hotmart</span>
+        </h2>
+        <div className="grid gap-6 md:grid-cols-3">
+          {libros.map((libro, i) => (
+            <Reveal key={libro.title} delay={i * 0.06} className="h-full">
+              <article className={`${card} flex h-full flex-col overflow-hidden`}>
+                <div className="relative flex h-56 items-center justify-center border-b-2 border-[#1B1B1B] bg-[#F4C21B]/30">
+                  <Image src={libro.cover} alt={libro.title} width={130} height={200} className="h-44 w-auto rounded-md border-2 border-[#1B1B1B] object-cover shadow-[4px_4px_0_#1B1B1B]" />
+                  <span className={`${badgeCls} absolute left-3 top-3`}>{libro.badge}</span>
                 </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Herramientas */}
-        <section className="mb-10">
-          <h2 className="text-white font-semibold text-sm mb-4 flex items-center gap-2">
-            <Wrench className="w-4 h-4 text-green-400" />
-            Herramientas Profesionales
-            <span className="ml-auto text-xs text-slate-500">disponibles en Gumroad</span>
-          </h2>
-          <div className="space-y-4">
-            {herramientas.map((h, i) => {
-              const c = colorMap[h.color];
-              const Icon = h.icon;
-              return (
-                <div key={i} className={`rounded-2xl border p-5 ${c.bg} ${c.border}`}>
-                  <div className="flex items-start gap-3">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${c.badge}`}>
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${c.badge}`}>{h.badge}</span>
-                        <span className="text-xs text-slate-500">{h.platform}</span>
-                      </div>
-                      <h3 className="text-white font-bold text-base">{h.title}</h3>
-                      <p className="text-slate-400 text-xs mt-0.5 mb-2">{h.subtitle}</p>
-                      <p className="text-slate-400 text-xs leading-relaxed mb-3">{h.description}</p>
-                      <div className="flex flex-wrap gap-1 mb-3">
-                        {h.tags.map((tag) => (
-                          <span key={tag} className={`text-xs px-2 py-0.5 rounded-full ${c.tag}`}>{tag}</span>
-                        ))}
-                      </div>
-                      <a
-                        href={h.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`inline-flex items-center gap-1.5 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors ${c.btn}`}
-                      >
-                        Adquirir <ExternalLink className="w-3 h-3" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Juegos / Simuladores */}
-        <section className="mb-10">
-          <h2 className="text-white font-semibold text-sm mb-4 flex items-center gap-2">
-            <Gamepad2 className="w-4 h-4 text-orange-400" />
-            Simuladores de Producción
-            <span className="ml-auto text-xs text-slate-500">Python / Pygame · Demo gratis</span>
-          </h2>
-          <div className="space-y-4">
-            {juegos.map((j, i) => {
-              const c = gameColorMap[j.color];
-              return (
-                <div key={i} className={`rounded-2xl border p-5 ${c.bg} ${c.border}`}>
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${c.badge}`}>
-                      <Gamepad2 className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${c.badge}`}>{j.badge}</span>
-                        <span className="text-xs text-slate-500">{j.platform}</span>
-                      </div>
-                      <h3 className="text-white font-bold text-base">{j.title}</h3>
-                      <p className="text-slate-400 text-xs mt-0.5">{j.subtitle}</p>
-                    </div>
-                  </div>
-                  <p className="text-slate-400 text-xs leading-relaxed mb-3">{j.description}</p>
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {j.tags.map((tag) => (
-                      <span key={tag} className={`text-xs px-2 py-0.5 rounded-full ${c.tag}`}>{tag}</span>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="text-lg font-bold leading-tight">{libro.title}</h3>
+                  <p className="mb-2 text-sm font-semibold text-[#1B1B1B]/60">{libro.subtitle}</p>
+                  <p className="mb-4 flex-1 text-sm leading-relaxed text-[#1B1B1B]/75">{libro.description}</p>
+                  <div className="mb-4 flex flex-wrap gap-1.5">
+                    {libro.tags.map((t) => (
+                      <span key={t} className={tagCls}>{t}</span>
                     ))}
                   </div>
-                  <div className={`text-xs mb-3 flex items-center gap-1 ${c.accent}`}>
-                    <Download className="w-3 h-3" />
-                    {j.demoLevels}
-                  </div>
-                  <div className="flex gap-2">
-                    <a
-                      href={j.hotmartUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`inline-flex items-center gap-1.5 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors ${c.btn}`}
-                    >
-                      <Lock className="w-3 h-3" /> Versión Completa
-                    </a>
-                    <a
-                      href={j.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-slate-300 text-xs px-3 py-2 rounded-lg border border-slate-700 hover:border-slate-500 hover:text-white transition-colors"
-                    >
-                      <Download className="w-3 h-3" /> Demo gratis
-                    </a>
-                  </div>
+                  <a href={libro.url} target="_blank" rel="noopener noreferrer" className={`${primaryBtn} self-start`}>
+                    Adquirir <ArrowUpRight className="h-4 w-4" />
+                  </a>
                 </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Gratuitos */}
-        <section>
-          <h2 className="text-white font-semibold text-sm mb-4 flex items-center gap-2">
-            <Gift className="w-4 h-4 text-yellow-400" />
-            Recursos Gratuitos
-          </h2>
-          <div className="space-y-3">
-            {gratuitos.map((r, i) => {
-              const Icon = r.icon;
-              return (
-                <a
-                  key={i}
-                  href={r.url}
-                  target={r.url.startsWith("/") ? "_self" : "_blank"}
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 bg-slate-800/60 hover:bg-slate-700/60 border border-slate-700/50 hover:border-yellow-500/30 rounded-xl p-4 transition-all group"
-                >
-                  <div className="w-9 h-9 bg-yellow-500/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-yellow-500/20 transition-colors">
-                    <Icon className="w-4 h-4 text-yellow-400" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-white font-medium text-sm truncate">{r.title}</h3>
-                      <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full flex-shrink-0">{r.tag}</span>
-                    </div>
-                    <p className="text-slate-500 text-xs mt-0.5 truncate">{r.description}</p>
-                  </div>
-                  <ExternalLink className="w-3.5 h-3.5 text-slate-600 group-hover:text-yellow-400 transition-colors flex-shrink-0" />
-                </a>
-              );
-            })}
-          </div>
-        </section>
-
-        <div className="mt-12 text-center text-slate-600 text-xs">
-          <p>© {new Date().getFullYear()} Cristian Javier Cano Mogollón</p>
+              </article>
+            </Reveal>
+          ))}
         </div>
-      </div>
+      </section>
+
+      <section className="mb-20 grid gap-10 lg:grid-cols-[1fr_2fr]">
+        <div>
+          <h2 className="mb-5 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
+            <Wrench className="h-4 w-4" /> Herramientas <span className="font-normal normal-case text-[#1B1B1B]/55">· Gumroad</span>
+          </h2>
+          {herramientas.map((h) => (
+            <Reveal key={h.title}>
+              <article className="rounded-2xl border-2 border-[#1B1B1B] bg-[#1B1B1B] p-6 text-[#F7F3EA] shadow-[5px_5px_0_#F4C21B]">
+                <span className="font-mono text-[11px] font-semibold uppercase tracking-wide text-[#F4C21B]">{h.badge}</span>
+                <h3 className="mt-2 text-2xl font-black">{h.title}</h3>
+                <p className="mb-3 text-sm text-[#F7F3EA]/60">{h.subtitle}</p>
+                <p className="mb-5 text-sm leading-relaxed text-[#F7F3EA]/80">{h.description}</p>
+                <a href={h.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-xl bg-[#F4C21B] px-4 py-2 text-sm font-semibold text-[#1B1B1B]">
+                  Adquirir <ArrowUpRight className="h-4 w-4" />
+                </a>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+
+        <div>
+          <h2 className="mb-5 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
+            <Gamepad2 className="h-4 w-4" /> Simuladores de producción <span className="font-normal normal-case text-[#1B1B1B]/55">· Python / Pygame</span>
+          </h2>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {juegos.map((j, i) => (
+              <Reveal key={j.title} delay={i * 0.06} className="h-full">
+                <article className={`${card} flex h-full flex-col p-5`}>
+                  <span className={`${badgeCls} self-start`}>{j.badge}</span>
+                  <h3 className="mt-3 text-lg font-bold leading-tight">{j.title}</h3>
+                  <p className="mb-2 text-sm font-semibold text-[#1B1B1B]/60">{j.subtitle}</p>
+                  <p className="mb-3 flex-1 text-sm leading-relaxed text-[#1B1B1B]/75">{j.description}</p>
+                  <p className="mb-4 flex items-center gap-1.5 text-xs font-semibold">
+                    <Download className="h-3.5 w-3.5" /> {j.demoLevels}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <a href={j.hotmartUrl} target="_blank" rel="noopener noreferrer" className={primaryBtn}>
+                      <Lock className="h-3.5 w-3.5" /> Versión completa
+                    </a>
+                    <a href={j.repoUrl} target="_blank" rel="noopener noreferrer" className={secondaryBtn}>
+                      Demo gratis
+                    </a>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 className="mb-5 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
+          <Gift className="h-4 w-4" /> Recursos gratuitos
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {gratuitos.map((r, i) => {
+            const Icon = r.icon;
+            return (
+              <Reveal key={r.title} delay={i * 0.04} className="h-full">
+                <a
+                  href={r.url}
+                  target={r.url.startsWith("/") ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  className="group flex h-full items-start gap-4 rounded-2xl border-2 border-[#1B1B1B] bg-white/60 p-5 transition-all hover:-translate-y-1 hover:bg-[#F4C21B] hover:shadow-[5px_5px_0_#1B1B1B]"
+                >
+                  <Icon className="mt-0.5 h-5 w-5 flex-shrink-0" />
+                  <span className="flex-1">
+                    <span className="block font-bold leading-tight">{r.title}</span>
+                    <span className="mt-1 block text-sm text-[#1B1B1B]/70">{r.description}</span>
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 flex-shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
+              </Reveal>
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 }

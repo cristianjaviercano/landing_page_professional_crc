@@ -1,431 +1,219 @@
-import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight, ArrowUpRight, BookHeart, Boxes, Gamepad2, Mail, Music } from "lucide-react";
 import Hero from "./components/hero/Hero";
-import { ExternalLink, BookOpen, Code, GraduationCap, Mail, MapPin, Briefcase, Activity, Music, Gamepad2, BookHeart, ShoppingBag, ArrowRight } from "lucide-react";
+import About from "./components/home/About";
+import Career from "./components/home/Career";
+import Projects from "./components/home/Projects";
+import QueueLab from "./components/home/QueueLab";
+import Reveal from "./components/home/Reveal";
+import SectionHeading, { Mark } from "./components/home/SectionHeading";
+import { InstagramIcon, LinkedInIcon } from "./components/SocialIcons";
+import { anylogic, contact, courses, games, music, stories } from "./data/profile";
 
-const LinkedInIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-  </svg>
-);
-
-const InstagramIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-  </svg>
-);
-
-const links = {
-  academic: [
-    {
-      title: "Logística - Curso",
-      description: "Curso completo de gestión logística",
-      url: "https://logiticcourse.vercel.app",
-      icon: BookOpen,
-    },
-    {
-      title: "Optimización en Redes - Curso y Laboratorio",
-      description: "Technology Presentation - Material académico interactivo",
-      url: "https://technology-presentation.vercel.app",
-      icon: BookOpen,
-    },
-    {
-      title: "Contenidos Académicos - GitBook",
-      description: "Gestión Logística y Operaciones de Despacho",
-      url: "https://crcbookshell.gitbook.io/cristian-s-bookshell/logistics-management/technical-in-advanced-dispatch-operations/session-1-foundations-of-dispatch-management-and-dispatch-information-systems-dis/task-session-1",
-      icon: GraduationCap,
-    },
-    {
-      title: "Fabricación de Agentes de IA - Curso",
-      description: "Curso interactivo: metodología de línea de producción multi-agente",
-      url: "/cursos/agentes-ia/",
-      icon: BookOpen,
-    },
-  ],
-  projects: [
-    {
-      title: "OptiStock Pro 3.0",
-      description: "Sistema avanzado de gestión de inventarios",
-      url: "https://optistockpro3-0.vercel.app",
-      icon: Code,
-    },
-    {
-      title: "OptiStock Lite 2.0",
-      description: "Versión ligera de control de stock",
-      url: "https://optistock-lite.vercel.app",
-      icon: Code,
-    },
-    {
-      title: "Textil App",
-      description: "Nivelador de capacidad textil",
-      url: "https://textilapp.vercel.app/dashboard",
-      icon: Code,
-    },
-    {
-      title: "Sistema RAS - Pisicultura",
-      description: "Control de sistema de recirculación acuática",
-      url: "https://pisiculture-app.vercel.app",
-      icon: Code,
-    },
-    {
-      title: "Auditoría RCA & Control Estadístico",
-      description: "Toolkit de causa raíz y SPC para redes de distribución",
-      url: "/proyectos/rca-quality-control/",
-      icon: Code,
-    },
-    {
-      title: "Plataforma de Última Milla",
-      description: "Rendimiento de rutas e inventario para flotas de reparto",
-      url: "/proyectos/last-mile-performance/",
-      icon: Code,
-    },
-    {
-      title: "ZERO — Plataforma Académica",
-      description: "Gestión de cursos, calificación y alertas de riesgo temprano",
-      url: "/proyectos/zero-academic-platform/",
-      icon: Code,
-    },
-    {
-      title: "Modelo HIS — Innovación Abierta",
-      description: "Prototipado guiado por IA para I+D aplicada",
-      url: "/proyectos/his-innovation-model/",
-      icon: Code,
-    },
-  ],
-  social: [
-    {
-      title: "LinkedIn",
-      url: "https://www.linkedin.com/in/msccristianjcanom/",
-      icon: LinkedInIcon,
-    },
-    {
-      title: "Instagram",
-      url: "https://www.instagram.com/crcjm11/",
-      icon: InstagramIcon,
-    },
-    {
-      title: "Email",
-      url: "mailto:msccristianjcanom@gmail.com",
-      icon: Mail,
-    },
-  ],
-  anylogic: [
-    { title: "Glorieta Mocari", url: "https://cloud.anylogic.com/model/8ec15dce-ada1-449a-ae1e-caae624f7881" },
-    { title: "Rutas de Montería", url: "https://cloud.anylogic.com/model/e9b4aa43-d156-4291-b597-99d64b942e69" },
-    { title: "Zapatería", url: "https://cloud.anylogic.com/model/6b72d628-dfef-4d0b-8e46-9167ff0aa3f7" },
-    { title: "Simulación de Mantenimiento", url: "https://cloud.anylogic.com/model/68ec5281-f0dc-4958-9d0a-f515a90fdb43" },
-    { title: "Gestión de Inventario", url: "https://cloud.anylogic.com/model/64808b15-d471-4a56-891e-78a596fea899" }
-  ],
-  music: [
-    { title: "Música para Orar", description: "Suno Playlist", url: "https://suno.com/playlist/85fb4b22-d87e-4603-bfd1-c6e0bd68f138" },
-    { title: "Para Escuchar y Compartir", description: "Suno Playlist", url: "https://suno.com/playlist/89655a90-f031-4a94-9ff0-6cda579d8259" }
-  ],
-  games: [
-    {
-      title: "Simulación de Teoría de Colas",
-      description: "Minijuego interactivo — sistemas M/M/1",
-      url: "https://cristianjaviercano.github.io/minijuegos/",
-      tag: "Colas",
-    },
-    {
-      title: "Simulador Flowshop",
-      description: "Optimización de secuencias de producción",
-      url: "https://cristianjaviercano.github.io/minijuegos/",
-      tag: "Manufactura",
-    },
-    {
-      title: "Retos de Simulación",
-      description: "Ejercicios de simulación discreta en HTML",
-      url: "https://cristianjaviercano.github.io/Retos/",
-      tag: "Simulación",
-    },
-  ],
-  stories: [
-    { title: "El Cirio", description: "Una llama que no se apaga", url: "/historias/el_cirio/", ready: true },
-    { title: "Fuiste Tú", description: "Una historia de amor y reconocimiento", url: "/historias/Fuiste_tu/", ready: true },
-    { title: "Ecos del San José", description: "El galeón que guarda secretos del mar", url: "/historias/ecos_del_San_jose/", ready: true },
-    { title: "El Silencio", description: "Lo que no se dice también habla", url: "/historias/Elsidelsilencio/", ready: true },
-    { title: "El Sueño de Mi Vida", description: "Perseguir lo que el alma pide", url: "/historias/", ready: false },
-    { title: "Lo que las Letras Sienten", description: "Palabras que cobran vida propia", url: "/historias/", ready: false },
-  ],
-};
+const shell = "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8";
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <>
       <Hero />
-      <div className="max-w-md mx-auto px-4 py-12">
-        <div className="text-center mb-8">
-          <div className="relative w-32 h-32 mx-auto mb-4">
-            <Image
-              src="/amarillo.png"
-              alt="Cristian Javier Cano Mogollón"
-              fill
-              className="rounded-full object-cover border-4 border-slate-700"
-            />
-          </div>
-          
-          <h1 className="text-2xl font-bold text-white mb-1">Cristian Javier Cano Mogollón</h1>
-          
-          <div className="flex items-center justify-center gap-2 text-slate-400 text-sm mb-3">
-            <MapPin className="w-4 h-4" />
-            <span>Colombia</span>
-          </div>
-          
-          <p className="text-slate-300 text-sm leading-relaxed mb-4">
-            Ingeniero Industrial • Magister en Gestión de la Innovación<br />
-            Universidad Tecnológica de Bolívar
-          </p>
-          
-          <div className="flex flex-wrap justify-center gap-2 mb-4">
-            <span className="px-3 py-1 bg-blue-600/20 text-blue-400 rounded-full text-xs font-medium border border-blue-600/30">
-              +16 años experiencia profesional
-            </span>
-            <span className="px-3 py-1 bg-purple-600/20 text-purple-400 rounded-full text-xs font-medium border border-purple-600/30">
-              +6 años experiencia académica
-            </span>
-            <span className="px-3 py-1 bg-green-600/20 text-green-400 rounded-full text-xs font-medium border border-green-600/30">
-              Manufactura • Logística • Consumo Masivo
-            </span>
-          </div>
-          
-          <p className="text-slate-400 text-sm">
-            Profesional bilingue especializado en gestión logística, gestión de operaciones, 
-            desarrollo de procesos y formulación de proyectos operativos.
-          </p>
+      <About />
+
+      <section id="trayectoria" className={`${shell} scroll-mt-20 py-24`}>
+        <SectionHeading index="02" kicker="trayectoria" title={<>16 años entre <Mark>planta</Mark> y aula.</>}>
+          Operaciones en manufactura multinacional, docencia de pregrado y maestría, e investigación aplicada con la industria.
+        </SectionHeading>
+        <Career />
+      </section>
+
+      <section id="proyectos" className="scroll-mt-20 border-y-2 border-[#1B1B1B] bg-[#F4C21B]/10 py-24">
+        <div className={shell}>
+          <SectionHeading index="03" kicker="proyectos" title={<>Herramientas que ya <Mark>operan</Mark>.</>}>
+            Casos de estudio documentados y aplicaciones en producción para inventarios, calidad, última milla y gestión académica.
+          </SectionHeading>
+          <Projects />
         </div>
+      </section>
 
-        <div className="space-y-8">
-          <section id="cursos" className="scroll-mt-8">
-            <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
-              <Briefcase className="w-4 h-4" />
-              Cursos Académicos
-            </h2>
-            <div className="space-y-3">
-              {links.academic.map((link, index) => (
+      <section id="simulacion" className={`${shell} scroll-mt-20 py-24`}>
+        <SectionHeading index="04" kicker="laboratorio" title={<>Juega con una <Mark>cola</Mark>.</>}>
+          Ajusta la tasa de llegadas λ y de servicio μ y compara la teoría M/M/1 con lo que ocurre en la simulación. Acerca ρ a 1 y
+          observa por qué la capacidad ociosa no es desperdicio.
+        </SectionHeading>
+        <Reveal>
+          <QueueLab />
+        </Reveal>
+
+        <div className="mt-14 grid gap-6 lg:grid-cols-2">
+          <Reveal>
+            <h3 className="mb-4 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
+              <Boxes className="h-4 w-4" /> Modelos en AnyLogic Cloud
+            </h3>
+            <ul className="divide-y-2 divide-[#1B1B1B]/10 rounded-2xl border-2 border-[#1B1B1B] bg-[#F7F3EA]">
+              {anylogic.map((m) => (
+                <li key={m.url}>
+                  <a href={m.url} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-5 py-3.5 transition-colors hover:bg-[#F4C21B]">
+                    <span className="font-semibold">{m.title}</span>
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <h3 className="mb-4 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
+              <Gamepad2 className="h-4 w-4" /> Minijuegos y retos
+            </h3>
+            <div className="space-y-4">
+              {games.map((g) => (
                 <a
-                  key={index}
-                  href={link.url}
+                  key={g.url}
+                  href={g.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-slate-600 rounded-xl p-4 transition-all group"
+                  className="group flex items-center justify-between gap-4 rounded-2xl border-2 border-[#1B1B1B] bg-[#1B1B1B] p-5 text-[#F7F3EA] shadow-[4px_4px_0_#F4C21B] transition-transform hover:-translate-y-1"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600/30 transition-colors">
-                      <link.icon className="w-5 h-5 text-blue-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-white font-medium text-sm truncate">{link.title}</h3>
-                      <p className="text-slate-400 text-xs truncate">{link.description}</p>
-                    </div>
-                    <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors flex-shrink-0" />
-                  </div>
+                  <span>
+                    <span className="block text-lg font-bold">{g.title}</span>
+                    <span className="text-sm text-[#F7F3EA]/65">{g.description}</span>
+                  </span>
+                  <ArrowUpRight className="h-5 w-5 flex-shrink-0 text-[#F4C21B]" />
                 </a>
               ))}
             </div>
-          </section>
+          </Reveal>
+        </div>
+      </section>
 
-          <section id="proyectos" className="scroll-mt-8">
-            <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
-              <Code className="w-4 h-4" />
-              Proyectos Operativos
-            </h2>
-            <div className="space-y-3">
-              {links.projects.map((link, index) => (
+      <section id="cursos" className="scroll-mt-20 border-y-2 border-[#1B1B1B] bg-[#F7F3EA] py-24">
+        <div className={shell}>
+          <SectionHeading index="05" kicker="cursos" title={<>Aprende <Mark>gratis</Mark>.</>}>
+            Material académico abierto: logística, redes, despacho y fabricación de agentes de IA.
+          </SectionHeading>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {courses.map((c, i) => (
+              <Reveal key={c.url} delay={i * 0.06} className="h-full">
                 <a
-                  key={index}
-                  href={link.url}
-                  target="_blank"
+                  href={c.url}
+                  target={c.url.startsWith("/") ? undefined : "_blank"}
                   rel="noopener noreferrer"
-                  className="block bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-slate-600 rounded-xl p-4 transition-all group"
+                  className="group flex h-full flex-col rounded-2xl border-2 border-[#1B1B1B] bg-white/60 p-5 transition-all hover:-translate-y-1 hover:bg-[#F4C21B] hover:shadow-[6px_6px_0_#1B1B1B]"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-green-600/30 transition-colors">
-                      <link.icon className="w-5 h-5 text-green-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-white font-medium text-sm truncate">{link.title}</h3>
-                      <p className="text-slate-400 text-xs truncate">{link.description}</p>
-                    </div>
-                    <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors flex-shrink-0" />
-                  </div>
+                  <span className="mb-8 font-mono text-4xl font-black text-[#1B1B1B]/20 transition-colors group-hover:text-[#1B1B1B]">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mb-1 text-lg font-bold leading-tight">{c.title}</h3>
+                  <p className="flex-1 text-sm text-[#1B1B1B]/70">{c.description}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold">
+                    Abrir curso <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </span>
                 </a>
-              ))}
-            </div>
-          </section>
+              </Reveal>
+            ))}
+          </div>
 
-          <section>
-            <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
-              <Gamepad2 className="w-4 h-4" />
-              Herramientas Interactivas
-            </h2>
-            <div className="space-y-3">
-              {links.games.map((game, index) => (
-                <a
-                  key={index}
-                  href={game.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-cyan-600/50 rounded-xl p-4 transition-all group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-cyan-600/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-cyan-600/30 transition-colors">
-                      <Gamepad2 className="w-5 h-5 text-cyan-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-white font-medium text-sm truncate">{game.title}</h3>
-                        <span className="text-xs bg-cyan-600/20 text-cyan-400 px-2 py-0.5 rounded-full flex-shrink-0">{game.tag}</span>
-                      </div>
-                      <p className="text-slate-400 text-xs truncate">{game.description}</p>
-                    </div>
-                    <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors flex-shrink-0" />
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
-              <ShoppingBag className="w-4 h-4" />
-              Aprende &amp; Apoya
-            </h2>
+          <Reveal className="mt-10">
             <Link
               href="/aprende"
-              className="block bg-gradient-to-r from-orange-600/10 to-amber-600/10 hover:from-orange-600/20 hover:to-amber-600/20 border border-orange-600/20 hover:border-orange-500/40 rounded-xl p-5 transition-all group"
+              className="group flex flex-col items-start justify-between gap-4 rounded-2xl border-2 border-[#1B1B1B] bg-[#1B1B1B] p-6 text-[#F7F3EA] sm:flex-row sm:items-center"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500/30 transition-colors">
-                  <ShoppingBag className="w-6 h-6 text-orange-400" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-white font-semibold text-sm mb-1">Libros, Herramientas y Recursos</h3>
-                  <p className="text-orange-200/60 text-xs leading-relaxed">
-                    3 libros · 1 herramienta web · recursos gratuitos de logística y simulación
-                  </p>
-                </div>
-                <ArrowRight className="w-4 h-4 text-orange-400/50 group-hover:text-orange-400 transition-colors flex-shrink-0" />
-              </div>
+              <span>
+                <span className="font-hand block text-2xl text-[#F4C21B]">aprende & apoya</span>
+                <span className="text-xl font-bold">Libros, herramientas y recursos de logística y simulación</span>
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-xl bg-[#F4C21B] px-4 py-2 font-semibold text-[#1B1B1B]">
+                Ver recursos <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
             </Link>
-          </section>
-
-          <section>
-            <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
-              <BookHeart className="w-4 h-4" />
-              Historias Narradas por el Viento
-            </h2>
-            <p className="text-slate-500 text-xs mb-3">Narrativa visual interactiva — ficción, fantasía y memoria.</p>
-            <div className="grid grid-cols-2 gap-3">
-              {links.stories.map((story, index) => (
-                <a
-                  key={index}
-                  href={story.url}
-                  target={story.ready ? "_self" : "_self"}
-                  rel="noopener noreferrer"
-                  className={`block border rounded-xl p-4 transition-all group text-left ${
-                    story.ready
-                      ? "bg-slate-800/80 hover:bg-slate-700/80 border-slate-700 hover:border-purple-600/50"
-                      : "bg-slate-900/50 border-slate-800 opacity-60 cursor-default pointer-events-none"
-                  }`}
-                >
-                  <div className="w-8 h-8 bg-purple-600/20 rounded-lg flex items-center justify-center mb-3 group-hover:bg-purple-600/30 transition-colors">
-                    <BookHeart className="w-4 h-4 text-purple-400" />
-                  </div>
-                  <div className="flex items-start justify-between gap-1">
-                    <h3 className="text-white font-medium text-sm leading-tight">{story.title}</h3>
-                    {!story.ready && (
-                      <span className="text-xs bg-slate-700 text-slate-400 px-1.5 py-0.5 rounded-full flex-shrink-0">pronto</span>
-                    )}
-                  </div>
-                  <p className="text-slate-500 text-xs mt-1 leading-tight">{story.description}</p>
-                </a>
-              ))}
-            </div>
-          </section>
-
-          <section id="simulacion" className="scroll-mt-8">
-            <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
-              <Activity className="w-4 h-4" />
-              Simulación con AnyLogic
-            </h2>
-            <div className="space-y-3">
-              {links.anylogic.map((link, index) => (
-                <a
-                  key={index}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-purple-600/50 rounded-xl p-4 transition-all group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-purple-600/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-purple-600/30 transition-colors">
-                      <Activity className="w-5 h-5 text-purple-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-white font-medium text-sm truncate">{link.title}</h3>
-                      <p className="text-slate-400 text-xs truncate">Ver modelo interactivo</p>
-                    </div>
-                    <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition-colors flex-shrink-0" />
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
-              <Music className="w-4 h-4" />
-              Música
-            </h2>
-            <div className="grid grid-cols-2 gap-3">
-              {links.music.map((link, index) => (
-                <a
-                  key={index}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-pink-600/50 rounded-xl p-4 transition-all group text-left"
-                >
-                  <div className="w-8 h-8 bg-pink-600/20 rounded-lg flex items-center justify-center mb-3 group-hover:bg-pink-600/30 transition-colors">
-                    <Music className="w-4 h-4 text-pink-400" />
-                  </div>
-                  <h3 className="text-white font-medium text-sm truncate">{link.title}</h3>
-                  <p className="text-slate-400 text-xs truncate mt-1">{link.description}</p>
-                </a>
-              ))}
-            </div>
-          </section>
-
-          <section id="conectar" className="scroll-mt-8">
-            <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
-              <Mail className="w-4 h-4" />
-              Conectar
-            </h2>
-            <div className="grid grid-cols-3 gap-3">
-              {links.social.map((link, index) => {
-                const IconComponent = link.icon;
-                return (
-                  <a
-                    key={index}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-2 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-slate-600 rounded-xl p-4 transition-all group"
-                  >
-                    <IconComponent className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
-                    <span className="text-white text-xs font-medium">{link.title}</span>
-                  </a>
-                );
-              })}
-            </div>
-          </section>
+          </Reveal>
         </div>
+      </section>
 
-        <footer className="mt-12 text-center text-slate-500 text-xs">
-          <p>© {new Date().getFullYear()} Cristian Javier Cano Mogollón</p>
-        </footer>
-      </div>
-    </div>
+      <section id="creativo" className="scroll-mt-20 bg-[#1B1B1B] py-24 text-[#F7F3EA]">
+        <div className={shell}>
+          <SectionHeading invert index="06" kicker="el otro lado" title="Historias narradas por el viento.">
+            Narrativa visual interactiva — ficción, fantasía y memoria — y música original.
+          </SectionHeading>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {stories.map((s, i) => (
+              <Reveal key={s.title} delay={i * 0.05} className="h-full">
+                {s.ready ? (
+                  <a
+                    href={s.url}
+                    className="group flex h-full items-start gap-4 rounded-2xl border-2 border-[#F7F3EA]/15 p-5 transition-all hover:-translate-y-1 hover:border-[#F4C21B]"
+                  >
+                    <BookHeart className="mt-1 h-5 w-5 flex-shrink-0 text-[#F4C21B]" />
+                    <span>
+                      <span className="block text-lg font-bold group-hover:text-[#F4C21B]">{s.title}</span>
+                      <span className="text-sm text-[#F7F3EA]/60">{s.description}</span>
+                    </span>
+                  </a>
+                ) : (
+                  <div className="flex h-full items-start gap-4 rounded-2xl border-2 border-dashed border-[#F7F3EA]/15 p-5 opacity-60">
+                    <BookHeart className="mt-1 h-5 w-5 flex-shrink-0" />
+                    <span>
+                      <span className="block text-lg font-bold">
+                        {s.title} <span className="font-hand ml-1 text-xl text-[#F4C21B]">pronto</span>
+                      </span>
+                      <span className="text-sm text-[#F7F3EA]/60">{s.description}</span>
+                    </span>
+                  </div>
+                )}
+              </Reveal>
+            ))}
+          </div>
+          <div className="mt-10 flex flex-wrap gap-3">
+            {music.map((m) => (
+              <a
+                key={m.url}
+                href={m.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-[#F4C21B] px-4 py-2 text-sm font-semibold text-[#F4C21B] transition-colors hover:bg-[#F4C21B] hover:text-[#1B1B1B]"
+              >
+                <Music className="h-4 w-4" /> {m.title}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="conectar" className="scroll-mt-20 bg-[#F4C21B] py-24">
+        <div className={`${shell} text-center`}>
+          <Reveal>
+            <p className="font-hand text-3xl">¿hablamos?</p>
+            <h2 className="mx-auto mt-2 max-w-3xl text-5xl font-black leading-[0.98] tracking-tight sm:text-7xl">
+              Optimicemos tu operación.
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-lg text-[#1B1B1B]/75">
+              Consultoría en logística y operaciones, formación corporativa, proyectos de innovación e investigación aplicada.
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
+              <a
+                href={`mailto:${contact.email}`}
+                className="inline-flex items-center gap-2 rounded-xl border-2 border-[#1B1B1B] bg-[#1B1B1B] px-6 py-3.5 font-semibold text-[#F4C21B] shadow-[4px_4px_0_#F7F3EA] transition-transform hover:-translate-y-0.5"
+              >
+                <Mail className="h-5 w-5" /> {contact.email}
+              </a>
+              <a
+                href={contact.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border-2 border-[#1B1B1B] bg-[#F7F3EA] px-5 py-3.5 font-semibold shadow-[4px_4px_0_#1B1B1B] transition-transform hover:-translate-y-0.5"
+              >
+                <LinkedInIcon className="h-5 w-5" /> LinkedIn
+              </a>
+              <a
+                href={contact.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border-2 border-[#1B1B1B] bg-[#F7F3EA] px-5 py-3.5 font-semibold shadow-[4px_4px_0_#1B1B1B] transition-transform hover:-translate-y-0.5"
+              >
+                <InstagramIcon className="h-5 w-5" /> @crcjm11
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </>
   );
 }

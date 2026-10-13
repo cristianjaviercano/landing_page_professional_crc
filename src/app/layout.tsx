@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Caveat, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,8 +20,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cristian Cano Mogollón | Link in Bio",
-  description: "Portafolio profesional - Proyectos de Logística, Optimización y Gestión de Operaciones",
+  title: "Cristian Javier Cano Mogollón | Operaciones, Logística e IA",
+  description:
+    "Ingeniero Industrial, MSc. en Gestión de la Innovación y candidato a Doctor en IA. Proyectos, simulación, cursos y trayectoria en logística y operaciones.",
 };
 
 export default function RootLayout({
@@ -30,17 +33,9 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable}`}>
       <body className="min-h-screen">
-        <div className="rainbow-container">
-          <div className="rainbow"></div>
-          <div className="rainbow"></div>
-          <div className="rainbow"></div>
-          <div className="rainbow"></div>
-          <div className="rainbow"></div>
-        </div>
-        <div className="glow-overlay"></div>
-        <div className="content-wrapper">
-          {children}
-        </div>
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
