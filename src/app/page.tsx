@@ -4,7 +4,7 @@ import Hero from "./components/hero/Hero";
 import About from "./components/home/About";
 import Career from "./components/home/Career";
 import Projects from "./components/home/Projects";
-import QueueLab from "./components/home/QueueLab";
+import LabTabs from "./components/lab/LabTabs";
 import Reveal from "./components/home/Reveal";
 import SectionHeading, { Mark } from "./components/home/SectionHeading";
 import PersonJsonLd from "./components/PersonJsonLd";
@@ -37,12 +37,12 @@ export default function Home() {
       </section>
 
       <section id="simulacion" className={`${shell} scroll-mt-20 py-24`}>
-        <SectionHeading index="04" kicker="laboratorio" title={<>Juega con una <Mark>cola</Mark>.</>}>
-          Ajusta la tasa de llegadas λ y de servicio μ y compara la teoría M/M/1 con lo que ocurre en la simulación. Acerca ρ a 1 y
-          observa por qué la capacidad ociosa no es desperdicio.
+        <SectionHeading index="04" kicker="laboratorio" title={<>Ingeniería que se <Mark>toca</Mark>.</>}>
+          Cuatro modelos clásicos de ingeniería industrial, interactivos: colas M/M/1, lote económico con punto de reorden, la ecuación
+          de Kingman y la cascada de pérdidas del OEE. Mueve los parámetros y observa cómo responde el sistema.
         </SectionHeading>
         <Reveal>
-          <QueueLab />
+          <LabTabs />
         </Reveal>
 
         <div className="mt-14 grid gap-6 lg:grid-cols-2">

@@ -99,3 +99,8 @@ html {
     scroll-behavior: auto;
   }
 }
+
+/* Diagonal ink hatch: marks losses without relying on colour alone. */
+.loss-hatch {
+  background: repeating-linear-gradient(45deg, rgba(27, 27, 27, 0.55) 0 2px, transparent 2px 6px), #f4c21b;
+}
