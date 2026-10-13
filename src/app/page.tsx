@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Hero from "./components/hero/Hero";
 import { ExternalLink, BookOpen, Code, GraduationCap, Mail, MapPin, Briefcase, Activity, Music, Gamepad2, BookHeart, ShoppingBag, ArrowRight } from "lucide-react";
 
 const LinkedInIcon = ({ className }: { className?: string }) => (
@@ -152,6 +153,7 @@ const links = {
 export default function Home() {
   return (
     <div className="min-h-screen">
+      <Hero />
       <div className="max-w-md mx-auto px-4 py-12">
         <div className="text-center mb-8">
           <div className="relative w-32 h-32 mx-auto mb-4">
@@ -194,7 +196,7 @@ export default function Home() {
         </div>
 
         <div className="space-y-8">
-          <section>
+          <section id="cursos" className="scroll-mt-8">
             <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
               <Briefcase className="w-4 h-4" />
               Cursos Académicos
@@ -223,7 +225,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section>
+          <section id="proyectos" className="scroll-mt-8">
             <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
               <Code className="w-4 h-4" />
               Proyectos Operativos
@@ -342,7 +344,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section>
+          <section id="simulacion" className="scroll-mt-8">
             <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
               <Activity className="w-4 h-4" />
               Simulación con AnyLogic
@@ -395,7 +397,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section>
+          <section id="conectar" className="scroll-mt-8">
             <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
               <Mail className="w-4 h-4" />
               Conectar
