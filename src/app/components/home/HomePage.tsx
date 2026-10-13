@@ -1,45 +1,46 @@
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, BookHeart, Boxes, Gamepad2, Mail, Music } from "lucide-react";
-import Hero from "./components/hero/Hero";
-import About from "./components/home/About";
-import Career from "./components/home/Career";
-import Projects from "./components/home/Projects";
-import LabTabs from "./components/lab/LabTabs";
-import Reveal from "./components/home/Reveal";
-import SectionHeading, { Mark } from "./components/home/SectionHeading";
-import PersonJsonLd from "./components/PersonJsonLd";
-import { InstagramIcon, LinkedInIcon } from "./components/SocialIcons";
-import { anylogic, contact, courses, games, music, stories } from "./data/profile";
+import Hero from "../hero/Hero";
+import About from "./About";
+import Career from "./Career";
+import Projects from "./Projects";
+import LabTabs from "../lab/LabTabs";
+import Reveal from "./Reveal";
+import SectionHeading, { titleWithMark } from "./SectionHeading";
+import PersonJsonLd from "../PersonJsonLd";
+import { InstagramIcon, LinkedInIcon } from "../SocialIcons";
+import { getProfile, getUi, type Locale } from "../../i18n";
 
 const shell = "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8";
 
-export default function Home() {
+export default function HomePage({ locale }: { locale: Locale }) {
+  const t = getUi(locale);
+  const { anylogic, contact, courses, games, music, stories } = getProfile(locale);
   return (
     <>
-      <PersonJsonLd />
+      <PersonJsonLd locale={locale} />
       <Hero />
-      <About />
+      <About locale={locale} />
 
       <section id="trayectoria" className={`${shell} scroll-mt-20 py-24`}>
-        <SectionHeading index="02" kicker="trayectoria" title={<>16 años entre <Mark>planta</Mark> y aula.</>}>
-          Operaciones en manufactura multinacional, docencia de pregrado y maestría, e investigación aplicada con la industria.
+        <SectionHeading index="02" kicker={t.career.kicker} title={titleWithMark(t.career.title)}>
+          {t.career.lead}
         </SectionHeading>
         <Career />
       </section>
 
       <section id="proyectos" className="scroll-mt-20 border-y-2 border-[#1B1B1B] bg-[#F4C21B]/10 py-24">
         <div className={shell}>
-          <SectionHeading index="03" kicker="proyectos" title={<>Herramientas que ya <Mark>operan</Mark>.</>}>
-            Casos de estudio documentados y aplicaciones en producción para inventarios, calidad, última milla y gestión académica.
+          <SectionHeading index="03" kicker={t.projects.kicker} title={titleWithMark(t.projects.title)}>
+            {t.projects.lead}
           </SectionHeading>
           <Projects />
         </div>
       </section>
 
       <section id="simulacion" className={`${shell} scroll-mt-20 py-24`}>
-        <SectionHeading index="04" kicker="laboratorio" title={<>Ingeniería que se <Mark>toca</Mark>.</>}>
-          Cuatro modelos clásicos de ingeniería industrial, interactivos: colas M/M/1, lote económico con punto de reorden, la ecuación
-          de Kingman y la cascada de pérdidas del OEE. Mueve los parámetros y observa cómo responde el sistema.
+        <SectionHeading index="04" kicker={t.lab.kicker} title={titleWithMark(t.lab.title)}>
+          {t.lab.lead}
         </SectionHeading>
         <Reveal>
           <LabTabs />
@@ -48,7 +49,7 @@ export default function Home() {
         <div className="mt-14 grid gap-6 lg:grid-cols-2">
           <Reveal>
             <h3 className="mb-4 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
-              <Boxes className="h-4 w-4" /> Modelos en AnyLogic Cloud
+              <Boxes className="h-4 w-4" /> {t.lab.anylogic}
             </h3>
             <ul className="divide-y-2 divide-[#1B1B1B]/10 rounded-2xl border-2 border-[#1B1B1B] bg-[#F7F3EA]">
               {anylogic.map((m) => (
@@ -63,7 +64,7 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.08}>
             <h3 className="mb-4 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
-              <Gamepad2 className="h-4 w-4" /> Minijuegos y retos
+              <Gamepad2 className="h-4 w-4" /> {t.lab.games}
             </h3>
             <div className="space-y-4">
               {games.map((g) => (
@@ -88,8 +89,8 @@ export default function Home() {
 
       <section id="cursos" className="scroll-mt-20 border-y-2 border-[#1B1B1B] bg-[#F7F3EA] py-24">
         <div className={shell}>
-          <SectionHeading index="05" kicker="cursos" title={<>Aprende <Mark>gratis</Mark>.</>}>
-            Material académico abierto: logística, redes, despacho y fabricación de agentes de IA.
+          <SectionHeading index="05" kicker={t.courses.kicker} title={titleWithMark(t.courses.title)}>
+            {t.courses.lead}
           </SectionHeading>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {courses.map((c, i) => (
@@ -106,7 +107,7 @@ export default function Home() {
                   <h3 className="mb-1 text-lg font-bold leading-tight">{c.title}</h3>
                   <p className="flex-1 text-sm text-[#1B1B1B]/70">{c.description}</p>
                   <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold">
-                    Abrir curso <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    {t.courses.open} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </a>
               </Reveal>
@@ -116,14 +117,15 @@ export default function Home() {
           <Reveal className="mt-10">
             <Link
               href="/aprende"
+              hrefLang="es"
               className="group flex flex-col items-start justify-between gap-4 rounded-2xl border-2 border-[#1B1B1B] bg-[#1B1B1B] p-6 text-[#F7F3EA] sm:flex-row sm:items-center"
             >
               <span>
-                <span className="font-hand block text-2xl text-[#F4C21B]">aprende & apoya</span>
-                <span className="text-xl font-bold">Libros, herramientas y recursos de logística y simulación</span>
+                <span className="font-hand block text-2xl text-[#F4C21B]">{t.courses.resourcesKicker}</span>
+                <span className="text-xl font-bold">{t.courses.resourcesTitle}</span>
               </span>
               <span className="inline-flex items-center gap-2 rounded-xl bg-[#F4C21B] px-4 py-2 font-semibold text-[#1B1B1B]">
-                Ver recursos <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                {t.courses.resourcesCta} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </span>
             </Link>
           </Reveal>
@@ -132,8 +134,8 @@ export default function Home() {
 
       <section id="creativo" className="scroll-mt-20 bg-[#1B1B1B] py-24 text-[#F7F3EA]">
         <div className={shell}>
-          <SectionHeading invert index="06" kicker="el otro lado" title="Historias narradas por el viento.">
-            Narrativa visual interactiva — ficción, fantasía y memoria — y música original.
+          <SectionHeading invert index="06" kicker={t.creative.kicker} title={t.creative.title}>
+            {t.creative.lead}
           </SectionHeading>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {stories.map((s, i) => (
@@ -154,7 +156,7 @@ export default function Home() {
                     <BookHeart className="mt-1 h-5 w-5 flex-shrink-0" />
                     <span>
                       <span className="block text-lg font-bold">
-                        {s.title} <span className="font-hand ml-1 text-xl text-[#F4C21B]">pronto</span>
+                        {s.title} <span className="font-hand ml-1 text-xl text-[#F4C21B]">{t.creative.soon}</span>
                       </span>
                       <span className="text-sm text-[#F7F3EA]/60">{s.description}</span>
                     </span>
@@ -182,13 +184,11 @@ export default function Home() {
       <section id="conectar" className="scroll-mt-20 bg-[#F4C21B] py-24">
         <div className={`${shell} text-center`}>
           <Reveal>
-            <p className="font-hand text-3xl">¿hablamos?</p>
+            <p className="font-hand text-3xl">{t.contact.kicker}</p>
             <h2 className="mx-auto mt-2 max-w-3xl text-5xl font-black leading-[0.98] tracking-tight sm:text-7xl">
-              Optimicemos tu operación.
+              {t.contact.title}
             </h2>
-            <p className="mx-auto mt-5 max-w-xl text-lg text-[#1B1B1B]/75">
-              Consultoría en logística y operaciones, formación corporativa, proyectos de innovación e investigación aplicada.
-            </p>
+            <p className="mx-auto mt-5 max-w-xl text-lg text-[#1B1B1B]/75">{t.contact.lead}</p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <a
                 href={`mailto:${contact.email}`}

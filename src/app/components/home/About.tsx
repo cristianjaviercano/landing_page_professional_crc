@@ -1,28 +1,14 @@
 import Image from "next/image";
 import { Factory, GraduationCap, BrainCircuit, MapPin } from "lucide-react";
-import { contact, summary } from "../../data/profile";
-import SectionHeading, { Mark } from "./SectionHeading";
+import { getProfile, getUi, type Locale } from "../../i18n";
+import SectionHeading, { titleWithMark } from "./SectionHeading";
 import Reveal from "./Reveal";
 
-const pillars = [
-  {
-    icon: Factory,
-    title: "Operaciones & Logística",
-    text: "Planeación MPS/MRP, abastecimiento, inventarios, despacho y KPIs de planta en manufactura multinacional.",
-  },
-  {
-    icon: GraduationCap,
-    title: "Docencia & Investigación",
-    text: "Pregrado y maestría en cuatro universidades; semilleros SILOGE y SIPROI; proyectos por madurez TRL.",
-  },
-  {
-    icon: BrainCircuit,
-    title: "IA & Innovación abierta",
-    text: "Metodología HIS, analítica predictiva, simulación y agentes de IA aplicados a retos reales de la industria.",
-  },
-];
+const icons = [Factory, GraduationCap, BrainCircuit];
 
-export default function About() {
+export default function About({ locale }: { locale: Locale }) {
+  const t = getUi(locale).about;
+  const { contact, summary } = getProfile(locale);
   return (
     <section id="sobre-mi" className="scroll-mt-20 px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
@@ -38,19 +24,22 @@ export default function About() {
         </Reveal>
 
         <div>
-          <SectionHeading index="01" kicker="sobre mí" title={<>De la planta al aula, <Mark>con datos</Mark>.</>}>
+          <SectionHeading index="01" kicker={t.kicker} title={titleWithMark(t.title)}>
             {summary}
           </SectionHeading>
           <div className="grid gap-4 sm:grid-cols-3">
-            {pillars.map((p, i) => (
+            {t.pillars.map((p, i) => {
+              const Icon = icons[i];
+              return (
               <Reveal key={p.title} delay={i * 0.08} className="h-full">
                 <div className="h-full rounded-2xl border-2 border-[#1B1B1B] bg-[#F7F3EA] p-5 shadow-[4px_4px_0_#1B1B1B] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[6px_6px_0_#F4C21B]">
-                  <p.icon className="mb-3 h-7 w-7" strokeWidth={1.8} />
+                  <Icon className="mb-3 h-7 w-7" strokeWidth={1.8} />
                   <h3 className="mb-1 font-bold">{p.title}</h3>
                   <p className="text-sm leading-relaxed text-[#1B1B1B]/70">{p.text}</p>
                 </div>
               </Reveal>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

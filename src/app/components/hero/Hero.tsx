@@ -4,22 +4,18 @@ import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import CountUp from "../home/CountUp";
+import { useLocale } from "../../i18n/LocaleProvider";
 
-const FactoryScene = dynamic(() => import("./FactoryScene"), {
-  ssr: false,
-  loading: () => (
+function SceneLoading() {
+  const { t } = useLocale();
+  return (
     <div className="flex h-full items-center justify-center">
-      <span className="font-hand animate-pulse text-2xl text-[#1B1B1B]/60">montando la planta…</span>
+      <span className="font-hand animate-pulse text-2xl text-[#1B1B1B]/60">{t.hero.loading}</span>
     </div>
-  ),
-});
+  );
+}
 
-const metrics = [
-  { value: "16+", label: "años de trayectoria" },
-  { value: "6+", label: "años de docencia" },
-  { value: "4", label: "universidades" },
-  { value: "5", label: "modelos de simulación" },
-];
+const FactoryScene = dynamic(() => import("./FactoryScene"), { ssr: false, loading: () => <SceneLoading /> });
 
 const rise = {
   hidden: { opacity: 0, y: 24 },
@@ -28,6 +24,8 @@ const rise = {
 
 export default function Hero() {
   const reduced = useReducedMotion();
+  const { t, path } = useLocale();
+  const h = t.hero;
 
   return (
     <section className="hero-paper relative isolate overflow-hidden text-[#1B1B1B]">
@@ -41,7 +39,7 @@ export default function Hero() {
             className="mb-5 inline-flex items-center gap-2 rounded-full border-2 border-[#1B1B1B] bg-[#F7F3EA] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em]"
           >
             <span className="h-2 w-2 rounded-full bg-[#F4C21B] ring-2 ring-[#1B1B1B]" />
-            Ingeniería Industrial · Operaciones · IA
+            {h.kicker}
           </motion.p>
 
           <motion.h1
@@ -51,9 +49,9 @@ export default function Hero() {
             animate="show"
             className="text-5xl font-black leading-[0.95] tracking-tight sm:text-6xl xl:text-7xl"
           >
-            Diseño operaciones que{" "}
+            {h.title.pre}{" "}
             <span className="relative inline-block">
-              <span className="relative z-10">fluyen</span>
+              <span className="relative z-10">{h.title.mark}</span>
               <svg
                 aria-hidden
                 viewBox="0 0 300 40"
@@ -72,33 +70,31 @@ export default function Hero() {
                 />
               </svg>
             </span>
-            .
+            {h.title.post}
           </motion.h1>
 
           <motion.p custom={2} variants={rise} initial="hidden" animate="show" className="mt-6 max-w-lg text-base leading-relaxed text-[#1B1B1B]/75 sm:text-lg">
-            <strong className="text-[#1B1B1B]">Cristian Javier Cano Mogollón</strong> — Ingeniero Industrial, MSc. en Gestión de la
-            Innovación y candidato a Doctor en IA y Ciencia de Datos. Dirijo operaciones, formo ingenieros y llevo la simulación y la
-            inteligencia artificial a la planta.
+            <strong className="text-[#1B1B1B]">Cristian Javier Cano Mogollón</strong> {h.intro}
           </motion.p>
 
           <motion.div custom={3} variants={rise} initial="hidden" animate="show" className="mt-8 flex flex-wrap gap-3">
             <a
-              href="#proyectos"
+              href={path("/#proyectos")}
               className="group inline-flex items-center gap-2 rounded-xl border-2 border-[#1B1B1B] bg-[#1B1B1B] px-5 py-3 font-semibold text-[#F4C21B] shadow-[4px_4px_0_#F4C21B] transition-transform hover:-translate-y-0.5"
             >
-              Ver proyectos
+              {h.ctaProjects}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
-              href="#conectar"
+              href={path("/#conectar")}
               className="inline-flex items-center gap-2 rounded-xl border-2 border-[#1B1B1B] bg-[#F7F3EA] px-5 py-3 font-semibold shadow-[4px_4px_0_#1B1B1B] transition-transform hover:-translate-y-0.5"
             >
-              Hablemos
+              {h.ctaTalk}
             </a>
           </motion.div>
 
           <motion.dl custom={4} variants={rise} initial="hidden" animate="show" className="mt-10 grid max-w-lg grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
-            {metrics.map((m) => (
+            {h.metrics.map((m) => (
               <div key={m.label} className="border-l-4 border-[#F4C21B] pl-3">
                 <dt className="sr-only">{m.label}</dt>
                 <dd className="text-3xl font-black">
@@ -118,14 +114,14 @@ export default function Hero() {
         >
           <FactoryScene animate={!reduced} />
           <p className="font-hand pointer-events-none absolute bottom-2 right-4 rotate-[-3deg] text-xl text-[#1B1B1B]/70">
-            ↖ explora la planta: cada estación te lleva a una sección
+            {h.hint}
           </p>
         </motion.div>
       </div>
 
       <a
-        href="#sobre-mi"
-        aria-label="Bajar al contenido"
+        href={path("/#sobre-mi")}
+        aria-label={h.scrollDown}
         className="absolute bottom-5 left-1/2 hidden -translate-x-1/2 rounded-full border-2 border-[#1B1B1B] bg-[#F4C21B] p-2 lg:block"
       >
         <ArrowDown className="h-5 w-5 animate-bounce" />

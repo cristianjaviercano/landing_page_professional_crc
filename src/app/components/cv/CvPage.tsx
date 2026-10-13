@@ -1,13 +1,8 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { academia, contact, education, headline, industry, languages, skills, summary, type CvItem } from "../data/profile";
+import type { CvItem } from "../../data/profile";
+import { getProfile, getUi, localePath, type Locale } from "../../i18n";
 import PrintButton from "./PrintButton";
-
-export const metadata: Metadata = {
-  title: "Hoja de vida | Cristian Javier Cano Mogollón",
-  description: headline,
-};
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -47,14 +42,16 @@ function Items({ items }: { items: CvItem[] }) {
   );
 }
 
-export default function CvPage() {
+export default function CvPage({ locale }: { locale: Locale }) {
+  const t = getUi(locale).cv;
+  const { academia, contact, education, headline, industry, languages, skills, summary } = getProfile(locale);
   return (
     <div className="px-4 py-10 sm:px-6 print:p-0">
       <div className="no-print mx-auto mb-6 flex max-w-4xl items-center justify-between gap-4">
-        <Link href="/#trayectoria" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline">
-          <ArrowLeft className="h-4 w-4" /> Volver
+        <Link href={localePath(locale, "/#trayectoria")} className="inline-flex items-center gap-2 text-sm font-semibold hover:underline">
+          <ArrowLeft className="h-4 w-4" /> {t.back}
         </Link>
-        <PrintButton />
+        <PrintButton label={t.download} />
       </div>
 
       <article className="mx-auto max-w-4xl space-y-9 rounded-2xl print:space-y-4 print:text-[9.5pt] print:leading-snug border-2 border-[#1B1B1B] bg-white p-6 shadow-[8px_8px_0_#1B1B1B] sm:p-10 print:max-w-none print:rounded-none print:border-0 print:p-0 print:shadow-none">
@@ -68,23 +65,23 @@ export default function CvPage() {
           </p>
         </header>
 
-        <Section title="Perfil">
+        <Section title={t.profile}>
           <p className="leading-relaxed text-[#1B1B1B]/85">{summary}</p>
         </Section>
 
-        <Section title="Trayectoria industrial">
+        <Section title={t.industry}>
           <Items items={industry} />
         </Section>
 
-        <Section title="Docencia e investigación">
+        <Section title={t.academia}>
           <Items items={academia} />
         </Section>
 
-        <Section title="Formación">
+        <Section title={t.education}>
           <Items items={education} />
         </Section>
 
-        <Section title="Competencias">
+        <Section title={t.skills}>
           <div className="grid gap-4 sm:grid-cols-2">
             {skills.map((s) => (
               <div key={s.group}>
@@ -95,7 +92,7 @@ export default function CvPage() {
           </div>
         </Section>
 
-        <Section title="Idiomas">
+        <Section title={t.languages}>
           <p className="text-sm">
             {languages.map((l, i) => (
               <span key={l.name}>
@@ -104,7 +101,7 @@ export default function CvPage() {
               </span>
             ))}
           </p>
-          <p className="mt-6 text-xs text-[#1B1B1B]/55">Referencias profesionales y personales disponibles a solicitud.</p>
+          <p className="mt-6 text-xs text-[#1B1B1B]/55">{t.references}</p>
         </Section>
       </article>
     </div>

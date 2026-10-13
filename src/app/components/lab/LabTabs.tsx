@@ -2,39 +2,36 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useLocale } from "../../i18n/LocaleProvider";
 import QueueLab from "../home/QueueLab";
 import EoqTool from "./EoqTool";
 import KingmanTool from "./KingmanTool";
 import OeeTool from "./OeeTool";
 
-const tools = [
-  { id: "mm1", label: "Cola M/M/1", sub: "simulación de eventos discretos" },
-  { id: "eoq", label: "EOQ & reorden", sub: "lote económico y stock de seguridad" },
-  { id: "kingman", label: "Kingman", sub: "variabilidad × utilización" },
-  { id: "oee", label: "OEE", sub: "eficiencia global del equipo" },
-] as const;
+const toolIds = ["mm1", "eoq", "kingman", "oee"] as const;
 
-type ToolId = (typeof tools)[number]["id"];
+type ToolId = (typeof toolIds)[number];
 
 export default function LabTabs() {
+  const { t } = useLocale();
   const [tool, setTool] = useState<ToolId>("mm1");
-  const active = tools.find((t) => t.id === tool)!;
+  const active = t.lab.tools[tool];
 
   return (
     <div>
-      <div role="tablist" aria-label="Herramientas del laboratorio" className="mb-6 flex flex-wrap gap-2">
-        {tools.map((t) => (
+      <div role="tablist" aria-label={t.lab.tabsLabel} className="mb-6 flex flex-wrap gap-2">
+        {toolIds.map((id) => (
           <button
-            key={t.id}
+            key={id}
             role="tab"
-            aria-selected={tool === t.id}
-            onClick={() => setTool(t.id)}
+            aria-selected={tool === id}
+            onClick={() => setTool(id)}
             className={`relative rounded-xl border-2 border-[#1B1B1B] px-4 py-2 text-sm font-bold transition-colors ${
-              tool === t.id ? "text-[#F4C21B]" : "bg-[#F7F3EA] hover:bg-[#F4C21B]"
+              tool === id ? "text-[#F4C21B]" : "bg-[#F7F3EA] hover:bg-[#F4C21B]"
             }`}
           >
-            {tool === t.id && <motion.span layoutId="lab-tab" className="absolute inset-0 rounded-[10px] bg-[#1B1B1B]" />}
-            <span className="relative">{t.label}</span>
+            {tool === id && <motion.span layoutId="lab-tab" className="absolute inset-0 rounded-[10px] bg-[#1B1B1B]" />}
+            <span className="relative">{t.lab.tools[id].label}</span>
           </button>
         ))}
       </div>

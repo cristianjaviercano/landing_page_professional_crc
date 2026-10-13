@@ -2,15 +2,21 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export const alt = "Cristian Javier Cano Mogollón — Operaciones, Logística e IA";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+import type { Locale } from "../i18n";
+
+export const ogSize = { width: 1200, height: 630 };
+
+const COPY = {
+  es: { kicker: "INGENIERÍA INDUSTRIAL · OPERACIONES · IA", line: "MSc. Gestión de la Innovación · Candidato a Doctor en IA y Ciencia de Datos · +16 años en operaciones" },
+  en: { kicker: "INDUSTRIAL ENGINEERING · OPERATIONS · AI", line: "MSc Innovation Management · PhD Candidate in AI & Data Science · 16+ years in operations" },
+} as const;
 
 const INK = "#1B1B1B";
 const YELLOW = "#F4C21B";
 const PAPER = "#F6F1E4";
 
-export default async function Image() {
+export async function renderOgImage(locale: Locale) {
+  const copy = COPY[locale];
   const photo = await readFile(join(process.cwd(), "public/amarillo.png"));
   const src = `data:image/png;base64,${photo.toString("base64")}`;
 
@@ -44,22 +50,23 @@ export default async function Image() {
               background: "#F7F3EA",
             }}
           >
-            INGENIERÍA INDUSTRIAL · OPERACIONES · IA
+            {copy.kicker}
           </div>
           <div style={{ display: "flex", flexDirection: "column", fontSize: 76, fontWeight: 800, lineHeight: 1, marginTop: 28 }}>
             <span>Cristian Javier</span>
             <span style={{ background: YELLOW, padding: "0 10px", marginTop: 8, alignSelf: "flex-start" }}>Cano Mogollón</span>
           </div>
           <div style={{ display: "flex", fontSize: 28, marginTop: 30, lineHeight: 1.35, opacity: 0.8 }}>
-            MSc. Gestión de la Innovación · Candidato a Doctor en IA y Ciencia de Datos · +16 años en operaciones
+            {copy.line}
           </div>
         </div>
         <div style={{ display: "flex", position: "relative", width: 360, height: 360 }}>
           <div style={{ position: "absolute", left: 16, top: 16, width: 360, height: 360, borderRadius: 999, background: INK }} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={src} width={360} height={360} alt="" style={{ borderRadius: 999, border: `4px solid ${INK}`, objectFit: "cover" }} />
         </div>
       </div>
     ),
-    size,
+    ogSize,
   );
 }

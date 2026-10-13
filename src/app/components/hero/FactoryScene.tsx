@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { Canvas, useFrame, type ThreeElements } from "@react-three/fiber";
 import { Outlines } from "@react-three/drei";
 import { PALETTE, getPaint } from "./paint";
+import { useLocale } from "../../i18n/LocaleProvider";
 
 const { yellow, white, ink } = PALETTE;
 const OUTLINE = 0.035;
@@ -52,10 +53,10 @@ function Cyl({ radius, height, color, segments = 12, ...props }: CylProps) {
 /* ---------- interactive hotspot ---------- */
 
 const STATIONS = [
-  { label: "Proyectos", target: "proyectos", anchor: [-3, 4.1, -0.6] },
-  { label: "Simulación", target: "simulacion", anchor: [2.1, 3.6, -1.4] },
-  { label: "Cursos", target: "cursos", anchor: [-3.6, 3.3, 2.2] },
-  { label: "Contacto", target: "conectar", anchor: [4.2, 2.5, 2.5] },
+  { key: "projects", target: "proyectos", anchor: [-3, 4.1, -0.6] },
+  { key: "lab", target: "simulacion", anchor: [2.1, 3.6, -1.4] },
+  { key: "courses", target: "cursos", anchor: [-3.6, 3.3, 2.2] },
+  { key: "contact", target: "conectar", anchor: [4.2, 2.5, 2.5] },
 ] as const;
 
 const goTo = (target: string) => document.getElementById(target)?.scrollIntoView({ behavior: "smooth" });
@@ -382,6 +383,7 @@ function Rig({
 }
 
 export default function FactoryScene({ animate = true }: { animate?: boolean }) {
+  const { t } = useLocale();
   const [hovered, setHovered] = useState<number | null>(null);
   const labels = useRef<(HTMLButtonElement | null)[]>([]);
   const hover = { hovered, setHovered };
@@ -455,7 +457,7 @@ export default function FactoryScene({ animate = true }: { animate?: boolean }) 
               hovered === i ? "-translate-y-1 -rotate-2 bg-[#F4C21B]" : "rotate-1 bg-[#F7F3EA]"
             }`}
           >
-            {st.label} ↘
+            {t.hero.stations[st.key]} ↘
           </span>
         </button>
       ))}

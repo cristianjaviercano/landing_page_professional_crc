@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, BookOpen, Download, FileText, Gamepad2, Gift, GraduationCap, Lock, Wrench } from "lucide-react";
-import Reveal from "../components/home/Reveal";
-import SectionHeading, { Mark } from "../components/home/SectionHeading";
+import Reveal from "../../components/home/Reveal";
+import SectionHeading, { Mark } from "../../components/home/SectionHeading";
 
 export const metadata: Metadata = {
   title: "Aprende & Apoya | Cristian Javier Cano Mogollón",

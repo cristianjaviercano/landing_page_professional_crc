@@ -4,24 +4,25 @@ import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { apps, caseStudies } from "../../data/profile";
+import { useLocale } from "../../i18n/LocaleProvider";
 import CountUp from "./CountUp";
 import TiltCard from "./TiltCard";
 
-const filters = [
-  { id: "all", label: "Todo" },
-  { id: "cases", label: "Casos de estudio" },
-  { id: "apps", label: "Apps en vivo" },
-] as const;
-
-type Filter = (typeof filters)[number]["id"];
+type Filter = "all" | "cases" | "apps";
 
 export default function Projects() {
+  const { t, profile } = useLocale();
+  const { apps, caseStudies } = profile;
+  const filters: { id: Filter; label: string }[] = [
+    { id: "all", label: t.projects.filters.all },
+    { id: "cases", label: t.projects.filters.cases },
+    { id: "apps", label: t.projects.filters.apps },
+  ];
   const [filter, setFilter] = useState<Filter>("all");
 
   return (
     <div>
-      <div role="tablist" aria-label="Filtrar proyectos" className="mb-8 flex flex-wrap gap-2">
+      <div role="tablist" aria-label={t.projects.filterLabel} className="mb-8 flex flex-wrap gap-2">
         {filters.map((f) => (
           <button
             key={f.id}
@@ -61,7 +62,7 @@ export default function Projects() {
                       className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     />
                     <span className="absolute left-3 top-3 rounded-full border-2 border-[#1B1B1B] bg-[#F4C21B] px-2.5 py-0.5 text-xs font-bold">
-                      Caso de estudio
+                      {t.projects.caseBadge}
                     </span>
                   </div>
                   <div className="p-5">
@@ -105,7 +106,7 @@ export default function Projects() {
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-wide text-[#F4C21B]">
                       <span className="h-2 w-2 animate-pulse rounded-full bg-[#F4C21B]" />
-                      En vivo · {a.tag}
+                      {t.projects.live} · {a.tag}
                     </span>
                     <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </div>

@@ -1,12 +1,13 @@
-import { academia, contact, education, headline, industry, siteUrl, summary } from "../data/profile";
+import { getProfile, type Locale } from "../i18n";
 
 /** schema.org Person, so search engines and AI assistants can read the profile. */
-export default function PersonJsonLd() {
+export default function PersonJsonLd({ locale }: { locale: Locale }) {
+  const { academia, contact, education, headline, industry, siteUrl, summary } = getProfile(locale);
   const data = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Cristian Javier Cano Mogollón",
-    url: siteUrl,
+    url: locale === "en" ? `${siteUrl}/en` : siteUrl,
     image: `${siteUrl}/amarillo.png`,
     jobTitle: headline,
     description: summary,
@@ -17,7 +18,10 @@ export default function PersonJsonLd() {
     alumniOf: [...new Set(education.map((e) => e.org))].map((name) => ({ "@type": "CollegeOrUniversity", name })),
     worksFor: { "@type": "CollegeOrUniversity", name: academia[0].org },
     hasOccupation: industry.slice(0, 1).map((i) => ({ "@type": "Occupation", name: i.role })),
-    knowsAbout: ["Logística", "Gestión de operaciones", "Simulación", "Teoría de colas", "Inteligencia artificial", "Innovación abierta"],
+    knowsAbout:
+      locale === "en"
+        ? ["Logistics", "Operations management", "Simulation", "Queueing theory", "Artificial intelligence", "Open innovation"]
+        : ["Logística", "Gestión de operaciones", "Simulación", "Teoría de colas", "Inteligencia artificial", "Innovación abierta"],
   };
   return (
     <script

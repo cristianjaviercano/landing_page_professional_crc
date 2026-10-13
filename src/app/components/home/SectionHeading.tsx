@@ -38,3 +38,13 @@ export function Mark({ children }: { children: ReactNode }) {
     </span>
   );
 }
+
+/** Renders a `{ pre, mark, post }` title from the UI dictionary. */
+export function titleWithMark(t: { pre: string; mark: string; post: string }) {
+  return (
+    <>
+      {t.pre} <Mark>{t.mark}</Mark>
+      {t.post}
+    </>
+  );
+}

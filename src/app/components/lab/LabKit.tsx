@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { useLocale } from "../../i18n/LocaleProvider";
 
 export const INK = "#1B1B1B";
 export const AMBER = "#B8860B";
@@ -8,8 +9,17 @@ export const YELLOW = "#F4C21B";
 
 /* ---------- formatting ---------- */
 
-export const fmt = (v: number, d = 0) =>
-  Number.isFinite(v) ? v.toLocaleString("es-CO", { minimumFractionDigits: d, maximumFractionDigits: d }) : "—";
+export const fmt = (v: number, d = 0, loc = "es-CO") =>
+  Number.isFinite(v) ? v.toLocaleString(loc, { minimumFractionDigits: d, maximumFractionDigits: d }) : "—";
+
+/** Renders `**bold**` spans from dictionary strings. */
+export function Rich({ text }: { text: string }) {
+  return (
+    <>
+      {text.split("**").map((part, i) => (i % 2 ? <strong key={i}>{part}</strong> : <span key={i}>{part}</span>))}
+    </>
+  );
+}
 
 /* ---------- inputs ---------- */
 
@@ -33,12 +43,13 @@ export function Slider({
   onChange: (v: number) => void;
 }) {
   const id = useId();
+  const { nf } = useLocale();
   return (
     <div>
       <label htmlFor={id} className="flex justify-between gap-3 text-sm font-semibold">
         <span>{label}</span>
         <span className="font-mono">
-          {fmt(value, digits)}
+          {fmt(value, digits, nf)}
           {unit && <span className="text-[#1B1B1B]/55"> {unit}</span>}
         </span>
       </label>

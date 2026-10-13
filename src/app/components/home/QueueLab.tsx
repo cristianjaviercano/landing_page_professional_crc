@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play, RotateCcw } from "lucide-react";
+import { useLocale } from "../../i18n/LocaleProvider";
 
 const INK = "#1B1B1B";
 const YELLOW = "#F4C21B";
@@ -42,9 +43,16 @@ function theory(lambda: number, mu: number) {
   return { rho, L: rho / (1 - rho), Lq: (rho * rho) / (1 - rho), W: 1 / (mu - lambda), Wq: rho / (mu - lambda) };
 }
 
-const fmt = (v: number | undefined, d = 2) => (v === undefined || !Number.isFinite(v) ? "—" : v.toFixed(d));
+const fmtN = (v: number | undefined, d = 2, loc = "es-CO") =>
+  v === undefined || !Number.isFinite(v) ? "—" : v.toLocaleString(loc, { minimumFractionDigits: d, maximumFractionDigits: d });
 
 export default function QueueLab() {
+  const { t, nf } = useLocale();
+  const x = t.lab.mm1;
+  const fmt = (v: number | undefined, d = 2) => fmtN(v, d, nf);
+  // canvas text is drawn inside the animation loop; read the active strings through a ref so a language change never restarts it
+  const labels = useRef({ server: x.server, inQueue: x.inQueue, nOfT: x.nOfT, lTheory: x.lTheory });
+  labels.current = { server: x.server, inQueue: x.inQueue, nOfT: x.nOfT, lTheory: x.lTheory };
   const [lambda, setLambda] = useState(4);
   const [mu, setMu] = useState(5);
   const [speed, setSpeed] = useState(5);
@@ -175,7 +183,7 @@ export default function QueueLab() {
       ctx.fillStyle = YELLOW;
       ctx.font = "600 11px ui-monospace, SFMono-Regular, Menlo, monospace";
       ctx.textAlign = "center";
-      ctx.fillText("SERVIDOR", serverX, laneY - sw / 2 - 14);
+      ctx.fillText(labels.current.server, serverX, laneY - sw / 2 - 14);
 
       if (inService) {
         inService.x = ease(inService.x, serverX, k);
@@ -202,7 +210,7 @@ export default function QueueLab() {
         ctx.fillStyle = INK;
         ctx.font = "700 13px ui-monospace, SFMono-Regular, Menlo, monospace";
         ctx.textAlign = "left";
-        ctx.fillText(`+${queue.length} en cola`, 8, laneY - slot);
+        ctx.fillText(`+${queue.length} ${labels.current.inQueue}`, 8, laneY - slot);
       }
 
       // departures
@@ -224,7 +232,7 @@ export default function QueueLab() {
         ctx.fillStyle = "rgba(27,27,27,0.55)";
         ctx.font = "600 11px ui-monospace, SFMono-Regular, Menlo, monospace";
         ctx.textAlign = "left";
-        ctx.fillText("N(t) en el sistema", 0, top - 4);
+        ctx.fillText(labels.current.nOfT, 0, top - 4);
         if (th) {
           const y = top + h - (th.L / maxV) * h;
           ctx.setLineDash([4, 4]);
@@ -256,7 +264,7 @@ export default function QueueLab() {
         }
         if (th && labelY !== null) {
           // drawn last so the series never hides it
-          const text = `L teórico = ${th.L.toFixed(2)}`;
+          const text = `${labels.current.lTheory} = ${th.L.toFixed(2)}`;
           const tw = ctx.measureText(text).width;
           ctx.fillStyle = PAPER;
           ctx.fillRect(width - tw - 8, labelY - 15, tw + 8, 15);
@@ -341,18 +349,18 @@ export default function QueueLab() {
   const littleObs = snap && Number.isFinite(snap.W) ? lambda * snap.W : NaN;
 
   const rows: { label: string; sym: string; th?: number; obs?: number }[] = [
-    { label: "Utilización", sym: "ρ", th: th?.rho, obs: snap?.rho },
-    { label: "Clientes en sistema", sym: "L", th: th?.L, obs: snap?.L },
-    { label: "Clientes en cola", sym: "Lq", th: th?.Lq, obs: snap?.Lq },
-    { label: "Tiempo en sistema (min)", sym: "W", th: th?.W, obs: snap?.W },
-    { label: "Espera en cola (min)", sym: "Wq", th: th?.Wq, obs: snap?.Wq },
+    { label: x.rows.rho, sym: "ρ", th: th?.rho, obs: snap?.rho },
+    { label: x.rows.L, sym: "L", th: th?.L, obs: snap?.L },
+    { label: x.rows.Lq, sym: "Lq", th: th?.Lq, obs: snap?.Lq },
+    { label: x.rows.W, sym: "W", th: th?.W, obs: snap?.W },
+    { label: x.rows.Wq, sym: "Wq", th: th?.Wq, obs: snap?.Wq },
   ];
 
   return (
     <div className="overflow-hidden rounded-3xl border-2 border-[#1B1B1B] bg-[#F7F3EA] shadow-[8px_8px_0_#1B1B1B]">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#1B1B1B] bg-[#1B1B1B] px-5 py-3 text-[#F7F3EA]">
         <p className="font-mono text-sm font-semibold">
-          <span className="text-[#F4C21B]">M/M/1</span> · simulación de eventos discretos
+          <span className="text-[#F4C21B]">M/M/1</span> · {x.header}
         </p>
         <div className="flex items-center gap-2">
           {[1, 5, 25].map((s) => (
@@ -366,10 +374,10 @@ export default function QueueLab() {
               {s}×
             </button>
           ))}
-          <button onClick={() => setRunning((r) => !r)} aria-label={running ? "Pausar" : "Reanudar"} className="ml-2 rounded-md p-1 hover:bg-white/10">
+          <button onClick={() => setRunning((r) => !r)} aria-label={running ? x.pause : x.resume} className="ml-2 rounded-md p-1 hover:bg-white/10">
             {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           </button>
-          <button onClick={() => setResetKey((k) => k + 1)} aria-label="Reiniciar" className="rounded-md p-1 hover:bg-white/10">
+          <button onClick={() => setResetKey((k) => k + 1)} aria-label={x.reset} className="rounded-md p-1 hover:bg-white/10">
             <RotateCcw className="h-4 w-4" />
           </button>
         </div>
@@ -377,20 +385,20 @@ export default function QueueLab() {
 
       <div className="grid lg:grid-cols-[1.4fr_1fr]">
         <div className="border-b-2 border-[#1B1B1B] p-5 lg:border-b-0 lg:border-r-2">
-          <canvas ref={canvasRef} className="h-[300px] w-full" aria-label="Animación de la cola M/M/1" role="img" />
+          <canvas ref={canvasRef} className="h-[300px] w-full" aria-label={x.canvas} role="img" />
 
           <div className="mt-4 grid gap-5 sm:grid-cols-2">
             <label className="block">
               <span className="flex justify-between text-sm font-semibold">
-                <span>Llegadas λ</span>
-                <span className="font-mono">{lambda.toFixed(1)} /min</span>
+                <span>{x.arrivals}</span>
+                <span className="font-mono">{fmt(lambda, 1)} {x.perMin}</span>
               </span>
               <input type="range" min={0.5} max={10} step={0.1} value={lambda} onChange={(e) => setLambda(+e.target.value)} className="lab-range mt-2 w-full" />
             </label>
             <label className="block">
               <span className="flex justify-between text-sm font-semibold">
-                <span>Servicio μ</span>
-                <span className="font-mono">{mu.toFixed(1)} /min</span>
+                <span>{x.service}</span>
+                <span className="font-mono">{fmt(mu, 1)} {x.perMin}</span>
               </span>
               <input type="range" min={0.5} max={10} step={0.1} value={mu} onChange={(e) => setMu(+e.target.value)} className="lab-range mt-2 w-full" />
             </label>
@@ -404,17 +412,17 @@ export default function QueueLab() {
             }`}
           >
             <span className="text-sm font-semibold">
-              {rho >= 1 ? "Sistema inestable: la cola crece sin límite" : rho > 0.85 ? "Zona crítica: la espera se dispara" : "Sistema estable"}
+              {rho >= 1 ? x.unstable : rho > 0.85 ? x.critical : x.stable}
             </span>
-            <span className="font-mono text-lg font-black">ρ = {rho.toFixed(2)}</span>
+            <span className="font-mono text-lg font-black">ρ = {fmt(rho, 2)}</span>
           </div>
 
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b-2 border-[#1B1B1B] text-left font-mono text-[11px] uppercase tracking-wide">
-                <th className="py-2 font-semibold">Métrica</th>
-                <th className="py-2 text-right font-semibold">Teórico</th>
-                <th className="py-2 text-right font-semibold">Simulado</th>
+                <th className="py-2 font-semibold">{x.metric}</th>
+                <th className="py-2 text-right font-semibold">{x.theory}</th>
+                <th className="py-2 text-right font-semibold">{x.simulated}</th>
               </tr>
             </thead>
             <tbody>
@@ -432,9 +440,9 @@ export default function QueueLab() {
           </table>
 
           <div className="mt-4 rounded-xl border-2 border-dashed border-[#1B1B1B]/40 p-3 text-sm">
-            <p className="font-hand text-xl leading-none">Ley de Little: L = λ·W</p>
+            <p className="font-hand text-xl leading-none">{x.little}</p>
             <p className="mt-1 font-mono text-xs text-[#1B1B1B]/75">
-              L sim = {fmt(snap?.L)} · λ·W sim = {fmt(littleObs)} · atendidos = {snap?.served ?? 0}
+              L sim = {fmt(snap?.L)} · λ·W sim = {fmt(littleObs)} · {x.served} = {snap?.served ?? 0}
             </p>
           </div>
         </div>

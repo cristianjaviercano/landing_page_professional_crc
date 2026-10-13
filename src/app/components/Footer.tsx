@@ -1,14 +1,18 @@
 import { Mail } from "lucide-react";
-import { contact } from "../data/profile";
+import { getProfile, getUi, type Locale } from "../i18n";
 import { InstagramIcon, LinkedInIcon } from "./SocialIcons";
 
-export default function Footer() {
+export default function Footer({ locale }: { locale: Locale }) {
+  const { contact } = getProfile(locale);
+  const t = getUi(locale);
   return (
     <footer className="no-print border-t-2 border-[#1B1B1B] bg-[#1B1B1B] py-10 text-[#F7F3EA]">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 sm:flex-row sm:px-6 lg:px-8">
         <div className="text-center sm:text-left">
           <p className="font-bold">Cristian Javier Cano Mogollón</p>
-          <p className="text-sm text-[#F7F3EA]/60">Ingeniería Industrial · Operaciones · IA — {contact.location}</p>
+          <p className="text-sm text-[#F7F3EA]/60">
+            {t.footer.tagline} — {contact.location}
+          </p>
         </div>
         <div className="flex items-center gap-2">
           {[
