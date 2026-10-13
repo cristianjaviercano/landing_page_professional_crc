@@ -180,6 +180,14 @@ const es = {
         `De ${planned} min planificados, solo **${fully} min** producen unidades buenas a velocidad ideal. Frente a la referencia de clase mundial, la mayor brecha está en **${worst}**: empieza el Kaizen por ahí.`,
     },
   },
+  services: {
+    kicker: "servicios",
+    title: { pre: "¿En qué puedo", mark: "ayudarte", post: "?" } as Title,
+    lead: "Trabajo con empresas, universidades y equipos de innovación. Cuéntame tu reto y te respondo por correo.",
+    cta: "Consultar",
+    book: "Agendar una llamada",
+    mailBody: "Hola Cristian,\n\nMe gustaría conversar sobre este tema:\n\n",
+  },
   courses: {
     kicker: "cursos",
     title: { pre: "Aprende", mark: "gratis", post: "." } as Title,
@@ -393,6 +401,14 @@ const en: UiStrings = {
       insight: (planned, fully, worst) =>
         `Of ${planned} planned minutes, only **${fully} min** make good units at ideal speed. Against the world-class benchmark, the largest gap is in **${worst}**: start your Kaizen there.`,
     },
+  },
+  services: {
+    kicker: "services",
+    title: { pre: "How can I", mark: "help", post: "?" },
+    lead: "I work with companies, universities and innovation teams. Tell me your challenge and I'll reply by email.",
+    cta: "Enquire",
+    book: "Book a call",
+    mailBody: "Hi Cristian,\n\nI'd like to talk about this topic:\n\n",
   },
   courses: {
     kicker: "courses",

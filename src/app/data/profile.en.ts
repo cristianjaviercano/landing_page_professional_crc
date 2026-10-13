@@ -9,6 +9,35 @@ function overlay<T extends object>(base: T[], text: Partial<T>[]): T[] {
 
 export const { siteUrl } = es;
 
+export const services = overlay(es.services, [
+  {
+    title: "Operations & logistics consulting",
+    description: "Diagnosis and redesign of production, procurement, inventory and dispatch processes, with clear KPIs: OEE, scrap and service level.",
+    tags: ["MPS/MRP", "Inventory", "KPIs"],
+    subject: "Operations & logistics consulting",
+  },
+  {
+    title: "Simulation & analytics",
+    description: "Simulation and optimization models, and control dashboards, to decide with data before investing in or changing the plant.",
+    tags: ["AnyLogic", "GAMS", "Power BI"],
+    subject: "Simulation & analytics",
+  },
+  {
+    title: "Corporate training & teaching",
+    description: "Workshops, diplomas and courses in logistics, project management, innovation and applied AI, for teams and universities.",
+    tags: ["Logistics", "Projects", "Applied AI"],
+    subject: "Corporate training",
+  },
+  {
+    title: "Open innovation & applied AI",
+    description: "From industrial challenge to prototype with the HIS methodology, planned by technology readiness levels (TRL 1–9).",
+    tags: ["HIS", "TRL 1–9", "Prototyping"],
+    subject: "Open innovation & applied AI",
+  },
+]);
+
+export const { bookingUrl } = es;
+
 export const contact = { ...es.contact, location: "Montería, Córdoba — Colombia" };
 
 export const caseStudies: CaseStudy[] = overlay(es.caseStudies, [

@@ -1,5 +1,5 @@
 import * as es from "../data/profile";
-import type { CaseStudy, CvItem } from "../data/profile";
+import type { CaseStudy, CvItem, Service } from "../data/profile";
 import * as en from "../data/profile.en";
 import { ui } from "./ui";
 
@@ -11,6 +11,8 @@ export type Profile = {
   siteUrl: string;
   contact: { email: string; linkedin: string; instagram: string; location: string };
   caseStudies: CaseStudy[];
+  services: Service[];
+  bookingUrl: string | null;
   apps: { title: string; description: string; url: string; tag: string }[];
   courses: { title: string; description: string; url: string }[];
   anylogic: { title: string; url: string }[];

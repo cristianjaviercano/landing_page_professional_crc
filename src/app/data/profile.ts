@@ -7,6 +7,52 @@ export const contact = {
   location: "Montería, Córdoba — Colombia",
 };
 
+/**
+ * Public booking page (Google Calendar appointment schedule, Cal.com, etc.).
+ * While null, the "book a call" button is hidden and only the email CTA is shown.
+ */
+export const bookingUrl: string | null = null;
+
+export type Service = {
+  id: "ops" | "sim" | "training" | "innovation";
+  title: string;
+  description: string;
+  tags: string[];
+  /** Subject line for the pre-filled email. */
+  subject: string;
+};
+
+export const services: Service[] = [
+  {
+    id: "ops",
+    title: "Consultoría en operaciones y logística",
+    description: "Diagnóstico y rediseño de procesos de producción, abastecimiento, inventarios y despacho, con KPIs claros: OEE, mermas y nivel de servicio.",
+    tags: ["MPS/MRP", "Inventarios", "KPIs"],
+    subject: "Consultoría en operaciones y logística",
+  },
+  {
+    id: "sim",
+    title: "Simulación y analítica",
+    description: "Modelos de simulación y optimización, y tableros de control, para decidir con datos antes de invertir o cambiar la planta.",
+    tags: ["AnyLogic", "GAMS", "Power BI"],
+    subject: "Simulación y analítica",
+  },
+  {
+    id: "training",
+    title: "Formación corporativa y docencia",
+    description: "Talleres, diplomados y cátedras en logística, gestión de proyectos, innovación e IA aplicada, para equipos y universidades.",
+    tags: ["Logística", "Proyectos", "IA aplicada"],
+    subject: "Formación corporativa",
+  },
+  {
+    id: "innovation",
+    title: "Innovación abierta e IA aplicada",
+    description: "Del reto industrial al prototipo con la metodología HIS, planificado por niveles de madurez tecnológica (TRL 1–9).",
+    tags: ["HIS", "TRL 1–9", "Prototipado"],
+    subject: "Innovación abierta e IA aplicada",
+  },
+];
+
 export type CaseStudy = {
   title: string;
   description: string;
