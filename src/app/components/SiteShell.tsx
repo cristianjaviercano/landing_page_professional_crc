@@ -4,6 +4,7 @@ import { Caveat, Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import AskCv from "./AskCv";
 import { getProfile, getUi, type Locale } from "../i18n";
 import { LocaleProvider } from "../i18n/LocaleProvider";
 
@@ -35,6 +36,8 @@ export function siteMetadata(locale: Locale): Metadata {
 }
 
 export default function SiteShell({ locale, children }: { locale: Locale; children: ReactNode }) {
+  // The assistant only exists when an API key is configured for the deployment (read at build time).
+  const askEnabled = Boolean(process.env.ANTHROPIC_API_KEY);
   return (
     <html lang={locale} className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable}`}>
       <body className="min-h-screen">
@@ -42,6 +45,7 @@ export default function SiteShell({ locale, children }: { locale: Locale; childr
           <Navbar />
           <main>{children}</main>
           <Footer locale={locale} />
+          {askEnabled && <AskCv />}
         </LocaleProvider>
         <Analytics />
       </body>
