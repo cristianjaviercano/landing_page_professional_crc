@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { apps, caseStudies } from "../../data/profile";
+import CountUp from "./CountUp";
 import TiltCard from "./TiltCard";
 
 const filters = [
@@ -64,6 +65,12 @@ export default function Projects() {
                     </span>
                   </div>
                   <div className="p-5">
+                    {p.metric && (
+                      <p className="mb-3 flex items-baseline gap-2 border-b-2 border-dashed border-[#1B1B1B]/20 pb-3">
+                        <CountUp value={p.metric.value} className="whitespace-nowrap text-3xl font-black tracking-tight" />
+                        <span className="text-xs font-semibold leading-tight text-[#1B1B1B]/65">{p.metric.label}</span>
+                      </p>
+                    )}
                     <h3 className="mb-2 flex items-start justify-between gap-2 text-lg font-bold leading-tight">
                       {p.title}
                       <ArrowUpRight className="h-5 w-5 flex-shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

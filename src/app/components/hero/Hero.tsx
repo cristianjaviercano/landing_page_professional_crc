@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
+import CountUp from "../home/CountUp";
 
 const FactoryScene = dynamic(() => import("./FactoryScene"), {
   ssr: false,
@@ -100,7 +101,9 @@ export default function Hero() {
             {metrics.map((m) => (
               <div key={m.label} className="border-l-4 border-[#F4C21B] pl-3">
                 <dt className="sr-only">{m.label}</dt>
-                <dd className="text-3xl font-black">{m.value}</dd>
+                <dd className="text-3xl font-black">
+                  <CountUp value={m.value} />
+                </dd>
                 <dd className="text-xs leading-tight text-[#1B1B1B]/65">{m.label}</dd>
               </div>
             ))}

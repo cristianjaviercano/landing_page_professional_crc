@@ -7,13 +7,24 @@ export const contact = {
   location: "Montería, Córdoba — Colombia",
 };
 
-export const caseStudies = [
+export type CaseStudy = {
+  title: string;
+  description: string;
+  url: string;
+  cover: string;
+  tags: string[];
+  /** Headline result taken from the case-study page itself. */
+  metric?: { value: string; label: string };
+};
+
+export const caseStudies: CaseStudy[] = [
   {
     title: "Auditoría RCA & Control Estadístico",
     description: "Cartas EWMA, capacidad Cp/Cpk y ranking cuantitativo de causas raíz para redes de distribución.",
     url: "/proyectos/rca-quality-control/index.html",
     cover: "/proyectos/rca-quality-control/cover.png",
     tags: ["SPC", "Python", "Calidad"],
+    metric: { value: "87%", label: "de las quejas explicadas por 4 causas raíz" },
   },
   {
     title: "Plataforma de Última Milla",
@@ -21,6 +32,7 @@ export const caseStudies = [
     url: "/proyectos/last-mile-performance/index.html",
     cover: "/proyectos/last-mile-performance/cover.png",
     tags: ["Logística", "Streamlit", "Rutas"],
+    metric: { value: "24%", label: "más puntualidad en entregas de última milla" },
   },
   {
     title: "ZERO — Plataforma Académica",
@@ -35,6 +47,7 @@ export const caseStudies = [
     url: "/proyectos/his-innovation-model/index.html",
     cover: "/proyectos/his-innovation-model/cover.png",
     tags: ["Innovación", "IA", "TRL"],
+    metric: { value: "48–72 h", label: "del concepto al prototipo funcional" },
   },
 ];
 
@@ -109,6 +122,8 @@ export type CvItem = {
   org: string;
   place?: string;
   points: string[];
+  /** Quantified results; add more as they are confirmed. */
+  impact?: { value: string; label: string }[];
 };
 
 export const industry: CvItem[] = [
@@ -122,6 +137,7 @@ export const industry: CvItem[] = [
       "Planeación MPS/MRP y control de mermas con SAP ERP y Power BI.",
       "Dirección de equipos de 30+ personas con KPIs de productividad, OEE, costos y seguridad.",
     ],
+    impact: [{ value: "30+", label: "personas a cargo" }],
   },
   {
     period: "2016 – 2018",

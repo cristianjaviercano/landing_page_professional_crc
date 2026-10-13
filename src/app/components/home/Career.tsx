@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { Briefcase, FileText, GraduationCap, School } from "lucide-react";
 import Link from "next/link";
+import CountUp from "./CountUp";
 import { academia, education, industry, languages, skills, type CvItem } from "../../data/profile";
 
 const tabs = [
@@ -35,6 +36,16 @@ function Timeline({ items }: { items: CvItem[] }) {
             {it.org}
             {it.place && <span className="font-normal text-[#1B1B1B]/55"> · {it.place}</span>}
           </p>
+          {it.impact && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {it.impact.map((m) => (
+                <span key={m.label} className="inline-flex items-baseline gap-1.5 rounded-lg border-2 border-[#1B1B1B] bg-[#F4C21B] px-2.5 py-1">
+                  <CountUp value={m.value} className="text-lg font-black" />
+                  <span className="text-xs font-semibold">{m.label}</span>
+                </span>
+              ))}
+            </div>
+          )}
           {it.points.length > 0 && (
             <ul className="mt-2 space-y-1 text-sm leading-relaxed text-[#1B1B1B]/70">
               {it.points.map((p) => (
