@@ -3,6 +3,8 @@ import { Caveat, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { Analytics } from "@vercel/analytics/next";
+import { headline, siteUrl } from "./data/profile";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,10 +21,30 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const description =
+  "Ingeniero Industrial, MSc. en Gestión de la Innovación y candidato a Doctor en IA. Proyectos, simulación, cursos y trayectoria en logística y operaciones.";
+
 export const metadata: Metadata = {
-  title: "Cristian Javier Cano Mogollón | Operaciones, Logística e IA",
-  description:
-    "Ingeniero Industrial, MSc. en Gestión de la Innovación y candidato a Doctor en IA. Proyectos, simulación, cursos y trayectoria en logística y operaciones.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Cristian Javier Cano Mogollón | Operaciones, Logística e IA",
+    template: "%s",
+  },
+  description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "profile",
+    locale: "es_CO",
+    siteName: "Cristian Javier Cano Mogollón",
+    title: "Cristian Javier Cano Mogollón — Operaciones, Logística e IA",
+    description: headline,
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cristian Javier Cano Mogollón — Operaciones, Logística e IA",
+    description: headline,
+  },
 };
 
 export default function RootLayout({
@@ -36,6 +58,7 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

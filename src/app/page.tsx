@@ -7,6 +7,7 @@ import Projects from "./components/home/Projects";
 import QueueLab from "./components/home/QueueLab";
 import Reveal from "./components/home/Reveal";
 import SectionHeading, { Mark } from "./components/home/SectionHeading";
+import PersonJsonLd from "./components/PersonJsonLd";
 import { InstagramIcon, LinkedInIcon } from "./components/SocialIcons";
 import { anylogic, contact, courses, games, music, stories } from "./data/profile";
 
@@ -15,6 +16,7 @@ const shell = "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8";
 export default function Home() {
   return (
     <>
+      <PersonJsonLd />
       <Hero />
       <About />
 

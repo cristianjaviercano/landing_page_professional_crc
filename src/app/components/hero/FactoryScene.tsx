@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, type ThreeElements } from "@react-three/fiber";
 import { Outlines } from "@react-three/drei";
@@ -385,10 +385,22 @@ export default function FactoryScene({ animate = true }: { animate?: boolean }) 
   const [hovered, setHovered] = useState<number | null>(null);
   const labels = useRef<(HTMLButtonElement | null)[]>([]);
   const hover = { hovered, setHovered };
+  const wrapper = useRef<HTMLDivElement>(null);
+  const [onScreen, setOnScreen] = useState(true);
+
+  // Stop rendering the WebGL scene while the hero is scrolled out of view.
+  useEffect(() => {
+    const el = wrapper.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <div className="relative h-full w-full">
+    <div ref={wrapper} className="relative h-full w-full">
       <Canvas
+        frameloop={onScreen ? "always" : "never"}
         orthographic
         shadows
         dpr={[1, 2]}

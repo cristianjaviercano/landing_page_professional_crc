@@ -309,13 +309,30 @@ export default function QueueLab() {
           rho: stats.busy / t,
         });
       }
+      raf = visible ? requestAnimationFrame(loop) : 0;
+    };
+
+    // Only simulate and paint while the lab is on screen.
+    let visible = true;
+    const start = () => {
+      if (raf) return;
+      last = performance.now();
       raf = requestAnimationFrame(loop);
     };
-    raf = requestAnimationFrame(loop);
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) start();
+      },
+      { rootMargin: "100px" },
+    );
+    io.observe(canvas);
+    start();
 
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      io.disconnect();
     };
   }, [resetKey]);
 

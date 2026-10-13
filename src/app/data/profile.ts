@@ -1,3 +1,5 @@
+export const siteUrl = "https://landing-page-professional-crc.vercel.app";
+
 export const contact = {
   email: "cristianjaviercano@gmail.com",
   linkedin: "https://www.linkedin.com/in/msccristianjcanom/",
