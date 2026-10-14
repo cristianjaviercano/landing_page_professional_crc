@@ -46,8 +46,8 @@ export default function Navbar() {
           <span className="grid h-9 w-9 place-items-center rounded-lg border-2 border-[#1B1B1B] bg-[#F4C21B] font-mono text-sm font-black shadow-[2px_2px_0_#1B1B1B]">
             CC
           </span>
-          <span className="hidden font-bold leading-tight sm:block">
-            Cristian Cano <span className="font-normal text-[#1B1B1B]/60">Mogollón</span>
+          <span className="hidden font-bold leading-tight sm:block md:hidden lg:block">
+            Cristian Javier Cano <span className="font-normal text-[#1B1B1B]/60">Mogollón</span>
           </span>
         </Link>
 

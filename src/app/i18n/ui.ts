@@ -205,7 +205,7 @@ const es = {
   },
   contact: {
     kicker: "¿hablamos?",
-    title: "Optimicemos tu operación.",
+    title: "Mejoremos tu operación.",
     lead: "Consultoría en logística y operaciones, formación corporativa, proyectos de innovación e investigación aplicada.",
   },
   footer: { tagline: "Ingeniería Industrial · Operaciones · IA" },
@@ -427,7 +427,7 @@ const en: UiStrings = {
   },
   contact: {
     kicker: "let's talk",
-    title: "Let's optimize your operation.",
+    title: "Let's improve your operation.",
     lead: "Logistics and operations consulting, corporate training, innovation projects and applied research.",
   },
   footer: { tagline: "Industrial Engineering · Operations · AI" },
