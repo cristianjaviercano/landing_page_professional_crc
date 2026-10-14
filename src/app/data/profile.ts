@@ -13,6 +13,9 @@ export const contact = {
  */
 export const bookingUrl: string | null = null;
 
+/** Language a linked page is written in; "both" = bilingual. */
+export type ContentLang = "es" | "en" | "both";
+
 export type Service = {
   id: "ops" | "sim" | "training" | "innovation";
   title: string;
@@ -59,6 +62,7 @@ export type CaseStudy = {
   url: string;
   cover: string;
   tags: string[];
+  lang?: ContentLang;
   /** Headline result taken from the case-study page itself. */
   metric?: { value: string; label: string };
 };
@@ -69,6 +73,7 @@ export const caseStudies: CaseStudy[] = [
     description: "Cartas EWMA, capacidad Cp/Cpk y ranking cuantitativo de causas raíz para redes de distribución.",
     url: "/proyectos/rca-quality-control/index.html",
     cover: "/proyectos/rca-quality-control/cover.png",
+    lang: "en",
     tags: ["SPC", "Python", "Calidad"],
     metric: { value: "87%", label: "de las quejas explicadas por 4 causas raíz" },
   },
@@ -77,6 +82,7 @@ export const caseStudies: CaseStudy[] = [
     description: "Rendimiento de rutas e inventario para flotas de reparto: tiempo teórico vs. real por despacho.",
     url: "/proyectos/last-mile-performance/index.html",
     cover: "/proyectos/last-mile-performance/cover.png",
+    lang: "en",
     tags: ["Logística", "Streamlit", "Rutas"],
     metric: { value: "24%", label: "más puntualidad en entregas de última milla" },
   },
@@ -85,6 +91,7 @@ export const caseStudies: CaseStudy[] = [
     description: "Gestión de cursos, calificación y alertas tempranas de riesgo académico.",
     url: "/proyectos/zero-academic-platform/index.html",
     cover: "/proyectos/zero-academic-platform/cover.png",
+    lang: "en",
     tags: ["EdTech", "Analítica", "Alertas"],
   },
   {
@@ -92,6 +99,7 @@ export const caseStudies: CaseStudy[] = [
     description: "Hub de Soluciones Industriales: prototipado guiado por IA para I+D aplicada con la industria.",
     url: "/proyectos/his-innovation-model/index.html",
     cover: "/proyectos/his-innovation-model/cover.png",
+    lang: "en",
     tags: ["Innovación", "IA", "TRL"],
     metric: { value: "48–72 h", label: "del concepto al prototipo funcional" },
   },
@@ -124,6 +132,7 @@ export const courses = [
     title: "Fabricación de Agentes de IA",
     description: "Metodología de línea de producción multi-agente.",
     url: "/cursos/agentes-ia/index.html",
+    lang: "es" as ContentLang,
   },
 ];
 
@@ -141,10 +150,10 @@ export const games = [
 ];
 
 export const stories = [
-  { title: "El Cirio", description: "Una llama que no se apaga", url: "/historias/el_cirio/index.html", ready: true },
-  { title: "Fuiste Tú", description: "Una historia de amor y reconocimiento", url: "/historias/Fuiste_tu/index.html", ready: true },
-  { title: "Ecos del San José", description: "El galeón que guarda secretos del mar", url: "/historias/ecos_del_San_jose/index.html", ready: true },
-  { title: "El Silencio", description: "Lo que no se dice también habla", url: "/historias/Elsidelsilencio/index.html", ready: true },
+  { title: "El Cirio", description: "Una llama que no se apaga", url: "/historias/el_cirio/index.html", ready: true, lang: "en" as ContentLang },
+  { title: "Fuiste Tú", description: "Una historia de amor y reconocimiento", url: "/historias/Fuiste_tu/index.html", ready: true, lang: "en" as ContentLang },
+  { title: "Ecos del San José", description: "El galeón que guarda secretos del mar", url: "/historias/ecos_del_San_jose/index.html", ready: true, lang: "both" as ContentLang },
+  { title: "El Silencio", description: "Lo que no se dice también habla", url: "/historias/Elsidelsilencio/index.html", ready: true, lang: "both" as ContentLang },
   { title: "El Sueño de Mi Vida", description: "Perseguir lo que el alma pide", url: "/historias/index.html", ready: false },
   { title: "Lo que las Letras Sienten", description: "Palabras que cobran vida propia", url: "/historias/index.html", ready: false },
 ];

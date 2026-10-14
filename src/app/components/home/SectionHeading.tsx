@@ -7,12 +7,15 @@ export default function SectionHeading({
   title,
   children,
   invert = false,
+  as: Heading = "h2",
 }: {
   index: string;
   kicker: string;
   title: ReactNode;
   children?: ReactNode;
   invert?: boolean;
+  /** Heading level: the home page uses h2 under its hero h1; standalone pages pass "h1". */
+  as?: "h1" | "h2";
 }) {
   return (
     <Reveal className="mb-10 max-w-3xl">
@@ -21,9 +24,9 @@ export default function SectionHeading({
         <span className={`h-px w-10 ${invert ? "bg-[#F4C21B]" : "bg-[#1B1B1B]"}`} />
         <span className="font-hand text-2xl">{kicker}</span>
       </p>
-      <h2 className={`text-4xl font-black leading-[1.02] tracking-tight sm:text-5xl ${invert ? "text-[#F7F3EA]" : "text-[#1B1B1B]"}`}>
+      <Heading className={`text-4xl font-black leading-[1.02] tracking-tight sm:text-5xl ${invert ? "text-[#F7F3EA]" : "text-[#1B1B1B]"}`}>
         {title}
-      </h2>
+      </Heading>
       {children && <p className={`mt-4 text-lg leading-relaxed ${invert ? "text-[#F7F3EA]/70" : "text-[#1B1B1B]/70"}`}>{children}</p>}
     </Reveal>
   );

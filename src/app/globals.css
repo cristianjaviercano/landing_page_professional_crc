@@ -30,19 +30,30 @@ body {
     center / 100% 100% no-repeat;
 }
 
-/* Ink-and-yellow range slider for the queue lab. */
+/* Ink-and-yellow range slider for the queue lab. The input itself is 28px tall (touch target); the 12px track is drawn on the pseudo-element. */
 .lab-range {
   appearance: none;
+  height: 28px;
+  background: transparent;
+  cursor: pointer;
+}
+.lab-range::-webkit-slider-runnable-track {
+  height: 12px;
+  border-radius: 999px;
+  border: 2px solid var(--foreground);
+  background: #fff;
+}
+.lab-range::-moz-range-track {
   height: 8px;
   border-radius: 999px;
   border: 2px solid var(--foreground);
   background: #fff;
-  cursor: pointer;
 }
 .lab-range::-webkit-slider-thumb {
   appearance: none;
   width: 22px;
   height: 22px;
+  margin-top: -7px;
   border-radius: 6px;
   border: 2px solid var(--foreground);
   background: var(--yellow);

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play, RotateCcw } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
 import { useLocale } from "../../i18n/LocaleProvider";
 
 const INK = "#1B1B1B";
@@ -44,7 +45,10 @@ function theory(lambda: number, mu: number) {
 }
 
 const fmtN = (v: number | undefined, d = 2, loc = "es-CO") =>
-  v === undefined || !Number.isFinite(v) ? "—" : v.toLocaleString(loc, { minimumFractionDigits: d, maximumFractionDigits: d });
+  v === undefined || !Number.isFinite(v)
+    ? "—"
+    : // values that round to zero must not print as "-0,00"
+      (Math.abs(v) < 0.5 * 10 ** -d ? 0 : v).toLocaleString(loc, { minimumFractionDigits: d, maximumFractionDigits: d });
 
 export default function QueueLab() {
   const { t, nf } = useLocale();
@@ -56,7 +60,10 @@ export default function QueueLab() {
   const [lambda, setLambda] = useState(4);
   const [mu, setMu] = useState(5);
   const [speed, setSpeed] = useState(5);
-  const [running, setRunning] = useState(true);
+  // With "reduce motion" the simulation starts paused; pressing play still runs it.
+  const reducedMotion = useReducedMotion();
+  const [userRunning, setUserRunning] = useState<boolean | null>(null);
+  const running = userRunning ?? !reducedMotion;
   const [snap, setSnap] = useState<Snapshot | null>(null);
   const [resetKey, setResetKey] = useState(0);
 
@@ -229,7 +236,7 @@ export default function QueueLab() {
         const th = theory(params.current.lambda, params.current.mu);
         const maxV = Math.max(4, ...spark, th ? th.L * 1.6 : 0);
         let labelY: number | null = null;
-        ctx.fillStyle = "rgba(27,27,27,0.55)";
+        ctx.fillStyle = "rgba(27,27,27,0.72)";
         ctx.font = "600 11px ui-monospace, SFMono-Regular, Menlo, monospace";
         ctx.textAlign = "left";
         ctx.fillText(labels.current.nOfT, 0, top - 4);
@@ -279,7 +286,8 @@ export default function QueueLab() {
     let last = performance.now();
     let lastSnap = 0;
     const loop = (ts: number) => {
-      const dtReal = Math.min(0.05, (ts - last) / 1000);
+      // rAF timestamps can precede the performance.now() taken at start: never step time backwards
+      const dtReal = Math.max(0, Math.min(0.05, (ts - last) / 1000));
       last = ts;
       const p = params.current;
 
@@ -306,7 +314,7 @@ export default function QueueLab() {
 
       if (ts - lastSnap > 300) {
         lastSnap = ts;
-        const t = stats.t || 1e-9;
+        const t = Math.max(stats.t, 1e-9);
         setSnap({
           inSystem: queue.length + (inService ? 1 : 0),
           served: stats.served,
@@ -367,17 +375,17 @@ export default function QueueLab() {
             <button
               key={s}
               onClick={() => setSpeed(s)}
-              className={`rounded-md px-2 py-0.5 font-mono text-xs font-bold transition-colors ${
+              className={`min-h-7 min-w-8 rounded-md px-2 py-1 font-mono text-xs font-bold transition-colors ${
                 speed === s ? "bg-[#F4C21B] text-[#1B1B1B]" : "text-[#F7F3EA]/70 hover:text-[#F7F3EA]"
               }`}
             >
               {s}×
             </button>
           ))}
-          <button onClick={() => setRunning((r) => !r)} aria-label={running ? x.pause : x.resume} className="ml-2 rounded-md p-1 hover:bg-white/10">
+          <button onClick={() => setUserRunning(!running)} aria-label={running ? x.pause : x.resume} className="ml-2 grid h-7 w-7 place-items-center rounded-md hover:bg-white/10">
             {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           </button>
-          <button onClick={() => setResetKey((k) => k + 1)} aria-label={x.reset} className="rounded-md p-1 hover:bg-white/10">
+          <button onClick={() => setResetKey((k) => k + 1)} aria-label={x.reset} className="grid h-7 w-7 place-items-center rounded-md hover:bg-white/10">
             <RotateCcw className="h-4 w-4" />
           </button>
         </div>

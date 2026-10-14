@@ -1,21 +1,10 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import CountUp from "../home/CountUp";
 import { useLocale } from "../../i18n/LocaleProvider";
-
-function SceneLoading() {
-  const { t } = useLocale();
-  return (
-    <div className="flex h-full items-center justify-center">
-      <span className="font-hand animate-pulse text-2xl text-[#1B1B1B]/60">{t.hero.loading}</span>
-    </div>
-  );
-}
-
-const FactoryScene = dynamic(() => import("./FactoryScene"), { ssr: false, loading: () => <SceneLoading /> });
+import SceneGuard from "./SceneGuard";
 
 const rise = {
   hidden: { opacity: 0, y: 24 },
@@ -112,10 +101,7 @@ export default function Hero() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="relative order-1 h-[52svh] min-h-[340px] lg:order-2 lg:h-[80svh]"
         >
-          <FactoryScene animate={!reduced} />
-          <p className="font-hand pointer-events-none absolute bottom-2 right-4 rotate-[-3deg] text-xl text-[#1B1B1B]/70">
-            {h.hint}
-          </p>
+          <SceneGuard animate={!reduced} />
         </motion.div>
       </div>
 

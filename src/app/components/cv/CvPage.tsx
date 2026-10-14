@@ -21,7 +21,7 @@ function Items({ items }: { items: CvItem[] }) {
     <div className="space-y-5 print:space-y-2.5">
       {items.map((it) => (
         <article key={it.role + it.period} className="grid gap-1 break-inside-avoid sm:grid-cols-[130px_1fr] sm:gap-5 print:grid-cols-[110px_1fr]">
-          <p className="font-mono text-xs font-bold text-[#1B1B1B]/60 sm:pt-1">{it.period}</p>
+          <p className="font-mono text-xs font-bold text-[#1B1B1B]/65 sm:pt-1">{it.period}</p>
           <div>
             <h3 className="font-bold leading-snug">{it.role}</h3>
             <p className="text-sm text-[#1B1B1B]/70">
@@ -101,7 +101,7 @@ export default function CvPage({ locale }: { locale: Locale }) {
               </span>
             ))}
           </p>
-          <p className="mt-6 text-xs text-[#1B1B1B]/55">{t.references}</p>
+          <p className="mt-6 text-xs text-[#1B1B1B]/65">{t.references}</p>
         </Section>
       </article>
     </div>

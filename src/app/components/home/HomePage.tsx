@@ -8,6 +8,7 @@ import Services from "./Services";
 import LabTabs from "../lab/LabTabs";
 import Reveal from "./Reveal";
 import SectionHeading, { titleWithMark } from "./SectionHeading";
+import LangChip from "../LangChip";
 import PersonJsonLd from "../PersonJsonLd";
 import { InstagramIcon, LinkedInIcon } from "../SocialIcons";
 import { getProfile, getUi, type Locale } from "../../i18n";
@@ -107,7 +108,10 @@ export default function HomePage({ locale }: { locale: Locale }) {
                   <span className="mb-8 font-mono text-4xl font-black text-[#1B1B1B]/20 transition-colors group-hover:text-[#1B1B1B]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mb-1 text-lg font-bold leading-tight">{c.title}</h3>
+                  <h3 className="mb-1 text-lg font-bold leading-tight">
+                    {c.title}
+                    <LangChip lang={c.lang} />
+                  </h3>
                   <p className="flex-1 text-sm text-[#1B1B1B]/70">{c.description}</p>
                   <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold">
                     {t.courses.open} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -150,7 +154,10 @@ export default function HomePage({ locale }: { locale: Locale }) {
                   >
                     <BookHeart className="mt-1 h-5 w-5 flex-shrink-0 text-[#F4C21B]" />
                     <span>
-                      <span className="block text-lg font-bold group-hover:text-[#F4C21B]">{s.title}</span>
+                      <span className="block text-lg font-bold group-hover:text-[#F4C21B]">
+                        {s.title}
+                        <LangChip lang={s.lang} />
+                      </span>
                       <span className="text-sm text-[#F7F3EA]/60">{s.description}</span>
                     </span>
                   </a>

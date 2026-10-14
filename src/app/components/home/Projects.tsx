@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useLocale } from "../../i18n/LocaleProvider";
+import LangChip from "../LangChip";
 import CountUp from "./CountUp";
 import TiltCard from "./TiltCard";
 
@@ -63,6 +64,7 @@ export default function Projects() {
                     />
                     <span className="absolute left-3 top-3 rounded-full border-2 border-[#1B1B1B] bg-[#F4C21B] px-2.5 py-0.5 text-xs font-bold">
                       {t.projects.caseBadge}
+                      <LangChip lang={p.lang} />
                     </span>
                   </div>
                   <div className="p-5">

@@ -50,7 +50,7 @@ export function Slider({
         <span>{label}</span>
         <span className="font-mono">
           {fmt(value, digits, nf)}
-          {unit && <span className="text-[#1B1B1B]/55"> {unit}</span>}
+          {unit && <span className="text-[#1B1B1B]/65"> {unit}</span>}
         </span>
       </label>
       <input id={id} type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(+e.target.value)} className="lab-range mt-2 w-full" />

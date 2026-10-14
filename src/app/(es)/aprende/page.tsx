@@ -156,14 +156,14 @@ export default function AprendePage() {
         <ArrowLeft className="h-4 w-4" /> Volver al inicio
       </Link>
 
-      <SectionHeading index="→" kicker="aprende & apoya" title={<>Recursos para seguir <Mark>aprendiendo</Mark>.</>}>
+      <SectionHeading as="h1" index="→" kicker="aprende & apoya" title={<>Recursos para seguir <Mark>aprendiendo</Mark>.</>}>
         Libros, herramientas y contenido gratuito en logística, simulación y narrativa. Al adquirir un producto apoyas la creación de
         más contenido libre.
       </SectionHeading>
 
       <section className="mb-20">
         <h2 className="mb-5 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
-          <BookOpen className="h-4 w-4" /> Libros y novelas <span className="font-normal normal-case text-[#1B1B1B]/55">· Hotmart</span>
+          <BookOpen className="h-4 w-4" /> Libros y novelas <span className="font-normal normal-case text-[#1B1B1B]/65">· Hotmart</span>
         </h2>
         <div className="grid gap-6 md:grid-cols-3">
           {libros.map((libro, i) => (
@@ -175,7 +175,7 @@ export default function AprendePage() {
                 </div>
                 <div className="flex flex-1 flex-col p-5">
                   <h3 className="text-lg font-bold leading-tight">{libro.title}</h3>
-                  <p className="mb-2 text-sm font-semibold text-[#1B1B1B]/60">{libro.subtitle}</p>
+                  <p className="mb-2 text-sm font-semibold text-[#1B1B1B]/65">{libro.subtitle}</p>
                   <p className="mb-4 flex-1 text-sm leading-relaxed text-[#1B1B1B]/75">{libro.description}</p>
                   <div className="mb-4 flex flex-wrap gap-1.5">
                     {libro.tags.map((t) => (
@@ -195,7 +195,7 @@ export default function AprendePage() {
       <section className="mb-20 grid gap-10 lg:grid-cols-[1fr_2fr]">
         <div>
           <h2 className="mb-5 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
-            <Wrench className="h-4 w-4" /> Herramientas <span className="font-normal normal-case text-[#1B1B1B]/55">· Gumroad</span>
+            <Wrench className="h-4 w-4" /> Herramientas <span className="font-normal normal-case text-[#1B1B1B]/65">· Gumroad</span>
           </h2>
           {herramientas.map((h) => (
             <Reveal key={h.title}>
@@ -214,7 +214,7 @@ export default function AprendePage() {
 
         <div>
           <h2 className="mb-5 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
-            <Gamepad2 className="h-4 w-4" /> Simuladores de producción <span className="font-normal normal-case text-[#1B1B1B]/55">· Python / Pygame</span>
+            <Gamepad2 className="h-4 w-4" /> Simuladores de producción <span className="font-normal normal-case text-[#1B1B1B]/65">· Python / Pygame</span>
           </h2>
           <div className="grid gap-6 sm:grid-cols-2">
             {juegos.map((j, i) => (
@@ -222,7 +222,7 @@ export default function AprendePage() {
                 <article className={`${card} flex h-full flex-col p-5`}>
                   <span className={`${badgeCls} self-start`}>{j.badge}</span>
                   <h3 className="mt-3 text-lg font-bold leading-tight">{j.title}</h3>
-                  <p className="mb-2 text-sm font-semibold text-[#1B1B1B]/60">{j.subtitle}</p>
+                  <p className="mb-2 text-sm font-semibold text-[#1B1B1B]/65">{j.subtitle}</p>
                   <p className="mb-3 flex-1 text-sm leading-relaxed text-[#1B1B1B]/75">{j.description}</p>
                   <p className="mb-4 flex items-center gap-1.5 text-xs font-semibold">
                     <Download className="h-3.5 w-3.5" /> {j.demoLevels}

@@ -72,7 +72,7 @@ export default function OeeTool() {
                 <span className="font-mono">
                   {f(s.value)} min
                   {s.loss && (
-                    <span className="text-[#1B1B1B]/55">
+                    <span className="text-[#1B1B1B]/65">
                       {" "}
                       · −{f(s.loss.value)} {s.loss.label}
                     </span>

@@ -33,7 +33,7 @@ export default function Footer({ locale }: { locale: Locale }) {
           ))}
         </div>
       </div>
-      <p className="mt-8 text-center font-mono text-xs text-[#F7F3EA]/40">© {new Date().getFullYear()} Cristian Javier Cano Mogollón</p>
+      <p className="mt-8 text-center font-mono text-xs text-[#F7F3EA]/55">© {new Date().getFullYear()} Cristian Javier Cano Mogollón</p>
     </footer>
   );
 }

@@ -47,7 +47,7 @@ export default function Navbar() {
             CC
           </span>
           <span className="hidden font-bold leading-tight sm:block md:hidden lg:block">
-            Cristian Javier Cano <span className="font-normal text-[#1B1B1B]/60">Mogollón</span>
+            Cristian Javier Cano <span className="font-normal text-[#1B1B1B]/65">Mogollón</span>
           </span>
         </Link>
 
@@ -87,7 +87,7 @@ export default function Navbar() {
             className="overflow-hidden md:hidden"
           >
             <div className="flex flex-col gap-1 px-4 pb-4">
-              {[...links, { href: path("/#conectar"), label: t.nav.talk }, { href: switchHref, label: `${t.nav.switchTo} · ${t.nav.switchLabel}` }].map((l) => (
+              {[...links, { href: path("/#conectar"), label: t.nav.talk }, { href: switchHref, label: t.nav.switchLabel }].map((l) => (
                 <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-lg font-bold hover:bg-[#F4C21B]">
                   {l.label}
                 </Link>

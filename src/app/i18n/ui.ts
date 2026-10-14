@@ -20,7 +20,7 @@ const es = {
     talk: "Hablemos",
     menu: "Menú",
     switchTo: "EN",
-    switchLabel: "View in English",
+    switchLabel: "EN – View in English",
   },
   hero: {
     loading: "montando la planta…",
@@ -208,6 +208,7 @@ const es = {
     title: "Mejoremos tu operación.",
     lead: "Consultoría en logística y operaciones, formación corporativa, proyectos de innovación e investigación aplicada.",
   },
+  langLabel: { es: "Contenido en español", en: "Contenido en inglés" },
   footer: { tagline: "Ingeniería Industrial · Operaciones · IA" },
   cv: {
     back: "Volver",
@@ -242,7 +243,7 @@ const en: UiStrings = {
     talk: "Let's talk",
     menu: "Menu",
     switchTo: "ES",
-    switchLabel: "Ver en español",
+    switchLabel: "ES – Ver en español",
   },
   hero: {
     loading: "building the plant…",
@@ -413,7 +414,7 @@ const en: UiStrings = {
   courses: {
     kicker: "courses",
     title: { pre: "Learn for", mark: "free", post: "." },
-    lead: "Open academic material: logistics, networks, dispatch and building AI agents. Most courses are in Spanish.",
+    lead: "Open academic material: logistics, networks, dispatch and building AI agents.",
     open: "Open course",
     resourcesKicker: "learn & support",
     resourcesTitle: "Books, tools and resources on logistics and simulation (Spanish)",
@@ -422,7 +423,7 @@ const en: UiStrings = {
   creative: {
     kicker: "the other side",
     title: "Stories told by the wind.",
-    lead: "Interactive visual storytelling — fiction, fantasy and memory — and original music (in Spanish).",
+    lead: "Interactive visual storytelling — fiction, fantasy and memory — and original music.",
     soon: "soon",
   },
   contact: {
@@ -430,6 +431,7 @@ const en: UiStrings = {
     title: "Let's improve your operation.",
     lead: "Logistics and operations consulting, corporate training, innovation projects and applied research.",
   },
+  langLabel: { es: "Content in Spanish", en: "Content in English" },
   footer: { tagline: "Industrial Engineering · Operations · AI" },
   cv: {
     back: "Back",

@@ -1,5 +1,5 @@
 import * as es from "../data/profile";
-import type { CaseStudy, CvItem, Service } from "../data/profile";
+import type { CaseStudy, ContentLang, CvItem, Service } from "../data/profile";
 import * as en from "../data/profile.en";
 import { ui } from "./ui";
 
@@ -14,10 +14,10 @@ export type Profile = {
   services: Service[];
   bookingUrl: string | null;
   apps: { title: string; description: string; url: string; tag: string }[];
-  courses: { title: string; description: string; url: string }[];
+  courses: { title: string; description: string; url: string; lang?: ContentLang }[];
   anylogic: { title: string; url: string }[];
   games: { title: string; description: string; url: string }[];
-  stories: { title: string; description: string; url: string; ready: boolean }[];
+  stories: { title: string; description: string; url: string; ready: boolean; lang?: ContentLang }[];
   music: { title: string; url: string }[];
   headline: string;
   summary: string;

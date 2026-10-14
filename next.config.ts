@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Two root layouts (es / en) leave no single layout to compose a 404 from.
+    globalNotFound: true,
+  },
   // Legacy standalone pages were folded into the home page sections and /cv.
   async redirects() {
     return [

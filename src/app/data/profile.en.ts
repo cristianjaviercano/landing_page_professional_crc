@@ -74,10 +74,10 @@ export const apps = overlay(es.apps, [
 ]);
 
 export const courses = overlay(es.courses, [
-  { title: "Logistics", description: "Complete logistics management course (Spanish)." },
+  { title: "Logistics", description: "Complete logistics management course." },
   { title: "Network Optimization", description: "Interactive course and lab on logistics networks." },
   { title: "Advanced Dispatch — GitBook", description: "Logistics management and dispatch information systems." },
-  { title: "Building AI Agents", description: "A multi-agent production-line methodology (Spanish)." },
+  { title: "Building AI Agents", description: "A multi-agent production-line methodology." },
 ]);
 
 export const anylogic = overlay(es.anylogic, [
