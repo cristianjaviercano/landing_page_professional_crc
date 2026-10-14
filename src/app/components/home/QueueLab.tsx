@@ -56,7 +56,9 @@ export default function QueueLab() {
   const fmt = (v: number | undefined, d = 2) => fmtN(v, d, nf);
   // canvas text is drawn inside the animation loop; read the active strings through a ref so a language change never restarts it
   const labels = useRef({ server: x.server, inQueue: x.inQueue, nOfT: x.nOfT, lTheory: x.lTheory });
-  labels.current = { server: x.server, inQueue: x.inQueue, nOfT: x.nOfT, lTheory: x.lTheory };
+  useEffect(() => {
+    labels.current = { server: x.server, inQueue: x.inQueue, nOfT: x.nOfT, lTheory: x.lTheory };
+  }, [x.server, x.inQueue, x.nOfT, x.lTheory]);
   const [lambda, setLambda] = useState(4);
   const [mu, setMu] = useState(5);
   const [speed, setSpeed] = useState(5);

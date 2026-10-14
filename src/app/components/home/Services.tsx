@@ -34,7 +34,7 @@ export default function Services({ locale, index }: { locale: Locale; index: str
                   <span className="grid h-12 w-12 place-items-center rounded-xl border-2 border-[#1B1B1B] bg-[#F4C21B]">
                     <Icon className="h-6 w-6" strokeWidth={1.8} />
                   </span>
-                  <span className="font-mono text-3xl font-black text-[#1B1B1B]/15">{String(i + 1).padStart(2, "0")}</span>
+                  <span aria-hidden="true" className="font-mono text-3xl font-black text-[#1B1B1B]/15">{String(i + 1).padStart(2, "0")}</span>
                 </div>
                 <h3 className="mb-2 text-xl font-bold leading-tight">{s.title}</h3>
                 <p className="mb-4 flex-1 text-sm leading-relaxed text-[#1B1B1B]/75">{s.description}</p>

@@ -105,7 +105,7 @@ export default function HomePage({ locale }: { locale: Locale }) {
                   rel="noopener noreferrer"
                   className="group flex h-full flex-col rounded-2xl border-2 border-[#1B1B1B] bg-white/60 p-5 transition-all hover:-translate-y-1 hover:bg-[#F4C21B] hover:shadow-[6px_6px_0_#1B1B1B]"
                 >
-                  <span className="mb-8 font-mono text-4xl font-black text-[#1B1B1B]/20 transition-colors group-hover:text-[#1B1B1B]">
+                  <span aria-hidden="true" className="mb-8 font-mono text-4xl font-black text-[#1B1B1B]/20 transition-colors group-hover:text-[#1B1B1B]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="mb-1 text-lg font-bold leading-tight">
@@ -162,13 +162,13 @@ export default function HomePage({ locale }: { locale: Locale }) {
                     </span>
                   </a>
                 ) : (
-                  <div className="flex h-full items-start gap-4 rounded-2xl border-2 border-dashed border-[#F7F3EA]/15 p-5 opacity-60">
-                    <BookHeart className="mt-1 h-5 w-5 flex-shrink-0" />
+                  <div className="flex h-full items-start gap-4 rounded-2xl border-2 border-dashed border-[#F7F3EA]/25 p-5">
+                    <BookHeart className="mt-1 h-5 w-5 flex-shrink-0 text-[#F7F3EA]/50" />
                     <span>
-                      <span className="block text-lg font-bold">
+                      <span className="block text-lg font-bold text-[#F7F3EA]/75">
                         {s.title} <span className="font-hand ml-1 text-xl text-[#F4C21B]">{t.creative.soon}</span>
                       </span>
-                      <span className="text-sm text-[#F7F3EA]/60">{s.description}</span>
+                      <span className="text-sm text-[#F7F3EA]/65">{s.description}</span>
                     </span>
                   </div>
                 )}
