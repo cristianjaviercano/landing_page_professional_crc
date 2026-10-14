@@ -74,7 +74,7 @@ export default function Career() {
   return (
     <div className="grid gap-12 lg:grid-cols-[1.35fr_1fr]">
       <div>
-        <div role="tablist" aria-label={ui.career.kicker} className="mb-8 inline-flex rounded-2xl border-2 border-[#1B1B1B] bg-[#F7F3EA] p-1">
+        <div role="tablist" aria-label={ui.career.kicker} className="mb-8 flex w-fit max-w-full flex-wrap rounded-2xl border-2 border-[#1B1B1B] bg-[#F7F3EA] p-1">
           {tabs.map((x) => {
             const Icon = tabIcons[x.id];
             return (
@@ -83,10 +83,10 @@ export default function Career() {
                 role="tab"
                 aria-selected={tab === x.id}
                 onClick={() => setTab(x.id)}
-                className={`relative flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold sm:px-4 ${tab === x.id ? "text-[#F4C21B]" : ""}`}
+                className={`relative flex min-w-0 items-center gap-1.5 rounded-xl px-2 py-2 text-sm font-semibold min-[360px]:gap-2 min-[360px]:px-3 sm:px-4 ${tab === x.id ? "text-[#F4C21B]" : ""}`}
               >
                 {tab === x.id && <motion.span layoutId="career-tab" className="absolute inset-0 rounded-xl bg-[#1B1B1B]" />}
-                <Icon className="relative h-4 w-4" />
+                <Icon className="relative hidden h-4 w-4 min-[360px]:block" />
                 <span className="relative">{x.label}</span>
               </button>
             );

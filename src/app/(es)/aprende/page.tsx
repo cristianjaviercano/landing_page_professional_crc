@@ -152,7 +152,7 @@ const secondaryBtn =
 export default function AprendePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-      <Link href="/#cursos" className="mb-10 inline-flex items-center gap-2 text-sm font-semibold hover:underline">
+      <Link href="/#cursos" className="mb-10 inline-flex min-h-6 items-center gap-2 text-sm font-semibold hover:underline">
         <ArrowLeft className="h-4 w-4" /> Volver al inicio
       </Link>
 

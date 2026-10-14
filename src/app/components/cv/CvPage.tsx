@@ -48,7 +48,7 @@ export default function CvPage({ locale }: { locale: Locale }) {
   return (
     <div className="px-4 py-10 sm:px-6 print:p-0">
       <div className="no-print mx-auto mb-6 flex max-w-4xl items-center justify-between gap-4">
-        <Link href={localePath(locale, "/#trayectoria")} className="inline-flex items-center gap-2 text-sm font-semibold hover:underline">
+        <Link href={localePath(locale, "/#trayectoria")} className="inline-flex min-h-6 items-center gap-2 text-sm font-semibold hover:underline">
           <ArrowLeft className="h-4 w-4" /> {t.back}
         </Link>
         <PrintButton label={t.download} />

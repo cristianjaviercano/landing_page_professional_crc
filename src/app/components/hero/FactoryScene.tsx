@@ -453,7 +453,7 @@ export default function FactoryScene({ animate = true }: { animate?: boolean }) 
           className="absolute left-0 top-0 transition-opacity duration-500"
         >
           <span
-            className={`font-hand block whitespace-nowrap rounded-md border-2 border-[#1B1B1B] px-2 py-0 text-base leading-tight shadow-[3px_3px_0_#1B1B1B] sm:px-3 sm:py-0.5 sm:text-xl transition-all duration-200 ${
+            className={`font-hand block min-h-7 whitespace-nowrap rounded-md border-2 border-[#1B1B1B] px-2 py-0.5 text-base leading-tight shadow-[3px_3px_0_#1B1B1B] sm:px-3 sm:py-0.5 sm:text-xl transition-all duration-200 ${
               hovered === i ? "-translate-y-1 -rotate-2 bg-[#F4C21B]" : "rotate-1 bg-[#F7F3EA]"
             }`}
           >
