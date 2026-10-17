@@ -11,7 +11,7 @@ export const contact = {
  * Public booking page (Google Calendar appointment schedule, Cal.com, etc.).
  * While null, the "book a call" button is hidden and only the email CTA is shown.
  */
-export const bookingUrl: string | null = null;
+export const bookingUrl: string | null = "https://calendar.app.google/eCm1vDubmomFFFWWA";
 
 /** Language a linked page is written in; "both" = bilingual. */
 export type ContentLang = "es" | "en" | "both";

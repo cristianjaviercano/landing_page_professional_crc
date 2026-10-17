@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, BookOpen, Download, FileText, Gamepad2, Gift, GraduationCap, Lock, Wrench } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, BookOpen, Download, FileText, Gamepad2, Gift, GraduationCap, Wrench } from "lucide-react";
 import Reveal from "../../components/home/Reveal";
 import SectionHeading, { Mark } from "../../components/home/SectionHeading";
 
@@ -77,7 +77,6 @@ const juegos = [
     demoLevels: "2 semanas gratis · 3 niveles completos",
     color: "orange",
     platform: "Python / Pygame",
-    hotmartUrl: "https://pay.hotmart.com/R101270360M",
     repoUrl: "https://toc-factory-simuladores-9jlwiw6zw.vercel.app/",
     badge: "Demo Gratis",
   },
@@ -90,7 +89,6 @@ const juegos = [
     demoLevels: "Nivel 1 completo gratis · 4 niveles en versión full",
     color: "cyan",
     platform: "Python / Pygame",
-    hotmartUrl: "https://pay.hotmart.com/R101270360M",
     repoUrl: "https://toc-factory-simuladores-9jlwiw6zw.vercel.app/",
     badge: "Demo Gratis",
   },
@@ -146,8 +144,6 @@ const tagCls = "rounded-md bg-[#1B1B1B]/[0.07] px-2 py-0.5 font-mono text-[11px]
 const badgeCls = "rounded-full border-2 border-[#1B1B1B] bg-[#F4C21B] px-2.5 py-0.5 text-xs font-bold";
 const primaryBtn =
   "inline-flex items-center gap-1.5 rounded-xl border-2 border-[#1B1B1B] bg-[#1B1B1B] px-4 py-2 text-sm font-semibold text-[#F4C21B] transition-transform hover:-translate-y-0.5";
-const secondaryBtn =
-  "inline-flex items-center gap-1.5 rounded-xl border-2 border-[#1B1B1B] bg-white/70 px-4 py-2 text-sm font-semibold transition-colors hover:bg-[#F4C21B]";
 
 export default function AprendePage() {
   return (
@@ -228,11 +224,8 @@ export default function AprendePage() {
                     <Download className="h-3.5 w-3.5" /> {j.demoLevels}
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <a href={j.hotmartUrl} target="_blank" rel="noopener noreferrer" className={primaryBtn}>
-                      <Lock className="h-3.5 w-3.5" /> Versión completa
-                    </a>
-                    <a href={j.repoUrl} target="_blank" rel="noopener noreferrer" className={secondaryBtn}>
-                      Demo gratis
+                    <a href={j.repoUrl} target="_blank" rel="noopener noreferrer" className={primaryBtn}>
+                      Probar demo gratis <ArrowUpRight className="h-3.5 w-3.5" />
                     </a>
                   </div>
                 </article>
