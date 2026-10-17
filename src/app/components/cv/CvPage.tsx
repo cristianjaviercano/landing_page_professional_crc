@@ -24,10 +24,12 @@ function Items({ items }: { items: CvItem[] }) {
           <p className="font-mono text-xs font-bold text-[#1B1B1B]/65 sm:pt-1">{it.period}</p>
           <div>
             <h3 className="font-bold leading-snug">{it.role}</h3>
-            <p className="text-sm text-[#1B1B1B]/70">
-              {it.org}
-              {it.place && ` · ${it.place}`}
-            </p>
+            {(it.org || it.place) && (
+              <p className="text-sm text-[#1B1B1B]/70">
+                {it.org}
+                {it.place && ` · ${it.place}`}
+              </p>
+            )}
             {it.points.length > 0 && (
               <ul className="mt-1.5 list-disc space-y-0.5 pl-4 text-sm leading-relaxed text-[#1B1B1B]/80 marker:text-[#1B1B1B]/40">
                 {it.points.map((p) => (

@@ -107,7 +107,7 @@ export const { music } = es;
 
 /* ---------- CV ---------- */
 
-export const headline = "Industrial Engineer · MSc in Innovation Management · PhD Candidate in AI & Data Science";
+export const headline = "Industrial Engineer · MSc in Innovation Management · Specialized studies in progress";
 
 export const summary =
   "16+ years bridging operations and manufacturing leadership with university teaching, applied research and innovation management. Founder of the HIS (Industrial Solutions Hub) open-innovation methodology and leader of student research groups. Specialist in technology-readiness-based project design (TRL 1–9), operations and logistics optimization, predictive analytics and AI integration for industry and academia.";
@@ -179,7 +179,7 @@ export const academia: CvItem[] = overlay(es.academia, [
 ]);
 
 export const education: CvItem[] = overlay(es.education, [
-  { period: "In progress", role: "PhD Candidate in Artificial Intelligence and Data Science", points: ["Doctoral research in progress."] },
+  { period: "In progress", role: "Specialized studies in progress", points: [] },
   { role: "MSc in Innovation Management" },
   { role: "Diploma in University Teaching" },
   { role: "B.Sc. Industrial Engineering" },

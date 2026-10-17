@@ -7,8 +7,8 @@ import type { Locale } from "../i18n";
 export const ogSize = { width: 1200, height: 630 };
 
 const COPY = {
-  es: { kicker: "INGENIERÍA INDUSTRIAL · OPERACIONES · IA", line: "MSc. Gestión de la Innovación · Candidato a Doctor en IA y Ciencia de Datos · +16 años en operaciones" },
-  en: { kicker: "INDUSTRIAL ENGINEERING · OPERATIONS · AI", line: "MSc Innovation Management · PhD Candidate in AI & Data Science · 16+ years in operations" },
+  es: { kicker: "INGENIERÍA INDUSTRIAL · OPERACIONES · IA", line: "MSc. Gestión de la Innovación · Estudios especializados en curso · +16 años en operaciones" },
+  en: { kicker: "INDUSTRIAL ENGINEERING · OPERATIONS · AI", line: "MSc Innovation Management · Specialized studies in progress · 16+ years in operations" },
 } as const;
 
 const INK = "#1B1B1B";

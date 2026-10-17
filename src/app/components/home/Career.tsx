@@ -30,10 +30,12 @@ function Timeline({ items }: { items: CvItem[] }) {
           <span className="absolute -left-[42px] top-1 h-5 w-5 rounded-full border-2 border-[#1B1B1B] bg-[#F4C21B]" />
           <p className="font-mono text-xs font-bold uppercase tracking-wider text-[#1B1B1B]/65">{it.period}</p>
           <h3 className="mt-1 text-xl font-bold leading-snug">{it.role}</h3>
-          <p className="text-sm font-semibold text-[#1B1B1B]/75">
-            {it.org}
-            {it.place && <span className="font-normal text-[#1B1B1B]/65"> · {it.place}</span>}
-          </p>
+          {(it.org || it.place) && (
+            <p className="text-sm font-semibold text-[#1B1B1B]/75">
+              {it.org}
+              {it.place && <span className="font-normal text-[#1B1B1B]/65"> · {it.place}</span>}
+            </p>
+          )}
           {it.impact && (
             <div className="mt-3 flex flex-wrap gap-2">
               {it.impact.map((m) => (
