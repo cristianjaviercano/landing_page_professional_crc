@@ -166,7 +166,7 @@ export const music = [
 /* ---------- CV ---------- */
 
 export const headline =
-  "Ingeniero Industrial · Magíster en Gestión de la Innovación · Candidato a Doctor en IA y Ciencia de Datos";
+  "Ingeniero Industrial · Magíster en Gestión de la Innovación · Estudios especializados en curso";
 
 export const summary =
   "Más de 16 años articulando la dirección operativa y de manufactura industrial con la docencia universitaria, la investigación aplicada y la gestión de la innovación. Fundador de la metodología de innovación abierta HIS (Hub de Soluciones Industriales) y líder de semilleros de investigación. Especialista en formulación de proyectos por madurez tecnológica (TRL 1–9), optimización de operaciones y logística, analítica predictiva e integración de IA en el sector productivo y académico.";
@@ -271,9 +271,9 @@ export const academia: CvItem[] = [
 export const education: CvItem[] = [
   {
     period: "En curso",
-    role: "Doctorado (c) en Inteligencia Artificial y Ciencia de Datos",
-    org: "Universidad Americana de Europa (UNADE)",
-    points: ["Investigación doctoral en progreso."],
+    role: "Estudios especializados en curso",
+    org: "",
+    points: [],
   },
   {
     period: "2016",

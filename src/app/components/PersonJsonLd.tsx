@@ -15,7 +15,7 @@ export default function PersonJsonLd({ locale }: { locale: Locale }) {
     address: { "@type": "PostalAddress", addressLocality: "Montería", addressRegion: "Córdoba", addressCountry: "CO" },
     sameAs: [contact.linkedin, contact.instagram],
     knowsLanguage: ["es", "en"],
-    alumniOf: [...new Set(education.map((e) => e.org))].map((name) => ({ "@type": "CollegeOrUniversity", name })),
+    alumniOf: [...new Set(education.map((e) => e.org).filter(Boolean))].map((name) => ({ "@type": "CollegeOrUniversity", name })),
     worksFor: { "@type": "CollegeOrUniversity", name: academia[0].org },
     hasOccupation: industry.slice(0, 1).map((i) => ({ "@type": "Occupation", name: i.role })),
     knowsAbout:

@@ -6,7 +6,7 @@ const es = {
   meta: {
     title: "Cristian Javier Cano Mogollón | Operaciones, Logística e IA",
     description:
-      "Ingeniero Industrial, MSc. en Gestión de la Innovación y candidato a Doctor en IA. Proyectos, simulación, cursos y trayectoria en logística y operaciones.",
+      "Ingeniero Industrial, MSc. en Gestión de la Innovación y estudios especializados en curso. Proyectos, simulación, cursos y trayectoria en logística y operaciones.",
     ogTitle: "Cristian Javier Cano Mogollón — Operaciones, Logística e IA",
     cvTitle: "Hoja de vida | Cristian Javier Cano Mogollón",
   },
@@ -27,7 +27,7 @@ const es = {
     kicker: "Ingeniería Industrial · Operaciones · IA",
     title: { pre: "Diseño operaciones que", mark: "fluyen", post: "." } as Title,
     intro:
-      "— Ingeniero Industrial, MSc. en Gestión de la Innovación y candidato a Doctor en IA y Ciencia de Datos. Dirijo operaciones, formo ingenieros y llevo la simulación y la inteligencia artificial a la planta.",
+      "— Ingeniero Industrial, MSc. en Gestión de la Innovación y estudios especializados en curso. Dirijo operaciones, formo ingenieros y llevo la simulación y la inteligencia artificial a la planta.",
     ctaProjects: "Ver proyectos",
     ctaTalk: "Hablemos",
     metrics: [
@@ -229,7 +229,7 @@ const en: UiStrings = {
   meta: {
     title: "Cristian Javier Cano Mogollón | Operations, Logistics & AI",
     description:
-      "Industrial Engineer, MSc in Innovation Management and PhD candidate in AI. Projects, simulation, courses and a career in logistics and operations.",
+      "Industrial Engineer, MSc in Innovation Management, with specialized studies in progress. Projects, simulation, courses and a career in logistics and operations.",
     ogTitle: "Cristian Javier Cano Mogollón — Operations, Logistics & AI",
     cvTitle: "Résumé | Cristian Javier Cano Mogollón",
   },
@@ -250,7 +250,7 @@ const en: UiStrings = {
     kicker: "Industrial Engineering · Operations · AI",
     title: { pre: "I design operations that", mark: "flow", post: "." },
     intro:
-      "— Industrial Engineer, MSc in Innovation Management and PhD candidate in AI & Data Science. I run operations, train engineers and bring simulation and artificial intelligence to the shop floor.",
+      "— Industrial Engineer, MSc in Innovation Management, with specialized studies in progress. I run operations, train engineers and bring simulation and artificial intelligence to the shop floor.",
     ctaProjects: "See projects",
     ctaTalk: "Let's talk",
     metrics: [
