@@ -56,6 +56,44 @@ export const services: Service[] = [
   },
 ];
 
+export type Product = {
+  id: string;
+  name: string;
+  /** Maturity badge, e.g. "Beta cerrada". */
+  status: string;
+  summary: string;
+  features: string[];
+  tags: string[];
+  /** How it is offered (not a price). */
+  offer: string;
+  /** Legal / scope note shown under the summary. */
+  note: string;
+  /** Subject line for the pre-filled email. */
+  subject: string;
+};
+
+export const products: Product[] = [
+  {
+    id: "campanas",
+    name: "Plataforma de campañas y recaudo colaborativo",
+    status: "Beta cerrada",
+    summary:
+      "Software para que fundaciones, emprendedores y organizaciones lancen campañas de donación o de recompensas con control transaccional: reserva de aportes, verificación de comprobantes, informe de recaudo auditable y avisos por WhatsApp. No custodia dinero: cada aporte llega directo a la cuenta del creador.",
+    features: [
+      "Aportes con comprobante y vencimiento automático",
+      "Cola de verificación y aprobación para el creador",
+      "Informe de recaudo con huella verificable y auditoría inalterable",
+      "Página pública con enlaces para compartir y vista previa",
+      "Avisos por WhatsApp Business",
+      "App web móvil (PWA) sobre Vercel y PostgreSQL",
+    ],
+    tags: ["FastAPI", "PostgreSQL", "PWA", "WhatsApp"],
+    offer: "Disponible como implementación a la medida, con capacitación y soporte.",
+    note: "En evolución hacia crowdfunding de donación y recompensas. Las rifas y los sorteos requieren autorización legal en Colombia y no se ofrecen sin ella.",
+    subject: "Demo de la plataforma de campañas",
+  },
+];
+
 export type CaseStudy = {
   title: string;
   description: string;

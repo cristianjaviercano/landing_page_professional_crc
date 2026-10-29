@@ -4,6 +4,7 @@ import Hero from "../hero/Hero";
 import About from "./About";
 import Career from "./Career";
 import Projects from "./Projects";
+import Products from "./Products";
 import Services from "./Services";
 import LabTabs from "../lab/LabTabs";
 import Reveal from "./Reveal";
@@ -91,9 +92,11 @@ export default function HomePage({ locale }: { locale: Locale }) {
 
       <Services locale={locale} index="05" />
 
+      <Products locale={locale} index="06" />
+
       <section id="cursos" className="scroll-mt-20 border-y-2 border-[#1B1B1B] bg-[#F7F3EA] py-24">
         <div className={shell}>
-          <SectionHeading index="06" kicker={t.courses.kicker} title={titleWithMark(t.courses.title)}>
+          <SectionHeading index="07" kicker={t.courses.kicker} title={titleWithMark(t.courses.title)}>
             {t.courses.lead}
           </SectionHeading>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -141,7 +144,7 @@ export default function HomePage({ locale }: { locale: Locale }) {
 
       <section id="creativo" className="scroll-mt-20 bg-[#1B1B1B] py-24 text-[#F7F3EA]">
         <div className={shell}>
-          <SectionHeading invert index="07" kicker={t.creative.kicker} title={t.creative.title}>
+          <SectionHeading invert index="08" kicker={t.creative.kicker} title={t.creative.title}>
             {t.creative.lead}
           </SectionHeading>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

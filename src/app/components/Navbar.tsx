@@ -21,6 +21,7 @@ export default function Navbar() {
     { href: path("/#trayectoria"), label: t.nav.career },
     { href: path("/#proyectos"), label: t.nav.projects },
     { href: path("/#simulacion"), label: t.nav.lab },
+    { href: path("/#producto"), label: t.nav.product },
     { href: path("/#cursos"), label: t.nav.courses },
     { href: path("/cv"), label: t.nav.cv },
   ];

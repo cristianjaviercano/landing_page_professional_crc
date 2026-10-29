@@ -9,6 +9,27 @@ function overlay<T extends object>(base: T[], text: Partial<T>[]): T[] {
 
 export const { siteUrl } = es;
 
+export const products = overlay(es.products, [
+  {
+    name: "Collaborative campaign and fundraising platform",
+    status: "Closed beta",
+    summary:
+      "Software for foundations, entrepreneurs and organizations to run donation or rewards campaigns with transactional control: pledge reservations, payment-proof verification, an auditable fundraising report and WhatsApp notices. It never holds money: every pledge goes straight to the creator's account.",
+    features: [
+      "Pledges with proof of payment and automatic expiry",
+      "Verification and approval queue for the creator",
+      "Fundraising report with a verifiable fingerprint and tamper-proof audit trail",
+      "Public page with share links and rich previews",
+      "WhatsApp Business notifications",
+      "Mobile web app (PWA) on Vercel and PostgreSQL",
+    ],
+    tags: ["FastAPI", "PostgreSQL", "PWA", "WhatsApp"],
+    offer: "Available as a tailored implementation, with training and support.",
+    note: "Evolving into donation and rewards crowdfunding. Raffles and prize draws require legal authorization in Colombia and are not offered without it.",
+    subject: "Campaign platform demo",
+  },
+]);
+
 export const services = overlay(es.services, [
   {
     title: "Operations & logistics consulting",
