@@ -92,6 +92,7 @@ export const apps = overlay(es.apps, [
   { description: "Lightweight stock control", tag: "Inventory" },
   { description: "Textile capacity leveling", tag: "Capacity" },
   { title: "RAS System", description: "Recirculating aquaculture control", tag: "Agribusiness" },
+  { title: "Campaign platform", description: "Collaborative fundraising with an auditable trail (closed beta)", tag: "Crowdfunding" },
 ]);
 
 export const courses = overlay(es.courses, [

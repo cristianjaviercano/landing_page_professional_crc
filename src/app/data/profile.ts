@@ -148,6 +148,7 @@ export const apps = [
   { title: "OptiStock Lite 2.0", description: "Control de stock ligero", url: "https://optistock-lite.vercel.app", tag: "Inventarios" },
   { title: "Textil App", description: "Nivelador de capacidad textil", url: "https://textilapp.vercel.app/dashboard", tag: "Capacidad" },
   { title: "Sistema RAS", description: "Control de recirculación acuícola", url: "https://pisiculture-app.vercel.app", tag: "Agroindustria" },
+  { title: "Plataforma de campañas", description: "Recaudo colaborativo con control auditable (beta cerrada)", url: "https://rifaapp-nine.vercel.app", tag: "Crowdfunding" },
 ];
 
 export const courses = [
