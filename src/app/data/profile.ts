@@ -149,6 +149,7 @@ export const apps = [
   { title: "Textil App", description: "Nivelador de capacidad textil", url: "https://textilapp.vercel.app/dashboard", tag: "Capacidad" },
   { title: "Sistema RAS", description: "Control de recirculación acuícola", url: "https://pisiculture-app.vercel.app", tag: "Agroindustria" },
   { title: "Plataforma de campañas", description: "Recaudo colaborativo con control auditable (beta cerrada)", url: "https://rifaapp-nine.vercel.app", tag: "Crowdfunding" },
+  { title: "Tidegrid — Puerto 3D", description: "Simulación 3D de un puerto de contenedores con flujo logístico en BPMN", url: "/simulaciones/tidegrid/index.html", tag: "Simulación", lang: "es" as ContentLang },
 ];
 
 export const courses = [

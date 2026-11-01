@@ -93,6 +93,7 @@ export const apps = overlay(es.apps, [
   { description: "Textile capacity leveling", tag: "Capacity" },
   { title: "RAS System", description: "Recirculating aquaculture control", tag: "Agribusiness" },
   { title: "Campaign platform", description: "Collaborative fundraising with an auditable trail (closed beta)", tag: "Crowdfunding" },
+  { title: "Tidegrid — 3D port", description: "3D container-port simulation with its logistics flow in BPMN", tag: "Simulation" },
 ]);
 
 export const courses = overlay(es.courses, [
